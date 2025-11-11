@@ -19,7 +19,13 @@
       --trans: 320ms cubic-bezier(.2,.9,.2,1);
     }
     * { box-sizing: border-box; }
-    html, body { height: 100%; margin: 0; font-family: "Segoe UI", Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
 
     /* Hero 区 */
     header {
@@ -30,8 +36,19 @@
       justify-content: center;
       text-align: center;
       padding: 2rem;
+      position: relative;
+      background: url('./images/hero.jpg') center/cover no-repeat;
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4); /* 黑色遮罩增强文字可读性 */
+      z-index: 0;
     }
     .hero-inner {
+      position: relative;
+      z-index: 1;
       max-width: 1100px;
       width: 100%;
       padding: 2rem;
@@ -40,7 +57,7 @@
       font-size: 4rem;
       font-weight: 900;
       margin: 0;
-      color: var(--text);
+      color: #fff;
       animation: fadeIn 0.6s ease-out forwards;
     }
     .hero-sub {
@@ -49,7 +66,7 @@
       text-transform: uppercase;
       letter-spacing: 0.2em;
       font-weight: 600;
-      color: rgba(0,0,0,0.6);
+      color: #eee;
       animation: fadeIn 0.8s ease-out 0.2s forwards;
     }
 
@@ -201,10 +218,10 @@
   </script>
 
   <!-- 注释：
-    - favicon 路径：./images/favicon.png
-    - Hero 区已恢复两行文字
+    - hero.jpg 背景图已添加，路径为 ./images/hero.jpg
+    - favicon 图标路径为 ./images/favicon.png
     - 子菜单设计已彻底移除
-    - 内容区域支持选项卡切换，空间更大
+    - 内容区域支持四个选项卡切换，空间更大
   -->
 </body>
 </html>
