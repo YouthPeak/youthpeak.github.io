@@ -5,13 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Youth Peak Training Camp | 月抛田径训练营</title>
 
-  <!-- favicon（请确保 ./images/favicon.png 已上传） -->
+  <!-- favicon -->
   <link rel="icon" href="./images/favicon.png" type="image/png">
 
   <style>
-    /* =========================
-       变量与基础重置
-       ========================= */
     :root{
       --bg: #fbfdff;
       --page-bg: #fff;
@@ -32,9 +29,7 @@
       -moz-osx-font-smoothing:grayscale;
     }
 
-    /* =========================
-       Hero 区（标题 + 副标题）
-       ========================= */
+    /* Hero 区 */
     header{
       height:calc(100vh - 120px);
       min-height:420px;
@@ -46,17 +41,15 @@
       position:relative;
       overflow:hidden;
     }
-
     .hero-inner{
       z-index:1;
       max-width:1100px;
       width:100%;
       padding:2rem;
     }
-
     .hero-title{
       font-weight:900;
-      font-size:4rem; /* 更大但不过分 */
+      font-size:4rem;
       margin:0;
       line-height:1;
       color:var(--text);
@@ -64,7 +57,6 @@
       transform: translateY(18px) scale(0.995);
       animation:heroIn 640ms var(--trans) 160ms forwards;
     }
-
     .hero-sub{
       margin:0;
       margin-top:0.8rem;
@@ -77,15 +69,12 @@
       transform: translateY(8px);
       animation:subIn 700ms var(--trans) 420ms forwards;
     }
-
     @keyframes heroIn{to{opacity:1;transform:translateY(0) scale(1)}}
     @keyframes subIn{to{opacity:1;transform:translateY(0)}}
 
-    /* =========================
-       选项卡整体容器（圆角矩形、较大空间）
-       ========================= */
+    /* 选项卡整体容器 */
     .tab-area{
-      margin-top:-2.2rem; /* 覆盖连接感 */
+      margin-top:-2.2rem;
       background:var(--page-bg);
       border-radius:18px 18px 0 0;
       padding:1.25rem;
@@ -93,7 +82,6 @@
       position:relative;
       z-index:2;
     }
-
     .tabs-row{
       display:flex;
       gap:0.6rem;
@@ -103,8 +91,6 @@
       margin-bottom:1rem;
       flex-wrap:wrap;
     }
-
-    /* 主选项卡（矩形 + 圆角） */
     .tab{
       position:relative;
       display:inline-flex;
@@ -121,80 +107,24 @@
       will-change: transform;
       user-select:none;
     }
-
-    /* 活动（选中）状态：简洁有力 */
     .tab.active{
       background: linear-gradient(90deg,#111,#333);
       color:#fff;
       transform: translateY(-6px);
       box-shadow: 0 20px 50px rgba(17,24,39,0.14);
     }
+    .tab:hover{ box-shadow:0 18px 44px rgba(25,118,210,0.08); }
 
-    /* 鼠标悬停基础反馈（与随鼠标晃动配合） */
-    .tab:hover{
-      box-shadow:0 18px 44px rgba(25,118,210,0.08);
-    }
+    /* 右侧三角与子菜单已移除（保留样式注释以便未来恢复） */
 
-    /* 小三角（展开子栏目按钮） */
-    .tab .chev{
-      width:0; height:0;
-      border-left:6px solid transparent;
-      border-right:6px solid transparent;
-      border-top:8px solid rgba(0,0,0,0.45);
-      margin-left:6px;
-      transition: transform var(--trans), border-top-color var(--trans);
-      flex-shrink:0;
-    }
-    .tab.active .chev{ border-top-color: #fff; }
-    .tab.open .chev{ transform:rotate(180deg); }
-
-    /* 子菜单（下拉） */
-    .submenu{
-      position:absolute;
-      top:110%;
-      right:0;
-      min-width:180px;
-      background:#fff;
-      border-radius:10px;
-      box-shadow:0 12px 36px rgba(15,23,42,0.12);
-      overflow:hidden;
-      transform-origin:top right;
-      transform: translateY(6px) scaleY(0.96);
-      opacity:0;
-      pointer-events:none;
-      transition: opacity var(--trans), transform var(--trans);
-      z-index:30;
-    }
-    .submenu.show{
-      opacity:1;
-      transform: translateY(0) scaleY(1);
-      pointer-events:auto;
-    }
-    .submenu button{
-      display:block;
-      width:100%;
-      padding:0.6rem 0.9rem;
-      background:transparent;
-      border:0;
-      text-align:left;
-      cursor:pointer;
-      font-weight:600;
-      color:var(--text);
-      transition: background var(--trans);
-    }
-    .submenu button:hover{ background:var(--muted); }
-
-    /* =========================
-       内容区域：更大的空间，左右拓展、更高
-       ========================= */
+    /* 内容区域：更大空间，panel 覆盖保证不被遮挡 */
     .content-area{
       max-width:1200px;
       margin:0 auto;
       padding:1rem;
-      min-height:520px; /* 更大空间 */
+      min-height:520px;
       position:relative;
     }
-
     .panel{
       position:absolute;
       inset:0;
@@ -207,27 +137,21 @@
       pointer-events:none;
       transition: opacity var(--trans), transform var(--trans);
       overflow:auto;
+      z-index:10; /* 确保面板处于最上层 */
     }
     .panel.active{
       opacity:1;
       transform: translateY(0) scale(1);
       pointer-events:auto;
     }
-
     .panel h3{ margin:0 0 0.75rem 0; font-size:1.35rem; font-weight:800;}
     .panel p{ margin:0; color:rgba(0,0,0,0.72); line-height:1.7; font-size:1rem; }
 
-    /* 标注子栏目已选显示（小徽章） */
-    .sub-selected{
-      display:inline-block;
-      margin-left:0.6rem;
-      font-size:0.85rem;
-      color:var(--accent);
-      font-weight:700;
-      letter-spacing:0.02em;
-    }
+    /* 鼠标追随轻微晃动（保留，但更温和） */
+    .tab{ transition: transform 160ms linear, box-shadow var(--trans); }
+    /* 触屏设备退化：不使用追随 */
 
-    /* 小屏幕适配 */
+    /* 响应式 */
     @media (max-width:900px){
       .hero-title{font-size:3.2rem}
       .content-area{min-height:420px;padding:1rem}
@@ -244,7 +168,7 @@
 </head>
 <body>
 
-  <!-- Hero 区 -->
+  <!-- Hero -->
   <header>
     <div class="hero-inner">
       <h1 class="hero-title">Youth Peak Training Camp</h1>
@@ -252,175 +176,72 @@
     </div>
   </header>
 
-  <!-- 选项卡区 -->
+  <!-- 选项卡区（子菜单移除） -->
   <section class="tab-area">
     <div class="tabs-row" id="tabsRow">
-      <!-- Tab: 团队介绍 -->
-      <div class="tab active" data-index="0" tabindex="0">
-        团队介绍
-        <span class="chev" aria-hidden="true"></span>
-        <!-- 子菜单 -->
-        <div class="submenu" data-submenu-for="0" aria-hidden="true">
-          <button data-sub="A">主队介绍</button>
-          <button data-sub="B">辅助教练</button>
-          <button data-sub="C">训练成果</button>
-        </div>
-      </div>
-
-      <!-- Tab: 建营初衷 -->
-      <div class="tab" data-index="1" tabindex="0">
-        建营初衷
-        <span class="chev" aria-hidden="true"></span>
-        <div class="submenu" data-submenu-for="1" aria-hidden="true">
-          <button data-sub="A">宗旨</button>
-          <button data-sub="B">愿景</button>
-          <button data-sub="C">发展路径</button>
-        </div>
-      </div>
-
-      <!-- Tab: 风姿展示 -->
-      <div class="tab" data-index="2" tabindex="0">
-        风姿展示
-        <span class="chev" aria-hidden="true"></span>
-        <div class="submenu" data-submenu-for="2" aria-hidden="true">
-          <button data-sub="A">比赛片段</button>
-          <button data-sub="B">训练瞬间</button>
-          <button data-sub="C">花絮</button>
-        </div>
-      </div>
-
-      <!-- Tab: 加入我们 -->
-      <div class="tab" data-index="3" tabindex="0">
-        加入我们
-        <span class="chev" aria-hidden="true"></span>
-        <div class="submenu" data-submenu-for="3" aria-hidden="true">
-          <button data-sub="A">报名入口</button>
-          <button data-sub="B">联系方式</button>
-          <button data-sub="C">常见问题</button>
-        </div>
-      </div>
+      <div class="tab active" data-index="0" tabindex="0">团队介绍</div>
+      <div class="tab" data-index="1" tabindex="0">建营初衷</div>
+      <div class="tab" data-index="2" tabindex="0">风姿展示</div>
+      <div class="tab" data-index="3" tabindex="0">加入我们</div>
     </div>
 
-    <!-- 内容区域（更大） -->
     <div class="content-area">
-      <!-- 四个主面板（被选中时显示） -->
       <div class="panel active" id="panel-0" role="region" aria-label="团队介绍面板">
-        <h3>团队介绍 <span class="sub-selected" id="sel-0"></span></h3>
+        <h3>团队介绍</h3>
         <p id="content-0">11111</p>
       </div>
 
       <div class="panel" id="panel-1" role="region" aria-label="建营初衷面板">
-        <h3>建营初衷 <span class="sub-selected" id="sel-1"></span></h3>
+        <h3>建营初衷</h3>
         <p id="content-1">11111</p>
       </div>
 
       <div class="panel" id="panel-2" role="region" aria-label="风姿展示面板">
-        <h3>风姿展示 <span class="sub-selected" id="sel-2"></span></h3>
+        <h3>风姿展示</h3>
         <p id="content-2">11111</p>
       </div>
 
       <div class="panel" id="panel-3" role="region" aria-label="加入我们面板">
-        <h3>加入我们 <span class="sub-selected" id="sel-3"></span></h3>
+        <h3>加入我们</h3>
         <p id="content-3">11111</p>
       </div>
     </div>
   </section>
 
   <script>
-    /* =============
-       交互逻辑说明
-       - 主 tab 点击切换主面板
-       - 点击 tab 右侧三角（整个 tab 区域点击也会触发）展开子菜单
-       - 子菜单点击某项会将该面板内容替换为该子项（并在标题处显示选中子项标签）
-       - 鼠标在 tab 上移动会产生轻微追随晃动（视觉微交互）
-       ============= */
-
     (function(){
       const tabs = Array.from(document.querySelectorAll('.tab'));
       const panels = Array.from(document.querySelectorAll('.panel'));
       const tabsRow = document.getElementById('tabsRow');
 
-      // 切换主面板
       function activateTab(index){
         tabs.forEach((t,i)=> t.classList.toggle('active', i===index));
         panels.forEach((p,i)=> p.classList.toggle('active', i===index));
-        // 关闭所有子菜单
-        document.querySelectorAll('.submenu').forEach(sm => sm.classList.remove('show'));
-        document.querySelectorAll('.tab').forEach(t=> t.classList.remove('open'));
+        // 确保激活面板滚入视口顶部（平滑）
+        const sel = document.querySelector('.panel.active');
+        if(sel) sel.scrollIntoView({behavior:'smooth', block:'start'});
       }
 
-      // 初始
+      // 初始激活
       activateTab(0);
 
       // 点击 tab 切换
       tabs.forEach((tab, idx) => {
-        // 切换主体
         tab.addEventListener('click', (ev) => {
-          // 如果目标是子菜单按钮（已由事件处理），则忽略这里的切换
-          const isSubBtn = ev.target.closest('.submenu');
-          if(isSubBtn) return;
           activateTab(idx);
         });
 
-        // 处理子菜单展开：点击 tab 的小三角或整个 tab 时，按住 Alt 或右侧点击可展开
-        // 为方便：在 tab 上双击或长按可以也展开；这里实现：点击并按住 Shift 展开（也可直接点击 chevron）
-        // 但我们更明确：单击 tab 切换；点击 chevron 通过事件委托展开子菜单
-      });
-
-      // 使用事件委托处理 chevron 点击（在 tab 内）
-      tabsRow.addEventListener('click', (ev) => {
-        const chev = ev.target.closest('.chev');
-        if(!chev) return;
-        const tab = chev.closest('.tab');
-        if(!tab) return;
-        const idx = tabs.indexOf(tab);
-        const submenu = tab.querySelector('.submenu');
-        const isShown = submenu.classList.contains('show');
-        // 关闭其他
-        document.querySelectorAll('.submenu').forEach(sm => sm.classList.remove('show'));
-        document.querySelectorAll('.tab').forEach(t=> t.classList.remove('open'));
-        if(!isShown){
-          submenu.classList.add('show');
-          tab.classList.add('open');
-        } else {
-          submenu.classList.remove('show');
-          tab.classList.remove('open');
-        }
-      });
-
-      // 子菜单点击：替换内容并标记子栏目
-      document.querySelectorAll('.submenu').forEach((sm)=> {
-        sm.addEventListener('click', (ev) => {
-          const btn = ev.target.closest('button');
-          if(!btn) return;
-          const parentTab = sm.closest('.tab');
-          const tabIndex = tabs.indexOf(parentTab);
-          const subKey = btn.dataset.sub || '';
-          // 将对应面板内容替换（这里示例替换为 标识字符串 ；你可替换为实际 HTML）
-          const contentEl = document.getElementById('content-' + tabIndex);
-          contentEl.textContent = `子栏目 ${subKey} 的内容 - 11111`;
-          // 在标题显示已选子栏目
-          document.getElementById('sel-' + tabIndex).textContent = subKey;
-          // 切换到该 tab 的主面板
-          activateTab(tabIndex);
-        });
-      });
-
-      /* =============
-         鼠标追随轻微晃动效果（在单个 tab 内）
-         - 当鼠标在 tab 上移动时，根据位置计算 translate/rotate 的轻微变换
-         - 离开时复位
-         ============= */
-      tabs.forEach(tab => {
+        // 鼠标追随轻微晃动（更温和的效果）
         let rect = null;
         function onMove(e){
           rect = rect || tab.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 .. 0.5
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
           const y = (e.clientY - rect.top) / rect.height - 0.5;
-          const tx = x * 6; // 水平位移（像素）
-          const ty = y * 6; // 垂直位移（像素）
-          const rz = x * 2; // 旋转量（deg）
-          tab.style.transform = `translate3d(${tx}px, ${ty - (tab.classList.contains('active')?6:0)}px,0) rotate(${rz}deg) scale(${tab.classList.contains('active')?1.03:1.01})`;
+          const tx = x * 6;
+          const ty = y * 4;
+          const rz = x * 1.5;
+          const scale = tab.classList.contains('active') ? 1.03 : 1.01;
+          tab.style.transform = `translate3d(${tx}px, ${ty - (tab.classList.contains('active')?6:0)}px,0) rotate(${rz}deg) scale(${scale})`;
         }
         function onLeave(){
           tab.style.transform = '';
@@ -428,37 +249,23 @@
         }
         tab.addEventListener('mousemove', onMove);
         tab.addEventListener('mouseleave', onLeave);
-        // 为触屏设备退化：触摸时不做追随
         tab.addEventListener('touchstart', ()=> tab.style.transform = '');
       });
 
-      /* =============
-         全局：点击空白区域关闭任何打开的子菜单
-         ============= */
-      document.addEventListener('click', (ev) => {
-        if(ev.target.closest('.tab')) return;
-        document.querySelectorAll('.submenu').forEach(sm => sm.classList.remove('show'));
-        document.querySelectorAll('.tab').forEach(t=> t.classList.remove('open'));
-      });
-
-      /* 可选：键盘导航（左右切换） */
+      // 键盘左右切换支持
       let currentIndex = 0;
       document.addEventListener('keydown', (ev) => {
         if(ev.key === 'ArrowRight'){ currentIndex = Math.min(currentIndex + 1, panels.length - 1); activateTab(currentIndex); }
         if(ev.key === 'ArrowLeft'){ currentIndex = Math.max(currentIndex - 1, 0); activateTab(currentIndex); }
       });
-      // 点击 tab 时同步 currentIndex
-      tabs.forEach((t,i) => t.addEventListener('click', ()=> currentIndex = i));
+      tabs.forEach((t,i)=> t.addEventListener('click', ()=> currentIndex = i));
     })();
   </script>
 
-  <!-- ===== 注释（便于维护）=====
-    - favicon 路径: ./images/favicon.png
-    - 若要替换 hero 背景图：在 header 添加 background: url('./images/hero.jpg') center/cover no-repeat;
-    - 子栏目点击会将对应 panel 内容替换为简单文本（示例为 "子栏目 X 的内容 - 11111"）
-      你可以把 content-N 元素替换为更复杂的 HTML 或通过 JS 异步加载内容。
-    - 如需拆分到 style.css / script.js，只需把 <style> 与 <script> 内容抽离并在 head/body 中引用即可。
-    - 已考虑移动端兼容；追随晃动对触屏设备退化处理（不使用追随变换）
-  ========================== -->
+  <!-- 注释：
+       - favicon 路径: ./images/favicon.png
+       - 子菜单设计已移除，后续想恢复可参考之前版本注释
+       - 若需将内容替换为复杂 HTML，可把 #content-N 元素替换为任意节点
+  -->
 </body>
 </html>
