@@ -3,64 +3,147 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Youth Peak Training Camp - 官方网站</title>
+  <title>Youth Peak Training Camp | 月抛田径训练营</title>
   <style>
-    :root{--accent:#1976d2;--muted:#f3f6fb}
-    body{font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0; background:linear-gradient(180deg,#fff 0%,#f7fbff 100%); color:#111}
-    main{max-width:960px; margin:2rem auto; padding:2rem; text-align:center}
-    h1{font-size:2.2rem; margin:0.2rem 0}
-    h2{font-size:1.5rem; margin:0.2rem 0; color:var(--accent)}
+    :root {
+      --accent: #1976d2;
+      --muted: #f3f6fb;
+    }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: #fff;
+      color: #111;
+    }
 
-    /* 布局 */
-    .gallery{display:flex; gap:1rem; justify-content:center; align-items:flex-start; flex-wrap:wrap; margin-top:1.5rem}
-    .card{width:260px; height:180px; background:var(--muted); border-radius:12px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; box-shadow:0 6px 18px rgba(25,118,210,0.08); transform:translateY(0); opacity:0; animation:fadeInUp 600ms ease forwards;}
-    .card:nth-child(1){animation-delay:120ms}
-    .card:nth-child(2){animation-delay:260ms}
-    .card:nth-child(3){animation-delay:400ms}
+    /* 顶部区域 */
+    header {
+      height: 100vh;
+      background: url('your-hero-image.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+    .hero-title {
+      display: inline-block;
+      background: rgba(0,0,0,0.5);
+      padding: 1.5rem 2.5rem;
+      border-radius: 12px;
+      transition: transform 0.4s ease, background 0.4s ease;
+    }
+    .hero-title:hover {
+      transform: translateY(-6px);
+      background: rgba(25, 118, 210, 0.7);
+    }
+    .hero-title h1 {
+      font-size: 3rem;
+      margin: 0;
+    }
+    .hero-title p {
+      font-size: 1rem;
+      margin: 0.5rem 0 0;
+      color: #e0e0e0;
+      font-style: italic;
+      letter-spacing: 0.5px;
+    }
 
-    .card img{width:100%; height:100%; object-fit:cover; display:block}
-    .placeholder{width:80%; height:64%; border:2px dashed rgba(0,0,0,0.08); border-radius:8px; display:flex; align-items:center; justify-content:center; color:rgba(0,0,0,0.35); font-size:0.95rem; padding:0.5rem; text-align:center}
+    /* 主体区域 */
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: var(--accent);
+    }
+    .columns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .column {
+      width: 220px;
+      background: var(--muted);
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 6px 18px rgba(25,118,210,0.08);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    .column:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(25,118,210,0.12);
+    }
+    .column:nth-child(1) { animation-delay: 0.2s; }
+    .column:nth-child(2) { animation-delay: 0.4s; }
+    .column:nth-child(3) { animation-delay: 0.6s; }
+    .column:nth-child(4) { animation-delay: 0.8s; }
 
-    /* 浮动动画（可用于 img 或单独类） */
-    @keyframes floaty { 0%{transform:translateY(0)} 50%{transform:translateY(-8px)} 100%{transform:translateY(0)} }
-    .float { animation: floaty 6s ease-in-out infinite; }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-    /* 悬浮提升效果（鼠标悬停） */
-    .card:hover{animation:none; transform:translateY(-6px); box-shadow:0 12px 30px rgba(25,118,210,0.12)}
-
-    /* 淡入并向上 */
-    @keyframes fadeInUp { from{opacity:0; transform:translateY(16px)} to{opacity:1; transform:translateY(0)} }
-
-    .caption{margin-top:1rem; color:rgba(0,0,0,0.6); font-size:0.95rem}
-
-    /* 响应式 */
-    @media (max-width:720px){.card{width:calc(50% - 0.5rem)} }
-    @media (max-width:420px){.card{width:100%}}
+    .content {
+      display: none;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: #333;
+    }
   </style>
 </head>
 <body>
+  <header>
+    <div class="hero-title">
+      <h1>Youth Peak Training Camp</h1>
+      <p>slogan: peak the passion</p>
+    </div>
+  </header>
+
   <main>
-    <h1>Youth Peak Training Camp</h1>
-    <h2>官方网站</h2>
-
-    <p class="caption">下方为图片占位区域。将占位元素替换为 &lt;img src="你的图片路径" alt="描述" class="float"&gt; 即可显示图片并启用浮动动画。</p>
-
-    <section class="gallery" aria-label="图片展示区">
-      <!-- 占位示例：替换为 <img src="/path/to/photo1.jpg" alt="营地活动1" class="float"> -->
-      <figure class="card" role="group" aria-label="图片占位1">
-        <div class="placeholder">图片占位 1<br/>(将此处替换为 &lt;img src="..." alt="..." class="float"&gt;)</div>
-      </figure>
-
-      <figure class="card" role="group" aria-label="图片占位2">
-        <div class="placeholder">图片占位 2<br/>(将此处替换为 &lt;img src="..." alt="..." class="float"&gt;)</div>
-      </figure>
-
-      <figure class="card" role="group" aria-label="图片占位3">
-        <div class="placeholder">图片占位 3<br/>(将此处替换为 &lt;img src="..." alt="..." class="float"&gt;)</div>
-      </figure>
-    </section>
-
-    <p class="caption">示例：<code>&lt;img src="/assets/photo1.jpg" alt="营地合影" class="float"&gt;</code></p>
+    <div class="section-title">了解我们的训练营</div>
+    <div class="columns">
+      <div class="column" onclick="toggleContent(0)">
+        训练项目介绍
+        <div class="content">11111</div>
+      </div>
+      <div class="column" onclick="toggleContent(1)">
+        教练团队
+        <div class="content">11111</div>
+      </div>
+      <div class="column" onclick="toggleContent(2)">
+        营地环境
+        <div class="content">11111</div>
+      </div>
+      <div class="column" onclick="toggleContent(3)">
+        报名方式
+        <div class="content">11111</div>
+      </div>
+    </div>
   </main>
+
+  <script>
+    function toggleContent(index) {
+      const contents = document.querySelectorAll('.content');
+      contents.forEach((c, i) => {
+        if (i === index) {
+          c.style.display = c.style.display === 'block' ? 'none' : 'block';
+        } else {
+          c.style.display = 'none';
+        }
+      });
+    }
+  </script>
 </body>
 </html>
