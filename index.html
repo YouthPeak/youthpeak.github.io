@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Youth Peak Training Camp | 月抛田径训练营</title>
 
-  <!-- favicon -->
+  <!-- favicon 图标 -->
   <link rel="icon" href="./images/favicon.png" type="image/png">
 
   <style>
-    :root{
+    :root {
       --bg: #fbfdff;
       --page-bg: #fff;
       --text: #111;
@@ -18,157 +18,125 @@
       --card-shadow: 0 12px 32px rgba(17,24,39,0.06);
       --trans: 320ms cubic-bezier(.2,.9,.2,1);
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background: linear-gradient(180deg,#ffffff 0%, var(--bg) 100%);
-      color:var(--text);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; font-family: "Segoe UI", Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); }
 
     /* Hero 区 */
-    header{
-      height:calc(100vh - 120px);
-      min-height:420px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:2rem;
-      position:relative;
-      overflow:hidden;
+    header {
+      height: calc(100vh - 120px);
+      min-height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
     }
-    .hero-inner{
-      z-index:1;
-      max-width:1100px;
-      width:100%;
-      padding:2rem;
+    .hero-inner {
+      max-width: 1100px;
+      width: 100%;
+      padding: 2rem;
     }
-    .hero-title{
-      font-weight:900;
-      font-size:4rem;
-      margin:0;
-      line-height:1;
-      color:var(--text);
-      opacity:0;
-      transform: translateY(18px) scale(0.995);
-      animation:heroIn 640ms var(--trans) 160ms forwards;
+    .hero-title {
+      font-size: 4rem;
+      font-weight: 900;
+      margin: 0;
+      color: var(--text);
+      animation: fadeIn 0.6s ease-out forwards;
     }
-    .hero-sub{
-      margin:0;
-      margin-top:0.8rem;
-      font-size:1.05rem;
-      color:rgba(0,0,0,0.66);
-      text-transform:uppercase;
-      letter-spacing:0.22em;
-      font-weight:600;
-      opacity:0;
-      transform: translateY(8px);
-      animation:subIn 700ms var(--trans) 420ms forwards;
+    .hero-sub {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-weight: 600;
+      color: rgba(0,0,0,0.6);
+      animation: fadeIn 0.8s ease-out 0.2s forwards;
     }
-    @keyframes heroIn{to{opacity:1;transform:translateY(0) scale(1)}}
-    @keyframes subIn{to{opacity:1;transform:translateY(0)}}
 
-    /* 选项卡整体容器 */
-    .tab-area{
-      margin-top:-2.2rem;
-      background:var(--page-bg);
-      border-radius:18px 18px 0 0;
-      padding:1.25rem;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 选项卡区域 */
+    .tab-area {
+      margin-top: -2rem;
+      background: var(--page-bg);
+      border-radius: 18px 18px 0 0;
+      padding: 1.5rem;
       box-shadow: 0 -8px 30px rgba(15,23,42,0.05);
-      position:relative;
-      z-index:2;
     }
-    .tabs-row{
-      display:flex;
-      gap:0.6rem;
-      justify-content:center;
-      align-items:center;
-      padding:0.6rem;
-      margin-bottom:1rem;
-      flex-wrap:wrap;
+    .tabs-row {
+      display: flex;
+      gap: 0.8rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
     }
-    .tab{
-      position:relative;
-      display:inline-flex;
-      align-items:center;
-      gap:0.6rem;
-      padding:0.75rem 1.2rem;
-      border-radius:10px;
-      background:var(--muted);
-      color:var(--text);
-      font-weight:700;
-      cursor:pointer;
-      box-shadow:0 8px 20px rgba(25,118,210,0.03);
-      transition: transform var(--trans), box-shadow var(--trans), background var(--trans), color var(--trans);
-      will-change: transform;
-      user-select:none;
+    .tab {
+      padding: 0.8rem 1.4rem;
+      border-radius: 12px;
+      background: var(--muted);
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
     }
-    .tab.active{
-      background: linear-gradient(90deg,#111,#333);
-      color:#fff;
-      transform: translateY(-6px);
-      box-shadow: 0 20px 50px rgba(17,24,39,0.14);
+    .tab:hover {
+      box-shadow: 0 12px 24px rgba(25,118,210,0.1);
     }
-    .tab:hover{ box-shadow:0 18px 44px rgba(25,118,210,0.08); }
+    .tab.active {
+      background: linear-gradient(90deg, #111, #333);
+      color: #fff;
+      transform: translateY(-4px);
+    }
 
-    /* 右侧三角与子菜单已移除（保留样式注释以便未来恢复） */
-
-    /* 内容区域：更大空间，panel 覆盖保证不被遮挡 */
-    .content-area{
-      max-width:1200px;
-      margin:0 auto;
-      padding:1rem;
-      min-height:520px;
-      position:relative;
+    /* 内容区域 */
+    .content-area {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+      min-height: 500px;
+      position: relative;
     }
-    .panel{
-      position:absolute;
-      inset:0;
-      padding:2.4rem;
-      background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(248,251,255,0.96));
-      border-radius:12px;
+    .panel {
+      position: absolute;
+      inset: 0;
+      padding: 2rem;
+      background: #fff;
+      border-radius: 12px;
       box-shadow: var(--card-shadow);
-      opacity:0;
-      transform: translateY(18px) scale(0.996);
-      pointer-events:none;
-      transition: opacity var(--trans), transform var(--trans);
-      overflow:auto;
-      z-index:10; /* 确保面板处于最上层 */
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
-    .panel.active{
-      opacity:1;
-      transform: translateY(0) scale(1);
-      pointer-events:auto;
+    .panel.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
     }
-    .panel h3{ margin:0 0 0.75rem 0; font-size:1.35rem; font-weight:800;}
-    .panel p{ margin:0; color:rgba(0,0,0,0.72); line-height:1.7; font-size:1rem; }
+    .panel h3 {
+      margin-top: 0;
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+    .panel p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(0,0,0,0.75);
+    }
 
-    /* 鼠标追随轻微晃动（保留，但更温和） */
-    .tab{ transition: transform 160ms linear, box-shadow var(--trans); }
-    /* 触屏设备退化：不使用追随 */
-
-    /* 响应式 */
-    @media (max-width:900px){
-      .hero-title{font-size:3.2rem}
-      .content-area{min-height:420px;padding:1rem}
-    }
-    @media (max-width:560px){
-      header{height:auto;padding:1.2rem 1rem}
-      .hero-title{font-size:2.4rem}
-      .hero-sub{font-size:0.9rem;letter-spacing:0.14em}
-      .tabs-row{gap:0.4rem}
-      .tab{padding:0.55rem 0.9rem;font-size:0.95rem;border-radius:8px}
-      .content-area{min-height:380px}
+    @media (max-width: 600px) {
+      .hero-title { font-size: 2.6rem; }
+      .hero-sub { font-size: 0.95rem; letter-spacing: 0.14em; }
+      .tab { padding: 0.6rem 1rem; font-size: 0.95rem; }
+      .content-area { min-height: 400px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Hero -->
+  <!-- Hero 区 -->
   <header>
     <div class="hero-inner">
       <h1 class="hero-title">Youth Peak Training Camp</h1>
@@ -176,96 +144,67 @@
     </div>
   </header>
 
-  <!-- 选项卡区（子菜单移除） -->
+  <!-- 选项卡区域 -->
   <section class="tab-area">
     <div class="tabs-row" id="tabsRow">
-      <div class="tab active" data-index="0" tabindex="0">团队介绍</div>
-      <div class="tab" data-index="1" tabindex="0">建营初衷</div>
-      <div class="tab" data-index="2" tabindex="0">风姿展示</div>
-      <div class="tab" data-index="3" tabindex="0">加入我们</div>
+      <div class="tab active" data-index="0">团队介绍</div>
+      <div class="tab" data-index="1">建营初衷</div>
+      <div class="tab" data-index="2">风姿展示</div>
+      <div class="tab" data-index="3">加入我们</div>
     </div>
 
     <div class="content-area">
-      <div class="panel active" id="panel-0" role="region" aria-label="团队介绍面板">
+      <div class="panel active" id="panel-0">
         <h3>团队介绍</h3>
-        <p id="content-0">11111</p>
+        <p>11111</p>
       </div>
-
-      <div class="panel" id="panel-1" role="region" aria-label="建营初衷面板">
+      <div class="panel" id="panel-1">
         <h3>建营初衷</h3>
-        <p id="content-1">11111</p>
+        <p>11111</p>
       </div>
-
-      <div class="panel" id="panel-2" role="region" aria-label="风姿展示面板">
+      <div class="panel" id="panel-2">
         <h3>风姿展示</h3>
-        <p id="content-2">11111</p>
+        <p>11111</p>
       </div>
-
-      <div class="panel" id="panel-3" role="region" aria-label="加入我们面板">
+      <div class="panel" id="panel-3">
         <h3>加入我们</h3>
-        <p id="content-3">11111</p>
+        <p>11111</p>
       </div>
     </div>
   </section>
 
   <script>
-    (function(){
-      const tabs = Array.from(document.querySelectorAll('.tab'));
-      const panels = Array.from(document.querySelectorAll('.panel'));
-      const tabsRow = document.getElementById('tabsRow');
+    const tabs = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.panel');
 
-      function activateTab(index){
-        tabs.forEach((t,i)=> t.classList.toggle('active', i===index));
-        panels.forEach((p,i)=> p.classList.toggle('active', i===index));
-        // 确保激活面板滚入视口顶部（平滑）
-        const sel = document.querySelector('.panel.active');
-        if(sel) sel.scrollIntoView({behavior:'smooth', block:'start'});
-      }
-
-      // 初始激活
-      activateTab(0);
-
-      // 点击 tab 切换
-      tabs.forEach((tab, idx) => {
-        tab.addEventListener('click', (ev) => {
-          activateTab(idx);
-        });
-
-        // 鼠标追随轻微晃动（更温和的效果）
-        let rect = null;
-        function onMove(e){
-          rect = rect || tab.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / rect.width - 0.5;
-          const y = (e.clientY - rect.top) / rect.height - 0.5;
-          const tx = x * 6;
-          const ty = y * 4;
-          const rz = x * 1.5;
-          const scale = tab.classList.contains('active') ? 1.03 : 1.01;
-          tab.style.transform = `translate3d(${tx}px, ${ty - (tab.classList.contains('active')?6:0)}px,0) rotate(${rz}deg) scale(${scale})`;
-        }
-        function onLeave(){
-          tab.style.transform = '';
-          rect = null;
-        }
-        tab.addEventListener('mousemove', onMove);
-        tab.addEventListener('mouseleave', onLeave);
-        tab.addEventListener('touchstart', ()=> tab.style.transform = '');
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        panels[index].classList.add('active');
       });
 
-      // 键盘左右切换支持
-      let currentIndex = 0;
-      document.addEventListener('keydown', (ev) => {
-        if(ev.key === 'ArrowRight'){ currentIndex = Math.min(currentIndex + 1, panels.length - 1); activateTab(currentIndex); }
-        if(ev.key === 'ArrowLeft'){ currentIndex = Math.max(currentIndex - 1, 0); activateTab(currentIndex); }
+      // 鼠标轻微晃动效果
+      let rect = null;
+      tab.addEventListener('mousemove', e => {
+        rect = rect || tab.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        tab.style.transform = `translate(${x * 6}px, ${y * 4}px) rotate(${x * 2}deg)`;
       });
-      tabs.forEach((t,i)=> t.addEventListener('click', ()=> currentIndex = i));
-    })();
+      tab.addEventListener('mouseleave', () => {
+        tab.style.transform = '';
+        rect = null;
+      });
+    });
   </script>
 
   <!-- 注释：
-       - favicon 路径: ./images/favicon.png
-       - 子菜单设计已移除，后续想恢复可参考之前版本注释
-       - 若需将内容替换为复杂 HTML，可把 #content-N 元素替换为任意节点
+    - favicon 路径：./images/favicon.png
+    - Hero 区已恢复两行文字
+    - 子菜单设计已彻底移除
+    - 内容区域支持选项卡切换，空间更大
   -->
 </body>
 </html>
