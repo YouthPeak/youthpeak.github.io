@@ -4,11 +4,63 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Youth Peak Training Camp - 官方网站</title>
+  <style>
+    :root{--accent:#1976d2;--muted:#f3f6fb}
+    body{font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0; background:linear-gradient(180deg,#fff 0%,#f7fbff 100%); color:#111}
+    main{max-width:960px; margin:2rem auto; padding:2rem; text-align:center}
+    h1{font-size:2.2rem; margin:0.2rem 0}
+    h2{font-size:1.5rem; margin:0.2rem 0; color:var(--accent)}
+
+    /* 布局 */
+    .gallery{display:flex; gap:1rem; justify-content:center; align-items:flex-start; flex-wrap:wrap; margin-top:1.5rem}
+    .card{width:260px; height:180px; background:var(--muted); border-radius:12px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; box-shadow:0 6px 18px rgba(25,118,210,0.08); transform:translateY(0); opacity:0; animation:fadeInUp 600ms ease forwards;}
+    .card:nth-child(1){animation-delay:120ms}
+    .card:nth-child(2){animation-delay:260ms}
+    .card:nth-child(3){animation-delay:400ms}
+
+    .card img{width:100%; height:100%; object-fit:cover; display:block}
+    .placeholder{width:80%; height:64%; border:2px dashed rgba(0,0,0,0.08); border-radius:8px; display:flex; align-items:center; justify-content:center; color:rgba(0,0,0,0.35); font-size:0.95rem; padding:0.5rem; text-align:center}
+
+    /* 浮动动画（可用于 img 或单独类） */
+    @keyframes floaty { 0%{transform:translateY(0)} 50%{transform:translateY(-8px)} 100%{transform:translateY(0)} }
+    .float { animation: floaty 6s ease-in-out infinite; }
+
+    /* 悬浮提升效果（鼠标悬停） */
+    .card:hover{animation:none; transform:translateY(-6px); box-shadow:0 12px 30px rgba(25,118,210,0.12)}
+
+    /* 淡入并向上 */
+    @keyframes fadeInUp { from{opacity:0; transform:translateY(16px)} to{opacity:1; transform:translateY(0)} }
+
+    .caption{margin-top:1rem; color:rgba(0,0,0,0.6); font-size:0.95rem}
+
+    /* 响应式 */
+    @media (max-width:720px){.card{width:calc(50% - 0.5rem)} }
+    @media (max-width:420px){.card{width:100%}}
+  </style>
 </head>
 <body>
-  <main style="text-align:center; font-family: sans-serif; padding:2rem;">
-    <h1 style="font-size:2.5rem; margin:0.5rem 0;">Youth Peak Training Camp</h1>
-    <h2 style="font-size:2rem; margin:0.5rem 0;">官方网站</h2>
+  <main>
+    <h1>Youth Peak Training Camp</h1>
+    <h2>官方网站</h2>
+
+    <p class="caption">下方为图片占位区域。将占位元素替换为 &lt;img src="你的图片路径" alt="描述" class="float"&gt; 即可显示图片并启用浮动动画。</p>
+
+    <section class="gallery" aria-label="图片展示区">
+      <!-- 占位示例：替换为 <img src="/path/to/photo1.jpg" alt="营地活动1" class="float"> -->
+      <figure class="card" role="group" aria-label="图片占位1">
+        <div class="placeholder">图片占位 1<br/>(将此处替换为 &lt;img src="..." alt="..." class="float"&gt;)</div>
+      </figure>
+
+      <figure class="card" role="group" aria-label="图片占位2">
+        <div class="placeholder">图片占位 2<br/>(将此处替换为 &lt;img src="..." alt="..." class="float"&gt;)</div>
+      </figure>
+
+      <figure class="card" role="group" aria-label="图片占位3">
+        <div class="placeholder">图片占位 3<br/>(将此处替换为 &lt;img src="..." alt="..." class="float"&gt;)</div>
+      </figure>
+    </section>
+
+    <p class="caption">示例：<code>&lt;img src="/assets/photo1.jpg" alt="营地合影" class="float"&gt;</code></p>
   </main>
 </body>
 </html>
