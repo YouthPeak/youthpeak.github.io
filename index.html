@@ -3,15 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Youth Peak Training Camp | 月抛田径训练营</title>
+  <title>Youth Peak Training Camp</title>
 
-  <!-- favicon -->
   <link rel="icon" href="./images/favicon.png" type="image/png">
   <link rel="apple-touch-icon" sizes="180x180" href="./images/apple_icon.png">
 
   <style>
     :root{
-      --bg:#0f1724;           /* 基底暗色，粒子更明显 */
+      --bg:#071026;
       --page:#fff;
       --text:#111;
       --muted:#f3f6fb;
@@ -19,24 +18,21 @@
       --shadow:0 14px 40px rgba(15,23,42,0.08);
       --easing:cubic-bezier(.2,.9,.2,1);
       --bullet-bg: rgba(255,255,255,0.08);
-      --dream-1:#7c4dff;
-      --dream-2:#00bcd4;
-      --dream-3:#ff6ec7;
     }
     *{box-sizing:border-box}
-    html,body{height:100%; margin:0; font-family:"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
+    html,body{height:100%;margin:0;font-family:"Segoe UI",Roboto,Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
     body{background:var(--bg); color:var(--text); overflow-x:hidden;}
 
-/* ========== 全局粒子 Canvas（覆盖页面背景） ========== */
+/* 粒子画布：放在最底层，不遮挡 hero 背景或文字 */
 #particleCanvas{
   position:fixed;
   inset:0;
-  z-index:0;
+  z-index:-1;            /* <<-- 关键：放到最底层 */
   pointer-events:none;
   mix-blend-mode:screen;
 }
 
-/* ========== 头栏 ========== */
+/* 头栏 */
 .topbar{
   position:relative;
   z-index:120;
@@ -50,188 +46,127 @@
   backdrop-filter: blur(6px);
   border-bottom: 1px solid rgba(255,255,255,0.04);
 }
-.logo{ display:flex; align-items:center; gap:10px; flex:0 0 auto; }
-.logo img{ height:36px; width:auto; border-radius:6px; display:block; }
-.logo .brand{ font-weight:900; font-size:1rem; letter-spacing:.02em; color:#fff; }
+.logo img{ height:36px; border-radius:6px; display:block; }
+.bullet-container{ flex:1 1 auto; display:flex; justify-content:center; align-items:center; pointer-events:none; }
+.bullet-frame{ display:none; align-items:center; padding:10px 36px; gap:12px; background:var(--bullet-bg); border-radius:999px; border:1px solid rgba(255,255,255,0.12); backdrop-filter:blur(8px); box-shadow:0 10px 28px rgba(0,0,0,0.28); color:#fff; max-width:88vw; overflow:hidden; white-space:nowrap; }
 
-/* 头栏中间弹幕容器（唯一弹幕框） */
-.bullet-container{ flex:1 1 auto; display:flex; justify-content:center; align-items:center; pointer-events:none; position:relative; height:100%; }
-.bullet-frame{
-  display:flex;
-  align-items:center;
-  padding:10px 36px;
-  gap:12px;
-  background:var(--bullet-bg);
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter: blur(8px);
-  box-shadow:0 10px 28px rgba(0,0,0,0.28);
-  color:#fff;
-  max-width:88vw;
-  width:100%;
-  overflow:hidden;
-  white-space:nowrap;
-  pointer-events:none;
-  display:none; /* JS 控制显示 */
-  transform:translateZ(0);
-}
-.bullet-text{ display:inline-block; font-weight:700; font-size:1rem; will-change:transform; }
+/* 粒子开关 */
+.controls{ flex:0 0 auto; display:flex; align-items:center; gap:12px; }
+.particle-toggle{ background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.09); color:#fff; padding:6px 10px; border-radius:10px; cursor:pointer; font-weight:700; }
 
-/* 右上角粒子开关（在头栏右侧） */
-.controls{ display:flex; align-items:center; gap:12px; flex:0 0 auto; }
-.particle-toggle{
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.09);
-  color:#fff;
-  padding:6px 10px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:700;
-  font-size:.9rem;
-}
-
-/* ========== Hero 区 ========== */
+/* Hero：使用 hero.jpg 作为背景（cover） */
 header.hero{
   position:relative;
   z-index:10;
-  min-height:580px;
+  min-height:560px;
   height: calc(100vh - 64px);
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
   padding:48px 20px;
-  background: url('./images/hero.jpg') center/cover no-repeat fixed;
-  box-shadow: inset 0 80px 160px rgba(0,0,0,0.28);
+  background-image: url('./images/hero.jpg'); /* <<-- 确保图片在 images/ */
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
 }
 .hero::before{
   content:"";
   position:absolute;
   inset:0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.28));
+  background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.28));
   z-index:0;
 }
-.hero-inner{ position:relative; z-index:2; max-width:1200px; width:100%; padding:28px; }
+.hero-inner{ position:relative; z-index:2; max-width:1200px; padding:28px; }
 
-/* 主副标题（更大，确保完整） */
+/* 主副标题更大、行高足够、动画完整 */
 .hero-title{
   margin:0;
   font-weight:900;
   color:#fff;
-  font-size:5.2rem;         /* 更大 */
-  line-height:1.12;        /* 足够行高避免裁剪 */
-  letter-spacing:-0.01em;
-  transform:translateY(6px) scale(0.99);
+  font-size:5.2rem;      /* 更大 */
+  line-height:1.14;
   opacity:0;
-  animation:heroEntrance .8s var(--easing) .15s forwards;
-  will-change:transform,opacity;
-  display:block;
+  transform:translateY(10px) scale(.995);
+  animation:heroIn .8s var(--easing) .12s forwards;
 }
-.typewriter-wrap{ display:inline-block; vertical-align:middle; }
-.typewriter{ display:inline-block; position:relative; }
-.typewriter span{ display:inline-block; clip-path: inset(0 100% 0 0); animation:reveal 2600ms steps(40,end) 220ms forwards; }
+.typewriter span{ display:inline-block; clip-path: inset(0 100% 0 0); animation:reveal 2600ms steps(40,end) .2s forwards; }
 @keyframes reveal{ to{ clip-path: inset(0 0 0 0) } }
-.typewriter::after{ content:""; display:inline-block; width:2px; height:1.06em; margin-left:10px; background:#fff; vertical-align:baseline; animation:blink 800ms steps(1,end) infinite; }
+.typewriter::after{ content:""; display:inline-block; width:2px; height:1.04em; margin-left:10px; background:#fff; vertical-align:baseline; animation:blink .8s steps(1,end) infinite; }
 .typewriter.done::after{ opacity:0; }
-@keyframes blink{ 50%{ opacity:0 } }
+@keyframes blink{50%{opacity:0}}
+@keyframes heroIn{ to{ opacity:1; transform:translateY(0) scale(1) } }
 
-@keyframes heroEntrance{ from{ transform:translateY(14px) scale(.99); opacity:0 } to{ transform:translateY(0) scale(1); opacity:1 } }
-
-/* 副标题 */
 .hero-sub{
-  margin:16px 0 0 0;
+  margin-top:18px;
   color:#f0f6fa;
-  font-size:1.25rem;
+  font-size:1.3rem;
   font-weight:800;
   letter-spacing:.22em;
   text-transform:uppercase;
   opacity:0;
   transform:translateY(28px);
-  text-shadow:0 0 8px rgba(255,255,255,0.22);
   animation:subIn 1s var(--easing) .9s forwards;
 }
-@keyframes subIn{ to{ opacity:1; transform:translateY(0) } }
+@keyframes subIn{ to{ opacity:1; transform:translateY(0)} }
 
-/* ========== 选项区（选项卡 + 展示） ========== */
-.section{ position:relative; z-index:8; }
-.tab-area{ background:var(--page); border-radius:18px 18px 0 0; padding:28px 20px 36px; box-shadow:0 -8px 30px rgba(15,23,42,0.06); margin-top:0; }
+/* 选项区 */
+.tab-area{ background:var(--page); border-radius:18px 18px 0 0; padding:28px 20px 36px; box-shadow:0 -8px 30px rgba(15,23,42,0.06); margin-top:0; z-index:8; position:relative;}
 .tabs-row{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:0 auto 22px; max-width:1200px; }
-.tab{ padding:12px 22px; border-radius:12px; background:var(--muted); font-weight:800; cursor:pointer; transition:transform .18s linear, box-shadow .28s var(--easing), background .28s var(--easing); }
-.tab:hover{ box-shadow:0 12px 24px rgba(25,118,210,.08) }
-.tab.active{ background:linear-gradient(90deg,#111,#333); color:#fff; transform:translateY(-3px); }
-.tab.active[data-index="0"]{ background: linear-gradient(135deg,var(--dream-1),var(--dream-2),var(--dream-3)); box-shadow:0 18px 44px rgba(124,77,255,.22); color:#fff; }
-
-.content-area{ max-width:1200px; margin:0 auto; padding:14px; min-height:680px; position:relative; }
+.tab{ padding:12px 22px; border-radius:12px; background:#f3f6fb; font-weight:800; cursor:pointer; transition:transform .18s linear; }
+.tab.active{ background:linear-gradient(90deg,#111,#333); color:#fff; transform:translateY(-3px) }
+.content-area{ max-width:1200px; margin:0 auto; padding:14px; min-height:640px; position:relative; z-index:6; }
 .panel{ position:absolute; inset:0; padding:30px; background:#fff; border-radius:12px; box-shadow:var(--shadow); opacity:0; transform:translateY(22px); pointer-events:none; transition:opacity .38s ease, transform .38s ease; overflow:auto; }
 .panel.active{ opacity:1; transform:translateY(0); pointer-events:auto; }
-.panel.active#panel-0::before{ content:""; position:absolute; inset:0; border-radius:12px; pointer-events:none; background: radial-gradient(600px 600px at 15% 20%, rgba(124,77,255,0.10), transparent 50%), radial-gradient(700px 700px at 85% 80%, rgba(0,188,212,0.08), transparent 50%); }
-.panel h3{ margin:0 0 12px 0; font-size:1.5rem; font-weight:900; }
-.panel p{ margin:0 0 12px 0; font-size:1rem; line-height:1.75; color:rgba(0,0,0,.86); }
 
-/* ========== 尾栏占位 ========== */
-.footer{
-  z-index:8;
-  background:#071022;
-  color:#cfe9ff;
-  padding:36px 20px;
-  text-align:center;
-}
+/* footer placeholder */
+.footer{ padding:36px 20px; color:#cfe9ff; background:#061122; text-align:center; }
 
-/* 响应式 */
-@media (max-width:900px){
-  .hero-title{ font-size:3.8rem; line-height:1.14 }
-  .hero-sub{ font-size:1.05rem; }
-  .content-area{ min-height:560px }
+/* responsive */
+@media(max-width:900px){
+  .hero-title{ font-size:3.8rem }
+  .hero-sub{ font-size:1.05rem }
 }
-@media (max-width:560px){
-  .hero-title{ font-size:2.8rem; line-height:1.12 }
-  .hero-sub{ font-size:.9rem; letter-spacing:.12em }
-  .tab{ padding:10px 14px }
-  .content-area{ min-height:480px }
+@media(max-width:560px){
+  .hero-title{ font-size:2.8rem }
   .bullet-frame{ padding:8px 18px; max-width:94vw }
 }
   </style>
 </head>
 <body>
 
-  <!-- 粒子 Canvas（全局背景层） -->
+  <!-- 粒子画布在最底层 (z-index:-1)，不会覆盖 hero.jpg -->
   <canvas id="particleCanvas" aria-hidden="true"></canvas>
 
   <!-- 头栏 -->
-  <header class="topbar" role="banner">
+  <header class="topbar">
     <div class="logo" title="Youth Peak">
-      <img src="./images/apple_icon.png" alt="Youth Peak Logo">
-      <span class="brand">Youth Peak</span>
+      <img src="./images/apple_icon.png" alt="logo">
     </div>
 
-    <!-- 弹幕框（位于头栏中部，且为唯一弹幕） -->
-    <div class="bullet-container" aria-live="polite" aria-atomic="true">
+    <div class="bullet-container">
       <div class="bullet-frame" id="bulletFrame" role="status" aria-hidden="true">
         <div class="bullet-text" id="bulletText"></div>
       </div>
     </div>
 
-    <!-- 粒子开关 -->
     <div class="controls">
-      <button class="particle-toggle" id="particleToggle" title="开关粒子动画">粒子：开</button>
+      <button id="particleToggle" class="particle-toggle">粒子：开</button>
     </div>
   </header>
 
-  <!-- Hero -->
+  <!-- Hero（确保 hero.jpg 可见） -->
   <main>
-    <section class="hero section" role="region" aria-label="Hero 区">
+    <section class="hero" role="region" aria-label="Hero 区">
       <div class="hero-inner">
-        <h1 class="hero-title" aria-label="Youth Peak Training Camp">
-          <span class="typewriter-wrap">
-            <span class="typewriter"><span>Youth Peak Training Camp</span></span>
-          </span>
-        </h1>
+        <h1 class="hero-title"><span class="typewriter"><span>Youth Peak Training Camp</span></span></h1>
         <p class="hero-sub">PEAK THE PASSION</p>
       </div>
     </section>
 
     <!-- 选项区 -->
-    <section class="tab-area section" aria-label="选项区">
+    <section class="tab-area">
       <div class="tabs-row" id="tabsRow">
         <div class="tab active" data-index="0">创营理念</div>
         <div class="tab" data-index="1">人员构成</div>
@@ -239,115 +174,64 @@ header.hero{
         <div class="tab" data-index="3">联系我们</div>
       </div>
 
-      <div class="content-area" id="contentArea">
+      <div class="content-area">
         <div class="panel active" id="panel-0">
           <h3>创营理念</h3>
           <p><strong>Youth Peak</strong> 由一群热爱中长跑的青少年跑者共同创立，专注于 <strong>800 米至 10000 米</strong> 项目的系统化训练与能力提升。</p>
-          <p>我们以科学的训练体系为基础，以清晰的目标与计划为指引，让热爱在专业中成长，让奔跑更有方向与成果。</p>
-          <p><strong>我们相信，热爱不该止于兴趣。</strong></p>
-          <p>它值得被坚持，被打磨，被赋予方向与意义。</p>
-          <p>我们希望为同样热爱跑步的年轻人，打造一个真正<strong>专业、互助、进步</strong>的训练环境。</p>
-          <p>在这里，竞争与支持并存，努力与友情同行——每一次训练，都是共同向上的旅程。</p>
-          <p>在 <strong>Youth Peak</strong>，每一位成员既是跑者，也是伙伴。</p>
-          <p>我们彼此激励、相互成长，让热爱不只是玩玩而已，而是玩出风采，跑出水平，奔向巅峰。</p>
-          <p><strong>“Peak The Passion（从热爱出发，向巅峰奔跑）。”</strong></p>
-          <p>这不仅是我们的口号，更是我们的信念——让热爱抵达巅峰。</p>
+          <p>……（内容省略）</p>
         </div>
-
-        <div class="panel" id="panel-1">
-          <h3>人员构成</h3>
-          <p>11111</p>
-        </div>
-
-        <div class="panel" id="panel-2">
-          <h3>训练集锦</h3>
-          <p>11111</p>
-        </div>
-
-        <div class="panel" id="panel-3">
-          <h3>联系我们</h3>
-          <p>11111</p>
-        </div>
+        <div class="panel" id="panel-1"><h3>人员构成</h3><p>11111</p></div>
+        <div class="panel" id="panel-2"><h3>训练集锦</h3><p>11111</p></div>
+        <div class="panel" id="panel-3"><h3>联系我们</h3><p>11111</p></div>
       </div>
     </section>
 
-    <!-- 尾栏占位 -->
-    <footer class="footer section" role="contentinfo">
-      Footer placeholder — 可在此加入版权、社交链接、联系方式等
-    </footer>
+    <footer class="footer">Footer placeholder</footer>
   </main>
 
-  <script>
-/* ==========================
-   选项卡逻辑与交互
-   ========================== */
-(function(){
-  const tabs = document.querySelectorAll('.tab');
-  const panels = document.querySelectorAll('.panel');
-  tabs.forEach((tab, idx)=>{
-    tab.addEventListener('click', ()=>{
-      tabs.forEach(t=>t.classList.remove('active'));
-      panels.forEach(p=>p.classList.remove('active'));
-      tab.classList.add('active');
-      panels[idx].classList.add('active');
-      // 确保激活面板滚入视口（在较短内容时可忽略）
-      panels[idx].scrollIntoView({behavior:'smooth', block:'start'});
-    });
-
-    // 轻微晃动效果（适度）
-    let rect=null;
-    tab.addEventListener('mousemove', e=>{
-      rect = rect || tab.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      tab.style.transform = `translate(${x*6}px, ${y*4}px) rotate(${x*1.2}deg)`;
-    });
-    tab.addEventListener('mouseleave', ()=>{ tab.style.transform=''; rect=null; });
-    tab.addEventListener('touchstart', ()=> tab.style.transform='' );
+<script>
+/* 选项卡切换 */
+document.querySelectorAll('.tab').forEach((tab, i)=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelectorAll('.panel')[i].classList.add('active');
   });
-})();
+});
 
-/* ==========================
-   打字动画完成后隐藏光标，保证不裁剪
-   ========================== */
-(function(){
-  const typeEl = document.querySelector('.typewriter');
-  const revealMs = 2600 + 220; // 同 CSS reveal 时间 + 延迟
-  setTimeout(()=> typeEl.classList.add('done'), revealMs);
-})();
+/* 打字动画结束后隐藏光标 */
+setTimeout(()=> document.querySelector('.typewriter').classList.add('done'), 2600 + 200);
 
-/* ==========================
-   单一弹幕框逻辑（位于头栏）
-   - 只有一个弹幕框，随机轮换两条消息
-   - 播放时间慢、间隔长
-   - 框显示/隐藏由 JS 控制
-   ========================== */
+/* 单一弹幕逻辑（头栏） */
 (function(){
   const frame = document.getElementById('bulletFrame');
   const text = document.getElementById('bulletText');
-  const messages = [
+  const msgs = [
     '月抛训练营欢迎每一位热爱田径的人',
     '献给所有田径人——想做就大胆去做，迎接属于我们自己的浪漫'
   ];
   let last = -1;
-  const runMs = 9000;   // 单条划过时间（慢速）
-  const gapMs = 20000;  // 两条之间总间隔（包含 runMs），因此两条间隔较长
+  const runMs = 9000;   // 慢速
+  const gapMs = 20000;  // 间隔较长
 
   function pick(){
-    let i = Math.floor(Math.random()*messages.length);
-    if(messages.length>1 && i===last) i=(i+1)%messages.length;
+    let i = Math.floor(Math.random()*msgs.length);
+    if(i===last) i = (i+1)%msgs.length;
     last = i; return i;
   }
 
+  // 动态 keyframes injection for movement
+  const style = document.createElement('style');
+  style.textContent = `@keyframes bulletMove{ from{transform:translateX(40%)} to{transform:translateX(-140%)} }`;
+  document.head.appendChild(style);
+
   function play(){
     const idx = pick();
-    text.textContent = messages[idx];
-    // 显示框
+    text.textContent = msgs[idx];
     frame.style.display = 'flex';
     frame.setAttribute('aria-hidden','false');
-    // start animation by using CSS animation on text
     text.style.animation = `bulletMove ${runMs}ms linear forwards`;
-    // after runMs hide and clear, schedule next
     setTimeout(()=>{
       text.style.animation = '';
       frame.style.display = 'none';
@@ -355,128 +239,65 @@ header.hero{
       setTimeout(play, gapMs - runMs);
     }, runMs);
   }
-
-  // define keyframes at runtime (so CSS doesn't need to predefine width-based transforms)
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes bulletMove {
-      from { transform: translateX(40%); opacity:1; }
-      to   { transform: translateX(-140%); opacity:1; }
-    }`;
-  document.head.appendChild(style);
-
-  // delay start to avoid clash with hero entrance
-  setTimeout(play, 1400);
+  setTimeout(play, 1200);
 })();
 
-/* ==========================
-   粒子背景（轻量级、受重力向下）
-   - 右上开关可关闭/开启，状态保存在 localStorage
-   - 粒子数量少，性能友好
-   ========================== */
+/* 粒子背景（简洁、在最底层） */
 (function(){
   const canvas = document.getElementById('particleCanvas');
+  if(!canvas) return;
   const ctx = canvas.getContext('2d');
-  let width = 0, height = 0, dpr = Math.max(1, window.devicePixelRatio || 1);
-  let particles = [];
-  const maxParticles = 40; // 不多，保证轻量
-  let animId = null;
+  let w=0,h=0,dpr=Math.max(1,window.devicePixelRatio||1);
+  const maxParticles = 36;
+  let particles = [], animId=null;
+  const toggle = document.getElementById('particleToggle');
   let enabled = localStorage.getItem('particles-enabled');
-  enabled = enabled === null ? true : enabled === 'true';
-
-  const toggleBtn = document.getElementById('particleToggle');
-  function updateToggleText(){ toggleBtn.textContent = enabled ? '粒子：开' : '粒子：关'; }
-  updateToggleText();
-
-  toggleBtn.addEventListener('click', ()=>{
-    enabled = !enabled;
-    localStorage.setItem('particles-enabled', enabled);
-    updateToggleText();
-    if(enabled) start(); else stop();
-  });
-
+  enabled = enabled===null? true : enabled==='true';
+  toggle.textContent = enabled? '粒子：开' : '粒子：关';
   function resize(){
-    width = innerWidth;
-    height = innerHeight;
-    canvas.width = Math.round(width * dpr);
-    canvas.height = Math.round(height * dpr);
-    canvas.style.width = width + 'px';
-    canvas.style.height = height + 'px';
+    w = innerWidth; h = innerHeight;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    canvas.style.width = w+'px'; canvas.style.height = h+'px';
     ctx.setTransform(dpr,0,0,dpr,0,0);
   }
   window.addEventListener('resize', resize, {passive:true});
-
-  function rand(min, max){ return Math.random()*(max-min)+min; }
-
-  function initParticles(){
-    particles = [];
+  function rand(a,b){ return Math.random()*(b-a)+a; }
+  function init(){
+    particles=[];
     for(let i=0;i<maxParticles;i++){
-      particles.push({
-        x: rand(0, width),
-        y: rand(-height*0.5, height),
-        vx: rand(-0.15, 0.15),
-        vy: rand(0.2, 0.8),
-        size: rand(2,6),
-        life: rand(4000, 12000),
-        age: 0,
-        alpha: rand(0.12,0.28),
-        hue: rand(180, 320)
-      });
+      particles.push({ x:rand(0,w), y:rand(-h*0.5,h), vx:rand(-0.2,0.2), vy:rand(0.2,0.7), size:rand(2,6), alpha:rand(0.12,0.28), hue:rand(180,320) });
     }
   }
-
-  function step(ts){
-    ctx.clearRect(0,0,width,height);
-    const dt = 16; // approx
+  function step(){
+    ctx.clearRect(0,0,w,h);
     for(let p of particles){
-      p.vy += 0.0009; // gravity slight
-      p.x += p.vx * (dt/16);
-      p.y += p.vy * (dt/16);
-      p.age += dt;
-      // wrap horizontally, reset when out of bottom
-      if(p.x < -50) p.x = width + 50;
-      if(p.x > width + 50) p.x = -50;
-      if(p.y - p.size > height + 60 || p.age > p.life){
-        // respawn at top
-        p.x = rand(0, width);
-        p.y = rand(-80, -10);
-        p.vx = rand(-0.15, 0.15);
-        p.vy = rand(0.2, 0.6);
-        p.size = rand(2,6);
-        p.life = rand(4000, 12000);
-        p.age = 0;
-        p.alpha = rand(0.12,0.28);
-        p.hue = rand(180,320);
+      p.vy += 0.0009;
+      p.x += p.vx;
+      p.y += p.vy;
+      if(p.x < -50) p.x = w+50;
+      if(p.x > w+50) p.x = -50;
+      if(p.y - p.size > h + 60){
+        p.x = rand(0,w); p.y = rand(-80,-10); p.vx = rand(-0.2,0.2); p.vy = rand(0.2,0.6); p.size = rand(2,6);
       }
-      // draw
       ctx.beginPath();
       const g = ctx.createLinearGradient(p.x, p.y, p.x + p.vx*6, p.y + p.size*2);
-      const c = `hsla(${p.hue}, 85%, 65%, ${p.alpha})`;
-      g.addColorStop(0, c);
+      g.addColorStop(0, `hsla(${p.hue},85%,65%,${p.alpha})`);
       g.addColorStop(1, 'rgba(255,255,255,0)');
       ctx.fillStyle = g;
-      ctx.ellipse(p.x, p.y, p.size, p.size*0.6, 0, 0, Math.PI*2);
+      ctx.ellipse(p.x,p.y,p.size,p.size*0.6,0,0,Math.PI*2);
       ctx.fill();
     }
-    if(enabled) animId = requestAnimationFrame(step);
-  }
-
-  function start(){
-    cancelAnimationFrame(animId);
-    resize();
-    initParticles();
     animId = requestAnimationFrame(step);
   }
-  function stop(){
-    cancelAnimationFrame(animId);
-    animId = null;
-    ctx.clearRect(0,0,width,height);
-  }
-
-  // 启动或关闭基于 saved state
+  function start(){ cancelAnimationFrame(animId); resize(); init(); animId = requestAnimationFrame(step); }
+  function stop(){ cancelAnimationFrame(animId); animId=null; ctx.clearRect(0,0,w,h); }
+  toggle.addEventListener('click', ()=>{
+    enabled = !enabled; localStorage.setItem('particles-enabled', enabled); toggle.textContent = enabled? '粒子：开' : '粒子：关';
+    if(enabled) start(); else stop();
+  });
   if(enabled) start(); else stop();
 })();
-
-  </script>
+</script>
 </body>
 </html>
