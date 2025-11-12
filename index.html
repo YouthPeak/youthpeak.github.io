@@ -309,6 +309,20 @@
       <span class="brand">Youth Peak</span>
     </div>
 
+    <!-- 持续滚动的轻量跑马灯 -->
+    <div class="marquee" aria-label="通知">
+      <div class="marquee-track">
+        <span class="marquee-item">月抛训练营欢迎每一位热爱田径的人</span>
+        <span class="marquee-item">月抛训练营欢迎每一位热爱田径的人</span>
+      </div>
+    </div>
+
+    <!-- 定时弹幕框（居中出现） -->
+    <div class="bullet-banner" id="bulletBanner">
+      <span class="bullet-inner" id="bulletInner"></span>
+    </div>
+  </div>
+
   <!-- Hero -->
   <header class="hero" role="banner">
     <div class="hero-inner">
@@ -415,6 +429,32 @@
     }
     adjustMarquee();
     window.addEventListener('resize', adjustMarquee);
+
+    // 顶部定时弹幕框（圆角，右到左划过，逐条轮换）
+    const banner = document.getElementById('bulletBanner');
+    const bannerInner = document.getElementById('bulletInner');
+    const bulletMessages = [
+      '月抛训练营欢迎每一位热爱田径的人',
+      '献给所有田径人——想做就大胆去做，迎接属于我们自己的浪漫'
+    ];
+    let bulletIndex = 0;
+    const bulletDuration = 6000;   // 单次划过时长
+    const bulletInterval = 8000;   // 两次弹幕之间的间隔（包含时长）
+    function runBullet(){
+      bannerInner.textContent = bulletMessages[bulletIndex % bulletMessages.length];
+      banner.classList.add('bullet-show');
+      bannerInner.style.animation = `bulletRun ${bulletDuration}ms linear`;
+      // 结束后隐藏并排队下一条
+      setTimeout(()=>{
+        banner.classList.remove('bullet-show');
+        bannerInner.style.animation = '';
+        bulletIndex++;
+        setTimeout(runBullet, bulletInterval - bulletDuration);
+      }, bulletDuration);
+    }
+    // 初始延迟后启动（避免与 Hero 动画同时）
+    setTimeout(runBullet, 2000);
+  </script>
 
   <!-- 注释：
     - hero.jpg 路径：./images/hero.jpg（1920x1080）
