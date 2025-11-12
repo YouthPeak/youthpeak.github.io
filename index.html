@@ -14,30 +14,34 @@
       --muted: #f3f6fb;
       --accent: #1976d2;
       --shadow: 0 12px 32px rgba(17,24,39,0.06);
-      --easing: cubic-bezier(.22, 1.05, .24, 1); /* 更弹性 */
+      --easing: cubic-bezier(.22, 1.05, .24, 1);
+      --radius: 18px;
+      --panel-padding: clamp(12px, 4vw, 32px);
     }
     *, *::before, *::after { box-sizing: border-box; }
-    html, body { height: 100%; }
+    body, html { height: 100%; margin: 0; padding: 0; }
     body {
-      margin: 0;
+      min-height: 100vh;
       font-family: "Segoe UI", Roboto, Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
+      line-height: 1.6;
     }
     .topbar {
-      height: 56px;
+      width: 100%;
+      min-height: 56px;
       background: #000;
       color: #fff;
       display: flex;
       align-items: center;
       gap: 1.1rem;
-      padding: 0 16px;
+      padding: 0 clamp(12px, 4vw, 36px);
       position: sticky;
       top: 0;
       z-index: 100;
+      box-sizing: border-box;
     }
     .logo {
-      flex: 0 0 auto;
       display: flex;
       align-items: center;
       gap: .55rem;
@@ -46,33 +50,29 @@
     .logo img {
       height: 28px;
       width: auto;
-      display: block;
       border-radius: 6px;
     }
     .brand {
       font-weight: 900;
-      font-size: 1.17rem;
-      letter-spacing: .04em;
+      font-size: 1.15rem;
+      letter-spacing: .025em;
       color: #fff;
       user-select: none;
       text-shadow: 0 2px 14px rgba(25, 118, 210, 0.16), 0 0px 2px #222a;
       transition: color .23s;
     }
-    .logo:hover .brand {
-      color: #74b4ff;
-    }
+    .logo:hover .brand { color: #74b4ff; }
 
-    /* Hero（1920x1080 适配） */
     header.hero {
-      min-height: 560px;
-      height: calc(100vh - 56px);
+      min-height: 45vh;
+      height: max(330px, 50vh);
       background: url('./images/hero.jpg') center/cover no-repeat;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 32px 16px;
+      padding: clamp(16px, 7vw, 38px) clamp(10px, 3vw, 22px);
     }
     .hero::before {
       content:"";
@@ -84,41 +84,30 @@
     .hero-inner {
       position: relative;
       z-index: 1;
-      max-width: 1100px;
       width: 100%;
-      padding: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: clamp(10px, 5vw, 36px) 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-
-    /* 主标题（弹入+缩放+渐显+打字机） */
     .hero-title {
       margin: 0;
       font-weight: 900;
       color: #fff;
-      font-size: 4.6rem;
-      line-height: 1.08;
+      font-size: clamp(2.1rem, 6vw, 4.6rem);
+      line-height: 1.10;
       opacity: 0;
       transform: translateY(45px) scale(.93) skewY(-2deg);
       will-change: transform, opacity;
-      /* 组合动画：弹入 */
       animation: heroTitlePopIn 1.05s cubic-bezier(.22,1.15,.32,1) .12s both;
     }
     @keyframes heroTitlePopIn {
-      0% {
-        opacity: 0;
-        transform: translateY(45px) scale(.93) skewY(-2deg);
-      }
-      65% {
-        opacity: 1;
-        transform: translateY(-10px) scale(1.03) skewY(1.5deg);
-      }
-      90% {
-        opacity:1;
-        transform: translateY(4px) scale(.99) skewY(-1deg);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1) skewY(0);
-      }
+      0% { opacity: 0; transform: translateY(45px) scale(.93) skewY(-2deg);}
+      65%{ opacity: 1; transform: translateY(-10px) scale(1.03) skewY(1.5deg);}
+      90%{ opacity:1; transform: translateY(4px) scale(.99) skewY(-1deg);}
+      100%{ opacity: 1; transform: translateY(0) scale(1) skewY(0);}
     }
     .typewriter-wrap { display: inline-block; }
     .typewriter {
@@ -127,6 +116,7 @@
       position: relative;
       will-change: filter;
       text-shadow: 0 2px 16px #fff3,0 1px 2px #222a;
+      font-size: inherit;
     }
     .typewriter::after {
       content: "";
@@ -145,71 +135,139 @@
     }
     @keyframes reveal { to { clip-path: inset(0 0 0 0); } }
     @keyframes caretBlink { 50% { opacity: 0; } }
-    /* 打字机完毕后渐隐光标 */
     .typewriter.done::after { opacity: 0; }
-
-    /* 副标题 - 弹性淡入+下滑+发光 */
     .hero-sub {
-      margin: .97rem 0 0 0;
+      margin: 1.1rem 0 0 0;
       color: #eaeaea;
-      font-size: 1.18rem;
+      font-size: clamp(1rem, 2.7vw, 1.18rem);
       text-transform: uppercase;
-      letter-spacing: .22em;
+      letter-spacing: .20em;
       font-weight: 800;
       opacity: 0;
       transform: translateY(-24px) scale(.95);
       text-shadow:0 0 10px rgba(255,255,255,.23);
       will-change: transform, opacity, text-shadow;
-      /* 高级弹性动画+发光 */
       animation: heroSubPopIn 1.12s cubic-bezier(.23,1.25,.22,1.07) 1.52s both, heroSubGlow 2.3s ease-in-out 2.68s infinite alternate;
     }
     @keyframes heroSubPopIn {
-      0% {
-        opacity: 0;
-        transform: translateY(-24px) scale(.95);
-        text-shadow: 0 1.5px 0px #fff7;
-      }
-      60% {
-        opacity: 1;
-        transform: translateY(9px) scale(1.04);
-        text-shadow: 0 0 20px #fff, 0 4px 8px #8cf8;
-      }
-      82% {
-        opacity: 1;
-        transform: translateY(-2px) scale(.97);  
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        text-shadow: 0 0 16px #fff8, 0 2px 12px #8cf6;
-      }
+      0% { opacity: 0; transform: translateY(-24px) scale(.95);}
+      60%{ opacity: 1; transform: translateY(9px) scale(1.04);}
+      82%{ opacity: 1; transform: translateY(-2px) scale(.97);}
+      100%{ opacity: 1; transform: translateY(0) scale(1);}
     }
     @keyframes heroSubGlow {
-      from { text-shadow: 0 0 11px #fff7, 0 0px 0px #8cf4; }
-      to   { text-shadow: 0 0 36px #ffffffc9, 0 6px 26px #8cf8; }
+      from { text-shadow: 0 0 11px #fff7, 0 0px 0px #8cf4;}
+      to   { text-shadow: 0 0 36px #ffffffc9, 0 6px 26px #8cf8;}
     }
-
-    /* 以下部分代码未改动，为保持页面功能 */
-    .tab-area { background: var(--page); border-radius: 18px 18px 0 0; padding: 24px 16px 32px; box-shadow: 0 -8px 30px rgba(15,23,42,.06);}
-    .tabs-row { display: flex; gap: .9rem; justify-content: center; flex-wrap: wrap; margin: 0 auto 20px; max-width: 1200px;}
-    .tab { padding: .85rem 1.5rem; border-radius: 12px; background: var(--muted); font-weight: 800; letter-spacing: .02em; cursor: pointer; transition: transform .18s linear, box-shadow .28s var(--easing), background .28s var(--easing), color .28s var(--easing); will-change: transform;}
+    .tab-area {
+      background: var(--page);
+      border-radius: var(--radius) var(--radius) 0 0;
+      padding: clamp(16px, 4vw, 30px) clamp(4px, 2vw, 16px) clamp(22px, 6vw, 38px);
+      box-shadow: 0 -5px 24px rgba(15,23,42,.07);
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: -18px;
+    }
+    .tabs-row {
+      display: flex;
+      gap: .86rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 0 auto 18px;
+      max-width: 1000px;
+    }
+    .tab {
+      padding: .72em 1.3em;
+      border-radius: 12px;
+      background: var(--muted);
+      font-weight: 800;
+      letter-spacing: .02em;
+      cursor: pointer;
+      transition: transform .18s linear, box-shadow .28s var(--easing), background .28s var(--easing), color .28s var(--easing);
+      will-change: transform;
+      font-size: clamp(.99rem, 2vw, 1.08rem);
+      margin-bottom: 8px;
+    }
     .tab:hover { box-shadow: 0 12px 24px rgba(25,118,210,.1);}
-    .tab.active { background: linear-gradient(90deg,#111,#333); color: #fff; transform: translateY(-3px);}
-    .content-area { max-width: 1200px; margin: 0 auto; padding: 12px; min-height: 640px; position: relative;}
-    .panel { position: absolute; inset: 0; padding: 28px; background: #fff; border-radius: 12px; box-shadow: var(--shadow); opacity: 0; transform: translateY(22px); pointer-events: none; transition: opacity .38s ease, transform .38s ease; overflow: auto;}
-    .panel.active { opacity: 1; transform: translateY(0); pointer-events: auto;}
-    .panel h3 { margin: 0 0 .75rem 0; font-size: 1.45rem; font-weight: 900;}
-    .panel p { margin: 0; font-size: 1rem; line-height: 1.75; color: rgba(0,0,0,.78);}
-    @media (max-width:900px) {
-      .hero-title { font-size: 3.6rem;}
-      .hero-sub { font-size: 1.05rem; letter-spacing: .18em;}
-      .content-area { min-height: 560px;}
+    .tab.active {
+      background: linear-gradient(90deg,#111,#333);
+      color: #fff;
+      transform: translateY(-3px);
     }
-    @media (max-width:560px) {
-      .hero-title { font-size: 2.6rem; line-height: 1.12;}
-      .hero-sub { font-size: .95rem; letter-spacing: .14em;}
-      .tab { padding: .65rem 1rem; font-size: .98rem;}
-      .content-area { min-height: 480px;}
+    .content-area {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: clamp(6px, 2vw, 20px);
+      min-height: 340px;
+      position: relative;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+    .panel {
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: var(--panel-padding);
+      background: #fff;
+      margin-bottom: 0;
+      opacity: 0;
+      transform: scale(.97);
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      overflow:auto;
+      transition: opacity .38s cubic-bezier(.33,1,.49,.98), transform .36s cubic-bezier(.35,1.55,.46,.98);
+    }
+    .panel.active {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+      z-index: 1;
+      position: relative;
+      animation: panelFadeIn .5s cubic-bezier(.3,1.2,.38,1.04);
+    }
+    @keyframes panelFadeIn {
+      0% { opacity:0; transform: scale(.97);}
+      100%{ opacity:1; transform: scale(1);}
+    }
+    .panel h3 {
+      margin: 0 0 .75em 0;
+      font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+      font-weight: 900;
+    }
+    .panel p {
+      margin: 0 0 1em 0;
+      font-size: clamp(.95rem, 2vw, 1.09rem);
+      line-height: 1.72;
+      color: rgba(0,0,0,.78);
+    }
+    @media (max-width: 900px) {
+      .hero-title { font-size: clamp(1.7rem, 7vw, 2.7rem); }
+      .hero-inner { padding: min(5vw,26px) 0;}
+      .content-area { min-height: 240px;}
+    }
+    @media (max-width: 700px) {
+      .topbar { flex-direction: row; gap: .7rem; padding: 0 clamp(3px,2.3vw,16px);}
+      .brand { font-size: 1.01rem;}
+      header.hero { padding: clamp(8px,3vw,18px); height: max(240px,35vh);}
+      .tabs-row { flex-wrap: wrap; gap: .52em; }
+      .tab { padding: .6em 1em; font-size: 1rem;}
+      .tab-area { border-radius: 12px 12px 0 0; }
+      .content-area { padding: clamp(0px,1vw,8px);}
+      .panel { border-radius: 8px; }
+    }
+    @media (max-width: 500px) {
+      .topbar { min-height: 46px; font-size: .99rem;}
+      .brand { font-size: .98rem;}
+      header.hero { background-position: 55% 45%; }
+      .hero-inner { padding: 0;}
+      .hero-sub { font-size: .93rem; }
+      .panel h3 { font-size: 1.02rem; }
+      .tab-area { padding: clamp(7px,2vw,14px);}
+    }
+    @media (max-width:360px){
+      .panel { padding: clamp(4px,1vw,10px);}
+      .tab-area { padding-bottom: 12px;}
     }
   </style>
 </head>
@@ -254,7 +312,7 @@
         <p>这不仅是我们的口号，更是我们的信念——让热爱抵达巅峰。</p>
       </div>
       <div class="panel" id="panel-1">
-        <h3>人员构成</h3>
+        <h3>团队成员</h3>
         <p>11111</p>
       </div>
       <div class="panel" id="panel-2">
@@ -262,7 +320,7 @@
         <p>11111</p>
       </div>
       <div class="panel" id="panel-3">
-        <h3>联系我们</h3>
+        <h3>加入我们</h3>
         <p>11111</p>
       </div>
     </div>
@@ -292,11 +350,9 @@
       });
       tab.addEventListener('touchstart', () => { tab.style.transform = ''; });
     });
-
     // 打字动画结束后移除光标
     const typewriter = document.querySelector('.typewriter');
     setTimeout(() => typewriter.classList.add('done'), 2100 + 460);
-
   </script>
 </body>
 </html>
