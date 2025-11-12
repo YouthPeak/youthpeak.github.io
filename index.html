@@ -4,273 +4,223 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Youth Peak Training Camp | 月抛田径训练营</title>
-
-  <!-- 桌面浏览器 favicon -->
   <link rel="icon" href="./images/favicon.png" type="image/png">
-  <!-- iOS Safari 图标（建议 180x180） -->
   <link rel="apple-touch-icon" sizes="180x180" href="./images/apple_icon.png">
-
   <style>
-    :root{
-      --bg:#fbfdff;
-      --page:#fff;
-      --text:#111;
-      --muted:#f3f6fb;
-      --accent:#1976d2;
-      --shadow:0 12px 32px rgba(17,24,39,0.06);
-      --easing:cubic-bezier(.2,.9,.2,1);
+    :root {
+      --bg: #fbfdff;
+      --page: #fff;
+      --text: #111;
+      --muted: #f3f6fb;
+      --accent: #1976d2;
+      --shadow: 0 12px 32px rgba(17,24,39,0.06);
+      --easing: cubic-bezier(.22, 1.05, .24, 1); /* 更弹性 */
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:"Segoe UI", Roboto, Arial, sans-serif;
-      background:var(--bg);
-      color:var(--text);
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
     }
-
-    /* 头栏 */
-    .topbar{
-      height:56px;
-      background:#000;
-      color:#fff;
-      display:flex;
-      align-items:center;
-      gap:1rem;
-      padding:0 16px;
-      position:sticky;
-      top:0;
-      z-index:100;
+    .topbar {
+      height: 56px;
+      background: #000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      padding: 0 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-    .logo{
-      flex:0 0 auto;
-      display:flex;
-      align-items:center;
-      gap:.5rem;
+    .logo {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+      text-decoration: none;
     }
-    .logo img{
-      height:28px; /* 适配头栏高度 */
-      width:auto;
-      display:block;
-      border-radius:6px;
+    .logo img {
+      height: 28px;
+      width: auto;
+      display: block;
+      border-radius: 6px;
     }
-    .logo .brand{
-      font-weight:900;
-      font-size:1.05rem;
-      letter-spacing:.02em;
+    .brand {
+      font-weight: 900;
+      font-size: 1.17rem;
+      letter-spacing: .04em;
+      color: #fff;
+      user-select: none;
+      text-shadow: 0 2px 14px rgba(25, 118, 210, 0.16), 0 0px 2px #222a;
+      transition: color .23s;
     }
-
-    .marquee{
-      flex:1 1 auto;
-      overflow:hidden;
-      position:relative;
-      height:1.4em;
-    }
-    .marquee-track{
-      display:inline-flex;
-      gap:3rem;
-      white-space:nowrap;
-      position:absolute;
-      will-change:transform;
-      animation:marquee 14s linear infinite;
-    }
-    .marquee-item{opacity:.96}
-    @keyframes marquee{
-      from{transform:translateX(0)}
-      to{transform:translateX(-50%)}
+    .logo:hover .brand {
+      color: #74b4ff;
     }
 
     /* Hero（1920x1080 适配） */
-    header.hero{
-      min-height:560px;
-      height:calc(100vh - 56px);
-      background:url('./images/hero.jpg') center/cover no-repeat;
-      position:relative;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:32px 16px;
+    header.hero {
+      min-height: 560px;
+      height: calc(100vh - 56px);
+      background: url('./images/hero.jpg') center/cover no-repeat;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 32px 16px;
     }
-    .hero::before{
+    .hero::before {
       content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.35));
-      z-index:0;
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.35));
+      z-index: 0;
     }
-    .hero-inner{
-      position:relative;
-      z-index:1;
-      max-width:1100px;
-      width:100%;
-      padding:24px;
-    }
-
-    /* 主标题（打字 + 弹入）——修复裁剪：提高行高、移除边界裁剪 */
-    .hero-title{
-      margin:0;
-      font-weight:900;
-      color:#fff;
-      font-size:4.6rem; /* 更大 */
-      line-height:1.08; /* 提高行高，避免上/下边裁剪 */
-      transform:scale(.92);
-      opacity:0;
-      animation:zoomIn .8s var(--easing) .2s forwards;
-      will-change:transform, opacity;
-    }
-    .typewriter-wrap{
-      display:inline-block;
-      /* 不使用 overflow hidden 在外层，避免字体被裁剪 */
-    }
-    .typewriter{
-      display:inline-block;
-      white-space:nowrap;
-      /* 改为使用渐隐的伪元素光标，避免真实边框导致裁剪 */
-      position:relative;
-    }
-    .typewriter::after{
-      content:"";
-      display:inline-block;
-      width:2px;
-      height:1em;
-      margin-left:6px;
-      background:#fff;
-      vertical-align:baseline;
-      animation:caretBlink .8s step-end infinite;
-    }
-    /* 通过字符显现动画（不再用 overflow:hidden） */
-    .typewriter span{
-      display:inline-block;
-      clip-path: inset(0 100% 0 0); /* 从右向左揭示文字 */
-      animation:reveal 2.4s steps(28, end) .25s forwards;
-    }
-    @keyframes reveal{
-      to{ clip-path: inset(0 0 0 0) }
-    }
-    @keyframes caretBlink{ 50%{opacity:0} }
-    @keyframes zoomIn{
-      from{transform:scale(.92); opacity:0}
-      to{transform:scale(1); opacity:1}
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      width: 100%;
+      padding: 24px;
     }
 
-    /* 动画结束后移除光标（避免遮挡） */
-    .typewriter.done::after{ opacity:0; }
+    /* 主标题（弹入+缩放+渐显+打字机） */
+    .hero-title {
+      margin: 0;
+      font-weight: 900;
+      color: #fff;
+      font-size: 4.6rem;
+      line-height: 1.08;
+      opacity: 0;
+      transform: translateY(45px) scale(.93) skewY(-2deg);
+      will-change: transform, opacity;
+      /* 组合动画：弹入 */
+      animation: heroTitlePopIn 1.05s cubic-bezier(.22,1.15,.32,1) .12s both;
+    }
+    @keyframes heroTitlePopIn {
+      0% {
+        opacity: 0;
+        transform: translateY(45px) scale(.93) skewY(-2deg);
+      }
+      65% {
+        opacity: 1;
+        transform: translateY(-10px) scale(1.03) skewY(1.5deg);
+      }
+      90% {
+        opacity:1;
+        transform: translateY(4px) scale(.99) skewY(-1deg);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) skewY(0);
+      }
+    }
+    .typewriter-wrap { display: inline-block; }
+    .typewriter {
+      display: inline-block;
+      white-space: nowrap;
+      position: relative;
+      will-change: filter;
+      text-shadow: 0 2px 16px #fff3,0 1px 2px #222a;
+    }
+    .typewriter::after {
+      content: "";
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      margin-left: 6px;
+      background: #fff;
+      vertical-align: baseline;
+      animation: caretBlink .8s step-end infinite;
+    }
+    .typewriter span {
+      display: inline-block;
+      clip-path: inset(0 100% 0 0);
+      animation: reveal 2.1s steps(28, end) .46s both;
+    }
+    @keyframes reveal { to { clip-path: inset(0 0 0 0); } }
+    @keyframes caretBlink { 50% { opacity: 0; } }
+    /* 打字机完毕后渐隐光标 */
+    .typewriter.done::after { opacity: 0; }
 
-    /* 副标题（滑入 + 微光脉动） */
-    .hero-sub{
-      margin:.9rem 0 0 0;
-      color:#eaeaea;
-      font-size:1.2rem;
-      text-transform:uppercase;
-      letter-spacing:.22em;
-      font-weight:800;
-      opacity:0;
-      transform:translateY(28px);
-      text-shadow:0 0 8px rgba(255,255,255,.28);
-      animation:subIn 1.1s var(--easing) .7s forwards, glow 2.4s ease-in-out 1.8s infinite alternate;
-      will-change:transform, opacity;
+    /* 副标题 - 弹性淡入+下滑+发光 */
+    .hero-sub {
+      margin: .97rem 0 0 0;
+      color: #eaeaea;
+      font-size: 1.18rem;
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      font-weight: 800;
+      opacity: 0;
+      transform: translateY(-24px) scale(.95);
+      text-shadow:0 0 10px rgba(255,255,255,.23);
+      will-change: transform, opacity, text-shadow;
+      /* 高级弹性动画+发光 */
+      animation: heroSubPopIn 1.12s cubic-bezier(.23,1.25,.22,1.07) 1.52s both, heroSubGlow 2.3s ease-in-out 2.68s infinite alternate;
     }
-    @keyframes subIn{
-      to{opacity:1; transform:translateY(0)}
+    @keyframes heroSubPopIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-24px) scale(.95);
+        text-shadow: 0 1.5px 0px #fff7;
+      }
+      60% {
+        opacity: 1;
+        transform: translateY(9px) scale(1.04);
+        text-shadow: 0 0 20px #fff, 0 4px 8px #8cf8;
+      }
+      82% {
+        opacity: 1;
+        transform: translateY(-2px) scale(.97);  
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        text-shadow: 0 0 16px #fff8, 0 2px 12px #8cf6;
+      }
     }
-    @keyframes glow{
-      from{text-shadow:0 0 6px rgba(255,255,255,.25)}
-      to{ text-shadow:0 0 18px rgba(255,255,255,.9)}
-    }
-
-    /* 选项卡区域（不重叠；整体向下拓展） */
-    .tab-area{
-      background:var(--page);
-      border-radius:18px 18px 0 0;
-      padding:24px 16px 32px;
-      box-shadow:0 -8px 30px rgba(15,23,42,.06);
-    }
-    .tabs-row{
-      display:flex;
-      gap:.9rem;
-      justify-content:center;
-      flex-wrap:wrap;
-      margin:0 auto 20px;
-      max-width:1200px;
-    }
-    .tab{
-      padding:.85rem 1.5rem;
-      border-radius:12px;
-      background:var(--muted);
-      font-weight:800;
-      letter-spacing:.02em;
-      cursor:pointer;
-      transition:transform .18s linear, box-shadow .28s var(--easing), background .28s var(--easing), color .28s var(--easing);
-      will-change:transform;
-    }
-    .tab:hover{ box-shadow:0 12px 24px rgba(25,118,210,.1) }
-    .tab.active{
-      background:linear-gradient(90deg,#111,#333);
-      color:#fff;
-      transform:translateY(-3px);
+    @keyframes heroSubGlow {
+      from { text-shadow: 0 0 11px #fff7, 0 0px 0px #8cf4; }
+      to   { text-shadow: 0 0 36px #ffffffc9, 0 6px 26px #8cf8; }
     }
 
-    /* 内容区更大，左右拓展 */
-    .content-area{
-      max-width:1200px;
-      margin:0 auto;
-      padding:12px;
-      min-height:640px;
-      position:relative;
+    /* 以下部分代码未改动，为保持页面功能 */
+    .tab-area { background: var(--page); border-radius: 18px 18px 0 0; padding: 24px 16px 32px; box-shadow: 0 -8px 30px rgba(15,23,42,.06);}
+    .tabs-row { display: flex; gap: .9rem; justify-content: center; flex-wrap: wrap; margin: 0 auto 20px; max-width: 1200px;}
+    .tab { padding: .85rem 1.5rem; border-radius: 12px; background: var(--muted); font-weight: 800; letter-spacing: .02em; cursor: pointer; transition: transform .18s linear, box-shadow .28s var(--easing), background .28s var(--easing), color .28s var(--easing); will-change: transform;}
+    .tab:hover { box-shadow: 0 12px 24px rgba(25,118,210,.1);}
+    .tab.active { background: linear-gradient(90deg,#111,#333); color: #fff; transform: translateY(-3px);}
+    .content-area { max-width: 1200px; margin: 0 auto; padding: 12px; min-height: 640px; position: relative;}
+    .panel { position: absolute; inset: 0; padding: 28px; background: #fff; border-radius: 12px; box-shadow: var(--shadow); opacity: 0; transform: translateY(22px); pointer-events: none; transition: opacity .38s ease, transform .38s ease; overflow: auto;}
+    .panel.active { opacity: 1; transform: translateY(0); pointer-events: auto;}
+    .panel h3 { margin: 0 0 .75rem 0; font-size: 1.45rem; font-weight: 900;}
+    .panel p { margin: 0; font-size: 1rem; line-height: 1.75; color: rgba(0,0,0,.78);}
+    @media (max-width:900px) {
+      .hero-title { font-size: 3.6rem;}
+      .hero-sub { font-size: 1.05rem; letter-spacing: .18em;}
+      .content-area { min-height: 560px;}
     }
-    .panel{
-      position:absolute;
-      inset:0;
-      padding:28px;
-      background:#fff;
-      border-radius:12px;
-      box-shadow:var(--shadow);
-      opacity:0;
-      transform:translateY(22px);
-      pointer-events:none;
-      transition:opacity .38s ease, transform .38s ease;
-      overflow:auto;
-    }
-    .panel.active{
-      opacity:1;
-      transform:translateY(0);
-      pointer-events:auto;
-    }
-    .panel h3{
-      margin:0 0 .75rem 0;
-      font-size:1.45rem;
-      font-weight:900;
-    }
-    .panel p{
-      margin:0;
-      font-size:1rem;
-      line-height:1.75;
-      color:rgba(0,0,0,.78);
-    }
-
-    /* 响应式 */
-    @media (max-width:900px){
-      .hero-title{font-size:3.6rem}
-      .hero-sub{font-size:1.05rem; letter-spacing:.18em}
-      .content-area{min-height:560px}
-    }
-    @media (max-width:560px){
-      .hero-title{font-size:2.6rem; line-height:1.12}
-      .hero-sub{font-size:.95rem; letter-spacing:.14em}
-      .tab{padding:.65rem 1rem; font-size:.98rem}
-      .content-area{min-height:480px}
+    @media (max-width:560px) {
+      .hero-title { font-size: 2.6rem; line-height: 1.12;}
+      .hero-sub { font-size: .95rem; letter-spacing: .14em;}
+      .tab { padding: .65rem 1rem; font-size: .98rem;}
+      .content-area { min-height: 480px;}
     }
   </style>
 </head>
 <body>
+  <div class="topbar">
+    <a class="logo" href="/">
+      <img src="./images/logo_white.png" alt="Youth Peak Logo">
+      <span class="brand">Youth Peak</span>
+    </a>
+  </div>
 
-<!-- 头栏 -->
-<div class="topbar">
-  <div class="logo">LOGO</div>
-</div>
-
-  <!-- Hero（优化打字动画防裁剪 + 更大字号） -->
   <header class="hero" role="banner">
     <div class="hero-inner">
       <h1 class="hero-title">
@@ -282,7 +232,6 @@
     </div>
   </header>
 
-  <!-- 选项卡区域（名称更新） -->
   <section class="tab-area" aria-label="选项卡区域">
     <div class="tabs-row" id="tabsRow">
       <div class="tab active" data-index="0">创营理念</div>
@@ -290,31 +239,20 @@
       <div class="tab" data-index="2">训练集锦</div>
       <div class="tab" data-index="3">加入我们</div>
     </div>
-
     <div class="content-area">
       <div class="panel active" id="panel-0">
         <h3>创营理念</h3>
          <p><strong>Youth Peak</strong> 由一群热爱中长跑的青少年跑者共同创立，专注于 <strong>800 米至 10000 米</strong> 项目的系统化训练与能力提升。</p>
-
         <p>我们以科学的训练体系为基础，以清晰的目标与计划为指引，让热爱在专业中成长，让奔跑更有方向与成果。</p>
-
         <p><strong>我们相信，热爱不该止于兴趣。</strong></p>
-
         <p>它值得被坚持，被打磨，被赋予方向与意义。</p>
-
         <p>我们希望为同样热爱跑步的年轻人，打造一个真正<strong>专业、互助、进步</strong>的训练环境。</p>
-
         <p>在这里，竞争与支持并存，努力与友情同行——每一次训练，都是共同向上的旅程。</p>
-
         <p>在 <strong>Youth Peak</strong>，每一位成员既是跑者，也是伙伴。</p>
-
         <p>我们彼此激励、相互成长，让热爱不只是玩玩而已，而是玩出风采，跑出水平，奔向巅峰。</p>
-
         <p><strong>“Peak The Passion（从热爱出发，向巅峰奔跑）。”</strong></p>
-
         <p>这不仅是我们的口号，更是我们的信念——让热爱抵达巅峰。</p>
       </div>
-
       <div class="panel" id="panel-1">
         <h3>人员构成</h3>
         <p>11111</p>
@@ -334,15 +272,13 @@
     // 选项卡切换
     const tabs = document.querySelectorAll('.tab');
     const panels = document.querySelectorAll('.panel');
-    tabs.forEach((tab, index) => {
+    tabs.forEach((tab, idx) => {
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         panels.forEach(p => p.classList.remove('active'));
         tab.classList.add('active');
-        panels[index].classList.add('active');
+        panels[idx].classList.add('active');
       });
-
-      // 轻微晃动（鼠标随动）
       let rect = null;
       tab.addEventListener('mousemove', e => {
         rect = rect || tab.getBoundingClientRect();
@@ -357,17 +293,10 @@
       tab.addEventListener('touchstart', () => { tab.style.transform = ''; });
     });
 
-    // 打字动画结束后移除光标（避免遮挡）
+    // 打字动画结束后移除光标
     const typewriter = document.querySelector('.typewriter');
-    const revealDurationMs = 2400 + 250; // reveal 2.4s + delay 0.25s
-    setTimeout(()=> typewriter.classList.add('done'), revealDurationMs);
-  </script>
+    setTimeout(() => typewriter.classList.add('done'), 2100 + 460);
 
-  <!-- 注释：
-    - hero.jpg 路径：./images/hero.jpg（1920x1080），已按 cover 居中铺设
-    - favicon：./images/favicon.png
-    - iOS 图标（logo 同用）：./images/apple_icon.png（建议 180x180）
-    - 主标题裁剪修复：提高行高、取消外层 overflow 裁剪、用 clip-path 揭示动画替代
-  -->
+  </script>
 </body>
 </html>
