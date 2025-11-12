@@ -7,341 +7,475 @@
 
   <!-- favicon -->
   <link rel="icon" href="./images/favicon.png" type="image/png">
-  <!-- iOS icon -->
   <link rel="apple-touch-icon" sizes="180x180" href="./images/apple_icon.png">
 
   <style>
     :root{
-      --bg:#fbfdff;
+      --bg:#0f1724;           /* 基底暗色，粒子更明显 */
       --page:#fff;
       --text:#111;
       --muted:#f3f6fb;
       --accent:#1976d2;
-      --shadow:0 12px 32px rgba(17,24,39,0.06);
+      --shadow:0 14px 40px rgba(15,23,42,0.08);
       --easing:cubic-bezier(.2,.9,.2,1);
+      --bullet-bg: rgba(255,255,255,0.08);
       --dream-1:#7c4dff;
       --dream-2:#00bcd4;
       --dream-3:#ff6ec7;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:"Segoe UI", Roboto, Arial, sans-serif;
-      background:var(--bg);
-      color:var(--text);
-    }
+    html,body{height:100%; margin:0; font-family:"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
+    body{background:var(--bg); color:var(--text); overflow-x:hidden;}
 
-    /* ========== 头栏 ========== */
-    .topbar{
-      height:56px;
-      background:#000;
-      color:#fff;
-      display:flex;
-      align-items:center;
-      gap:12px;
-      padding:0 16px;
-      position:sticky;
-      top:0;
-      z-index:100;
-      overflow:visible;
-    }
-    .logo{
-      flex:0 0 auto;
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-    .logo img{ height:28px; width:auto; border-radius:6px; display:block; }
-    .logo .brand{ font-weight:900; font-size:1.05rem; }
+/* ========== 全局粒子 Canvas（覆盖页面背景） ========== */
+#particleCanvas{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  mix-blend-mode:screen;
+}
 
-    /* 容器：包含底层跑马灯和上层定时弹幕 */
-    .topbar-bullets{
-      position:relative;
-      flex:1 1 auto;
-      height:100%;
-      display:flex;
-      align-items:center;
-      overflow:visible;
-    }
+/* ========== 头栏 ========== */
+.topbar{
+  position:relative;
+  z-index:120;
+  height:64px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:0 18px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35));
+  color:#fff;
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.logo{ display:flex; align-items:center; gap:10px; flex:0 0 auto; }
+.logo img{ height:36px; width:auto; border-radius:6px; display:block; }
+.logo .brand{ font-weight:900; font-size:1rem; letter-spacing:.02em; color:#fff; }
 
-    /* 底层连续跑马灯（低存在感） */
-    .marquee-low{
-      position:absolute;
-      left:0; right:0;
-      height:100%;
-      display:flex;
-      align-items:center;
-      overflow:hidden;
-      pointer-events:none;
-      opacity:0.72;
-    }
-    .marquee-track{
-      display:inline-flex;
-      gap:48px;
-      white-space:nowrap;
-      will-change:transform;
-      animation:marqueeLinear 14s linear infinite;
-    }
-    .marquee-item{ color:rgba(255,255,255,0.95); font-weight:600; }
+/* 头栏中间弹幕容器（唯一弹幕框） */
+.bullet-container{ flex:1 1 auto; display:flex; justify-content:center; align-items:center; pointer-events:none; position:relative; height:100%; }
+.bullet-frame{
+  display:flex;
+  align-items:center;
+  padding:10px 36px;
+  gap:12px;
+  background:var(--bullet-bg);
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+  box-shadow:0 10px 28px rgba(0,0,0,0.28);
+  color:#fff;
+  max-width:88vw;
+  width:100%;
+  overflow:hidden;
+  white-space:nowrap;
+  pointer-events:none;
+  display:none; /* JS 控制显示 */
+  transform:translateZ(0);
+}
+.bullet-text{ display:inline-block; font-weight:700; font-size:1rem; will-change:transform; }
 
-    @keyframes marqueeLinear{
-      from{ transform: translateX(0%) }
-      to{ transform: translateX(-50%) }
-    }
+/* 右上角粒子开关（在头栏右侧） */
+.controls{ display:flex; align-items:center; gap:12px; flex:0 0 auto; }
+.particle-toggle{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.09);
+  color:#fff;
+  padding:6px 10px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+  font-size:.9rem;
+}
 
-    /* 上层定时弹幕框（圆角，居中出现并从右向左划过） */
-    .bullet-banner{
-      position:relative;
-      width:100%;
-      display:flex;
-      justify-content:center;
-      pointer-events:none;
-    }
-    .bullet-frame{
-      position:absolute;
-      left:50%;
-      transform:translateX(-50%);
-      top:50%;
-      transform-origin:center;
-      translate: -50% -50%;
-      background: rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.18);
-      backdrop-filter: blur(6px);
-      color:#fff;
-      padding:8px 16px;
-      border-radius:999px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.28);
-      white-space:nowrap;
-      overflow:hidden;
-      display:none; /* 显示由 JS 控制 */
-    }
-    .bullet-text{
-      display:inline-block;
-      will-change:transform;
-    }
-    @keyframes bulletRun {
-      from{ transform: translateX(60vw); opacity:1; }
-      to{ transform: translateX(-60vw); opacity:1; }
-    }
+/* ========== Hero 区 ========== */
+header.hero{
+  position:relative;
+  z-index:10;
+  min-height:580px;
+  height: calc(100vh - 64px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:48px 20px;
+  background: url('./images/hero.jpg') center/cover no-repeat fixed;
+  box-shadow: inset 0 80px 160px rgba(0,0,0,0.28);
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.28));
+  z-index:0;
+}
+.hero-inner{ position:relative; z-index:2; max-width:1200px; width:100%; padding:28px; }
 
-    /* ========== Hero（已适配 1920x1080） ========== */
-    header.hero{
-      min-height:560px;
-      height:calc(100vh - 56px);
-      background:url('./images/hero.jpg') center/cover no-repeat;
-      position:relative;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:32px 16px;
-    }
-    .hero::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.35));
-      z-index:0;
-    }
-    .hero-inner{ position:relative; z-index:1; max-width:1100px; width:100%; padding:24px; }
+/* 主副标题（更大，确保完整） */
+.hero-title{
+  margin:0;
+  font-weight:900;
+  color:#fff;
+  font-size:5.2rem;         /* 更大 */
+  line-height:1.12;        /* 足够行高避免裁剪 */
+  letter-spacing:-0.01em;
+  transform:translateY(6px) scale(0.99);
+  opacity:0;
+  animation:heroEntrance .8s var(--easing) .15s forwards;
+  will-change:transform,opacity;
+  display:block;
+}
+.typewriter-wrap{ display:inline-block; vertical-align:middle; }
+.typewriter{ display:inline-block; position:relative; }
+.typewriter span{ display:inline-block; clip-path: inset(0 100% 0 0); animation:reveal 2600ms steps(40,end) 220ms forwards; }
+@keyframes reveal{ to{ clip-path: inset(0 0 0 0) } }
+.typewriter::after{ content:""; display:inline-block; width:2px; height:1.06em; margin-left:10px; background:#fff; vertical-align:baseline; animation:blink 800ms steps(1,end) infinite; }
+.typewriter.done::after{ opacity:0; }
+@keyframes blink{ 50%{ opacity:0 } }
 
-    .hero-title{ margin:0; font-weight:900; color:#fff; font-size:4.6rem; line-height:1.08; transform:scale(.92); opacity:0; animation:zoomIn .8s var(--easing) .2s forwards; }
-    .typewriter-wrap{ display:inline-block; }
-    .typewriter{ display:inline-block; position:relative; }
-    .typewriter::after{ content:""; display:inline-block; width:2px; height:1em; margin-left:6px; background:#fff; vertical-align:baseline; animation:caretBlink .8s step-end infinite;}
-    .typewriter span{ display:inline-block; clip-path: inset(0 100% 0 0); animation:reveal 2.4s steps(28, end) .25s forwards; }
-    @keyframes reveal{ to{ clip-path: inset(0 0 0 0) } }
-    @keyframes caretBlink{ 50%{opacity:0} }
-    @keyframes zoomIn{ from{transform:scale(.92);opacity:0} to{transform:scale(1);opacity:1} }
-    .typewriter.done::after{ opacity:0; }
+@keyframes heroEntrance{ from{ transform:translateY(14px) scale(.99); opacity:0 } to{ transform:translateY(0) scale(1); opacity:1 } }
 
-    .hero-sub{ margin:.9rem 0 0 0; color:#eaeaea; font-size:1.2rem; text-transform:uppercase; letter-spacing:.22em; font-weight:800; opacity:0; transform:translateY(28px); text-shadow:0 0 8px rgba(255,255,255,.28); animation:subIn 1.1s var(--easing) .7s forwards, glow 2.4s ease-in-out 1.8s infinite alternate; }
-    @keyframes subIn{ to{opacity:1; transform:translateY(0)} }
-    @keyframes glow{ from{text-shadow:0 0 6px rgba(255,255,255,.25)} to{ text-shadow:0 0 18px rgba(255,255,255,.9)} }
+/* 副标题 */
+.hero-sub{
+  margin:16px 0 0 0;
+  color:#f0f6fa;
+  font-size:1.25rem;
+  font-weight:800;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  opacity:0;
+  transform:translateY(28px);
+  text-shadow:0 0 8px rgba(255,255,255,0.22);
+  animation:subIn 1s var(--easing) .9s forwards;
+}
+@keyframes subIn{ to{ opacity:1; transform:translateY(0) } }
 
-    /* ========== 选项卡与内容区 ========== */
-    .tab-area{ background:var(--page); border-radius:18px 18px 0 0; padding:24px 16px 32px; box-shadow:0 -8px 30px rgba(15,23,42,.06); }
-    .tabs-row{ display:flex; gap:.9rem; justify-content:center; flex-wrap:wrap; margin:0 auto 20px; max-width:1200px; }
-    .tab{ padding:.85rem 1.5rem; border-radius:12px; background:var(--muted); font-weight:800; cursor:pointer; transition:transform .18s linear, box-shadow .28s var(--easing), background .28s var(--easing), color .28s var(--easing); }
-    .tab:hover{ box-shadow:0 12px 24px rgba(25,118,210,.1) }
-    .tab.active{ background:linear-gradient(90deg,#111,#333); color:#fff; transform:translateY(-3px); }
-    .tab.active[data-index="0"]{ background: linear-gradient(135deg, var(--dream-1), var(--dream-2), var(--dream-3)); box-shadow:0 18px 44px rgba(124,77,255,.28); color:#fff; }
+/* ========== 选项区（选项卡 + 展示） ========== */
+.section{ position:relative; z-index:8; }
+.tab-area{ background:var(--page); border-radius:18px 18px 0 0; padding:28px 20px 36px; box-shadow:0 -8px 30px rgba(15,23,42,0.06); margin-top:0; }
+.tabs-row{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:0 auto 22px; max-width:1200px; }
+.tab{ padding:12px 22px; border-radius:12px; background:var(--muted); font-weight:800; cursor:pointer; transition:transform .18s linear, box-shadow .28s var(--easing), background .28s var(--easing); }
+.tab:hover{ box-shadow:0 12px 24px rgba(25,118,210,.08) }
+.tab.active{ background:linear-gradient(90deg,#111,#333); color:#fff; transform:translateY(-3px); }
+.tab.active[data-index="0"]{ background: linear-gradient(135deg,var(--dream-1),var(--dream-2),var(--dream-3)); box-shadow:0 18px 44px rgba(124,77,255,.22); color:#fff; }
 
-    .content-area{ max-width:1200px; margin:0 auto; padding:12px; min-height:640px; position:relative; }
-    .panel{ position:absolute; inset:0; padding:28px; background:#fff; border-radius:12px; box-shadow:var(--shadow); opacity:0; transform:translateY(22px); pointer-events:none; transition:opacity .38s ease, transform .38s ease; overflow:auto; }
-    .panel.active{ opacity:1; transform:translateY(0); pointer-events:auto; }
-    .panel.active#panel-0::before{ content:""; position:absolute; inset:0; border-radius:12px; pointer-events:none; background: radial-gradient(800px 800px at 20% 20%, rgba(124,77,255,0.12), transparent 60%), radial-gradient(800px 800px at 80% 80%, rgba(0,188,212,0.10), transparent 60%); }
-    .panel h3{ margin:0 0 .75rem 0; font-size:1.45rem; font-weight:900; }
-    .panel p{ margin:0 0 .9rem 0; font-size:1rem; line-height:1.75; color:rgba(0,0,0,.84); }
+.content-area{ max-width:1200px; margin:0 auto; padding:14px; min-height:680px; position:relative; }
+.panel{ position:absolute; inset:0; padding:30px; background:#fff; border-radius:12px; box-shadow:var(--shadow); opacity:0; transform:translateY(22px); pointer-events:none; transition:opacity .38s ease, transform .38s ease; overflow:auto; }
+.panel.active{ opacity:1; transform:translateY(0); pointer-events:auto; }
+.panel.active#panel-0::before{ content:""; position:absolute; inset:0; border-radius:12px; pointer-events:none; background: radial-gradient(600px 600px at 15% 20%, rgba(124,77,255,0.10), transparent 50%), radial-gradient(700px 700px at 85% 80%, rgba(0,188,212,0.08), transparent 50%); }
+.panel h3{ margin:0 0 12px 0; font-size:1.5rem; font-weight:900; }
+.panel p{ margin:0 0 12px 0; font-size:1rem; line-height:1.75; color:rgba(0,0,0,.86); }
 
-    /* 响应式 */
-    @media (max-width:900px){
-      .hero-title{font-size:3.6rem}
-      .hero-sub{font-size:1.05rem; letter-spacing:.18em}
-      .content-area{min-height:560px}
-    }
-    @media (max-width:560px){
-      .hero-title{font-size:2.6rem; line-height:1.12}
-      .hero-sub{font-size:.95rem; letter-spacing:.14em}
-      .tab{padding:.65rem 1rem; font-size:.98rem}
-      .content-area{min-height:480px}
-    }
+/* ========== 尾栏占位 ========== */
+.footer{
+  z-index:8;
+  background:#071022;
+  color:#cfe9ff;
+  padding:36px 20px;
+  text-align:center;
+}
+
+/* 响应式 */
+@media (max-width:900px){
+  .hero-title{ font-size:3.8rem; line-height:1.14 }
+  .hero-sub{ font-size:1.05rem; }
+  .content-area{ min-height:560px }
+}
+@media (max-width:560px){
+  .hero-title{ font-size:2.8rem; line-height:1.12 }
+  .hero-sub{ font-size:.9rem; letter-spacing:.12em }
+  .tab{ padding:10px 14px }
+  .content-area{ min-height:480px }
+  .bullet-frame{ padding:8px 18px; max-width:94vw }
+}
   </style>
 </head>
 <body>
 
-  <!-- 头栏：logo + 合并弹幕容器 -->
-  <div class="topbar">
-    <div class="logo">
+  <!-- 粒子 Canvas（全局背景层） -->
+  <canvas id="particleCanvas" aria-hidden="true"></canvas>
+
+  <!-- 头栏 -->
+  <header class="topbar" role="banner">
+    <div class="logo" title="Youth Peak">
       <img src="./images/apple_icon.png" alt="Youth Peak Logo">
       <span class="brand">Youth Peak</span>
     </div>
 
-    <div class="topbar-bullets" aria-hidden="false">
-      <!-- 底层连续跑马灯 -->
-      <div class="marquee-low" aria-hidden="true">
-        <div class="marquee-track" id="marqueeTrack">
-          <div class="marquee-item">月抛训练营欢迎每一位热爱田径的人</div>
-          <div class="marquee-item">献给所有田径人——想做就大胆去做，迎接属于我们自己的浪漫</div>
-          <div class="marquee-item">月抛训练营欢迎每一位热爱田径的人</div>
-          <div class="marquee-item">献给所有田径人——想做就大胆去做，迎接属于我们自己的浪漫</div>
-        </div>
-      </div>
-
-      <!-- 上层定时弹幕框（显示与播放由 JS 控制） -->
-      <div class="bullet-banner" aria-hidden="true">
-        <div class="bullet-frame" id="bulletFrame" aria-hidden="true">
-          <div class="bullet-text" id="bulletText"></div>
-        </div>
+    <!-- 弹幕框（位于头栏中部，且为唯一弹幕） -->
+    <div class="bullet-container" aria-live="polite" aria-atomic="true">
+      <div class="bullet-frame" id="bulletFrame" role="status" aria-hidden="true">
+        <div class="bullet-text" id="bulletText"></div>
       </div>
     </div>
-  </div>
 
-  <!-- Hero -->
-  <header class="hero" role="banner">
-    <div class="hero-inner">
-      <h1 class="hero-title">
-        <span class="typewriter-wrap">
-          <span class="typewriter"><span>Youth Peak Training Camp</span></span>
-        </span>
-      </h1>
-      <p class="hero-sub">PEAK THE PASSION</p>
+    <!-- 粒子开关 -->
+    <div class="controls">
+      <button class="particle-toggle" id="particleToggle" title="开关粒子动画">粒子：开</button>
     </div>
   </header>
 
-  <!-- 选项卡区域 -->
-  <section class="tab-area" aria-label="选项卡区域">
-    <div class="tabs-row" id="tabsRow">
-      <div class="tab active" data-index="0">创营理念</div>
-      <div class="tab" data-index="1">人员构成</div>
-      <div class="tab" data-index="2">训练集锦</div>
-      <div class="tab" data-index="3">联系我们</div>
-    </div>
+  <!-- Hero -->
+  <main>
+    <section class="hero section" role="region" aria-label="Hero 区">
+      <div class="hero-inner">
+        <h1 class="hero-title" aria-label="Youth Peak Training Camp">
+          <span class="typewriter-wrap">
+            <span class="typewriter"><span>Youth Peak Training Camp</span></span>
+          </span>
+        </h1>
+        <p class="hero-sub">PEAK THE PASSION</p>
+      </div>
+    </section>
 
-    <div class="content-area">
-      <div class="panel active" id="panel-0">
-        <h3>创营理念</h3>
-        <p><strong>Youth Peak</strong> 由一群热爱中长跑的青少年跑者共同创立，专注于 <strong>800 米至 10000 米</strong> 项目的系统化训练与能力提升。</p>
-        <p>我们以科学的训练体系为基础，以清晰的目标与计划为指引，让热爱在专业中成长，让奔跑更有方向与成果。</p>
-        <p><strong>我们相信，热爱不该止于兴趣。</strong></p>
-        <p>它值得被坚持，被打磨，被赋予方向与意义。</p>
-        <p>我们希望为同样热爱跑步的年轻人，打造一个真正<strong>专业、互助、进步</strong>的训练环境。</p>
-        <p>在这里，竞争与支持并存，努力与友情同行——每一次训练，都是共同向上的旅程。</p>
-        <p>在 <strong>Youth Peak</strong>，每一位成员既是跑者，也是伙伴。</p>
-        <p>我们彼此激励、相互成长，让热爱不只是玩玩而已，而是玩出风采，跑出水平，奔向巅峰。</p>
-        <p><strong>“Peak The Passion（从热爱出发，向巅峰奔跑）。”</strong></p>
-        <p>这不仅是我们的口号，更是我们的信念——让热爱抵达巅峰。</p>
+    <!-- 选项区 -->
+    <section class="tab-area section" aria-label="选项区">
+      <div class="tabs-row" id="tabsRow">
+        <div class="tab active" data-index="0">创营理念</div>
+        <div class="tab" data-index="1">人员构成</div>
+        <div class="tab" data-index="2">训练集锦</div>
+        <div class="tab" data-index="3">联系我们</div>
       </div>
 
-      <div class="panel" id="panel-1">
-        <h3>人员构成</h3>
-        <p>11111</p>
-      </div>
+      <div class="content-area" id="contentArea">
+        <div class="panel active" id="panel-0">
+          <h3>创营理念</h3>
+          <p><strong>Youth Peak</strong> 由一群热爱中长跑的青少年跑者共同创立，专注于 <strong>800 米至 10000 米</strong> 项目的系统化训练与能力提升。</p>
+          <p>我们以科学的训练体系为基础，以清晰的目标与计划为指引，让热爱在专业中成长，让奔跑更有方向与成果。</p>
+          <p><strong>我们相信，热爱不该止于兴趣。</strong></p>
+          <p>它值得被坚持，被打磨，被赋予方向与意义。</p>
+          <p>我们希望为同样热爱跑步的年轻人，打造一个真正<strong>专业、互助、进步</strong>的训练环境。</p>
+          <p>在这里，竞争与支持并存，努力与友情同行——每一次训练，都是共同向上的旅程。</p>
+          <p>在 <strong>Youth Peak</strong>，每一位成员既是跑者，也是伙伴。</p>
+          <p>我们彼此激励、相互成长，让热爱不只是玩玩而已，而是玩出风采，跑出水平，奔向巅峰。</p>
+          <p><strong>“Peak The Passion（从热爱出发，向巅峰奔跑）。”</strong></p>
+          <p>这不仅是我们的口号，更是我们的信念——让热爱抵达巅峰。</p>
+        </div>
 
-      <div class="panel" id="panel-2">
-        <h3>训练集锦</h3>
-        <p>11111</p>
-      </div>
+        <div class="panel" id="panel-1">
+          <h3>人员构成</h3>
+          <p>11111</p>
+        </div>
 
-      <div class="panel" id="panel-3">
-        <h3>联系我们</h3>
-        <p>11111</p>
+        <div class="panel" id="panel-2">
+          <h3>训练集锦</h3>
+          <p>11111</p>
+        </div>
+
+        <div class="panel" id="panel-3">
+          <h3>联系我们</h3>
+          <p>11111</p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- 尾栏占位 -->
+    <footer class="footer section" role="contentinfo">
+      Footer placeholder — 可在此加入版权、社交链接、联系方式等
+    </footer>
+  </main>
 
   <script>
-    /* ========== 选项卡切换（保持原有交互） ========== */
-    const tabs = document.querySelectorAll('.tab');
-    const panels = document.querySelectorAll('.panel');
-    tabs.forEach((tab, index) => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        panels.forEach(p => p.classList.remove('active'));
-        tab.classList.add('active');
-        panels[index].classList.add('active');
-      });
-      // 轻微晃动
-      let rect = null;
-      tab.addEventListener('mousemove', e => {
-        rect = rect || tab.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        tab.style.transform = `translate(${x * 6}px, ${y * 4}px) rotate(${x * 1.6}deg)`;
-      });
-      tab.addEventListener('mouseleave', () => { tab.style.transform = ''; rect = null; });
-      tab.addEventListener('touchstart', () => { tab.style.transform = ''; });
+/* ==========================
+   选项卡逻辑与交互
+   ========================== */
+(function(){
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+  tabs.forEach((tab, idx)=>{
+    tab.addEventListener('click', ()=>{
+      tabs.forEach(t=>t.classList.remove('active'));
+      panels.forEach(p=>p.classList.remove('active'));
+      tab.classList.add('active');
+      panels[idx].classList.add('active');
+      // 确保激活面板滚入视口（在较短内容时可忽略）
+      panels[idx].scrollIntoView({behavior:'smooth', block:'start'});
     });
 
-    /* ========== 打字动画光标移除 ========== */
-    const typewriter = document.querySelector('.typewriter');
-    const revealDurationMs = 2400 + 250;
-    setTimeout(()=> typewriter.classList.add('done'), revealDurationMs);
+    // 轻微晃动效果（适度）
+    let rect=null;
+    tab.addEventListener('mousemove', e=>{
+      rect = rect || tab.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      tab.style.transform = `translate(${x*6}px, ${y*4}px) rotate(${x*1.2}deg)`;
+    });
+    tab.addEventListener('mouseleave', ()=>{ tab.style.transform=''; rect=null; });
+    tab.addEventListener('touchstart', ()=> tab.style.transform='' );
+  });
+})();
 
-    /* ========== 合并后的弹幕逻辑 ========== */
+/* ==========================
+   打字动画完成后隐藏光标，保证不裁剪
+   ========================== */
+(function(){
+  const typeEl = document.querySelector('.typewriter');
+  const revealMs = 2600 + 220; // 同 CSS reveal 时间 + 延迟
+  setTimeout(()=> typeEl.classList.add('done'), revealMs);
+})();
 
-    // 底层跑马灯速度按视口宽度调整
-    const marqueeTrack = document.getElementById('marqueeTrack');
-    function adjustMarquee(){
-      const w = window.innerWidth;
-      const base = 14;
-      const dur = w < 400 ? base * 1.4 : w < 700 ? base * 1.2 : base;
-      marqueeTrack.style.animationDuration = `${dur}s`;
+/* ==========================
+   单一弹幕框逻辑（位于头栏）
+   - 只有一个弹幕框，随机轮换两条消息
+   - 播放时间慢、间隔长
+   - 框显示/隐藏由 JS 控制
+   ========================== */
+(function(){
+  const frame = document.getElementById('bulletFrame');
+  const text = document.getElementById('bulletText');
+  const messages = [
+    '月抛训练营欢迎每一位热爱田径的人',
+    '献给所有田径人——想做就大胆去做，迎接属于我们自己的浪漫'
+  ];
+  let last = -1;
+  const runMs = 9000;   // 单条划过时间（慢速）
+  const gapMs = 20000;  // 两条之间总间隔（包含 runMs），因此两条间隔较长
+
+  function pick(){
+    let i = Math.floor(Math.random()*messages.length);
+    if(messages.length>1 && i===last) i=(i+1)%messages.length;
+    last = i; return i;
+  }
+
+  function play(){
+    const idx = pick();
+    text.textContent = messages[idx];
+    // 显示框
+    frame.style.display = 'flex';
+    frame.setAttribute('aria-hidden','false');
+    // start animation by using CSS animation on text
+    text.style.animation = `bulletMove ${runMs}ms linear forwards`;
+    // after runMs hide and clear, schedule next
+    setTimeout(()=>{
+      text.style.animation = '';
+      frame.style.display = 'none';
+      frame.setAttribute('aria-hidden','true');
+      setTimeout(play, gapMs - runMs);
+    }, runMs);
+  }
+
+  // define keyframes at runtime (so CSS doesn't need to predefine width-based transforms)
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes bulletMove {
+      from { transform: translateX(40%); opacity:1; }
+      to   { transform: translateX(-140%); opacity:1; }
+    }`;
+  document.head.appendChild(style);
+
+  // delay start to avoid clash with hero entrance
+  setTimeout(play, 1400);
+})();
+
+/* ==========================
+   粒子背景（轻量级、受重力向下）
+   - 右上开关可关闭/开启，状态保存在 localStorage
+   - 粒子数量少，性能友好
+   ========================== */
+(function(){
+  const canvas = document.getElementById('particleCanvas');
+  const ctx = canvas.getContext('2d');
+  let width = 0, height = 0, dpr = Math.max(1, window.devicePixelRatio || 1);
+  let particles = [];
+  const maxParticles = 40; // 不多，保证轻量
+  let animId = null;
+  let enabled = localStorage.getItem('particles-enabled');
+  enabled = enabled === null ? true : enabled === 'true';
+
+  const toggleBtn = document.getElementById('particleToggle');
+  function updateToggleText(){ toggleBtn.textContent = enabled ? '粒子：开' : '粒子：关'; }
+  updateToggleText();
+
+  toggleBtn.addEventListener('click', ()=>{
+    enabled = !enabled;
+    localStorage.setItem('particles-enabled', enabled);
+    updateToggleText();
+    if(enabled) start(); else stop();
+  });
+
+  function resize(){
+    width = innerWidth;
+    height = innerHeight;
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  window.addEventListener('resize', resize, {passive:true});
+
+  function rand(min, max){ return Math.random()*(max-min)+min; }
+
+  function initParticles(){
+    particles = [];
+    for(let i=0;i<maxParticles;i++){
+      particles.push({
+        x: rand(0, width),
+        y: rand(-height*0.5, height),
+        vx: rand(-0.15, 0.15),
+        vy: rand(0.2, 0.8),
+        size: rand(2,6),
+        life: rand(4000, 12000),
+        age: 0,
+        alpha: rand(0.12,0.28),
+        hue: rand(180, 320)
+      });
     }
-    adjustMarquee();
-    window.addEventListener('resize', adjustMarquee);
+  }
 
-    // 上层定时弹幕：逐条播放，播放完后隔一段时间出现下一条
-    const bulletFrame = document.getElementById('bulletFrame');
-    const bulletText  = document.getElementById('bulletText');
-    const bullets = [
-      '月抛训练营欢迎每一位热爱田径的人',
-      '献给所有田径人——想做就大胆去做，迎接属于我们自己的浪漫'
-    ];
-    let bIndex = 0;
-    const runMs = 6000;      // 单条弹幕划过持续时间
-    const gapMs = 8000;      // 两条弹幕间隔（包含 runMs）
-    function showBullet(){
-      const msg = bullets[bIndex % bullets.length];
-      bulletText.textContent = msg;
-      bulletFrame.style.display = 'block';
-      bulletFrame.setAttribute('aria-hidden', 'false');
-      // 强制触发重绘以重置动画
-      bulletText.style.animation = 'none';
-      void bulletText.offsetWidth;
-      bulletText.style.animation = `bulletRun ${runMs}ms linear forwards`;
-      // 隐藏并排队下一条
-      setTimeout(()=>{
-        bulletFrame.style.display = 'none';
-        bulletFrame.setAttribute('aria-hidden', 'true');
-        bulletText.style.animation = '';
-        bIndex++;
-        setTimeout(showBullet, gapMs - runMs);
-      }, runMs);
+  function step(ts){
+    ctx.clearRect(0,0,width,height);
+    const dt = 16; // approx
+    for(let p of particles){
+      p.vy += 0.0009; // gravity slight
+      p.x += p.vx * (dt/16);
+      p.y += p.vy * (dt/16);
+      p.age += dt;
+      // wrap horizontally, reset when out of bottom
+      if(p.x < -50) p.x = width + 50;
+      if(p.x > width + 50) p.x = -50;
+      if(p.y - p.size > height + 60 || p.age > p.life){
+        // respawn at top
+        p.x = rand(0, width);
+        p.y = rand(-80, -10);
+        p.vx = rand(-0.15, 0.15);
+        p.vy = rand(0.2, 0.6);
+        p.size = rand(2,6);
+        p.life = rand(4000, 12000);
+        p.age = 0;
+        p.alpha = rand(0.12,0.28);
+        p.hue = rand(180,320);
+      }
+      // draw
+      ctx.beginPath();
+      const g = ctx.createLinearGradient(p.x, p.y, p.x + p.vx*6, p.y + p.size*2);
+      const c = `hsla(${p.hue}, 85%, 65%, ${p.alpha})`;
+      g.addColorStop(0, c);
+      g.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = g;
+      ctx.ellipse(p.x, p.y, p.size, p.size*0.6, 0, 0, Math.PI*2);
+      ctx.fill();
     }
-    // 启动，延迟启动避免与页面首屏动画冲突
-    setTimeout(showBullet, 2000);
+    if(enabled) animId = requestAnimationFrame(step);
+  }
+
+  function start(){
+    cancelAnimationFrame(animId);
+    resize();
+    initParticles();
+    animId = requestAnimationFrame(step);
+  }
+  function stop(){
+    cancelAnimationFrame(animId);
+    animId = null;
+    ctx.clearRect(0,0,width,height);
+  }
+
+  // 启动或关闭基于 saved state
+  if(enabled) start(); else stop();
+})();
 
   </script>
 </body>
