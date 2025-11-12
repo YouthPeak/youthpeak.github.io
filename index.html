@@ -5,8 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Youth Peak Training Camp | 月抛田径训练营</title>
 
-  <!-- favicon 图标 -->
+  <!-- favicon for desktop browsers -->
   <link rel="icon" href="./images/favicon.png" type="image/png">
+
+  <!-- iOS Safari icon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="./images/apple_icon.png">
 
   <style>
     :root {
@@ -77,7 +80,7 @@
 
     /* 选项卡区域 */
     .tab-area {
-      margin-top: -2rem;
+      margin-top: 0; /* 避免 Hero 区遮挡 */
       background: var(--page-bg);
       border-radius: 18px 18px 0 0;
       padding: 1.5rem;
@@ -218,10 +221,7 @@
   </script>
 
   <!-- 注释：
-    - hero.jpg 背景图已添加，路径为 ./images/hero.jpg
-    - favicon 图标路径为 ./images/favicon.png
-    - 子菜单设计已彻底移除
-    - 内容区域支持四个选项卡切换，空间更大
-  -->
-</body>
-</html>
+    - hero.jpg 背景图路径：./images/hero.jpg
+    - favicon 图标路径：./images/favicon.png
+    - iOS Safari 图标路径：./images/apple_icon.png
+    - 子菜单设计已彻底移
