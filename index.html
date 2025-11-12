@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Youth Peak Training Camp | 月抛田径训练营</title>
   <link rel="icon" href="./images/favicon.png" type="image/png">
   <link rel="apple-touch-icon" sizes="180x180" href="./images/apple_icon.png">
@@ -13,191 +13,214 @@
       --text: #111;
       --muted: #f3f6fb;
       --accent: #1976d2;
-      --shadow: 0 12px 32px rgba(17,24,39,0.06);
-      --easing: cubic-bezier(.22, 1.05, .24, 1);
+      --shadow: 0 8px 32px rgba(17,24,39,0.09);
       --radius: 18px;
-      --panel-padding: clamp(12px, 4vw, 32px);
+      --panel-padding: clamp(10px, 3vw, 32px);
+      --header-min: 48px;
     }
-    *, *::before, *::after { box-sizing: border-box; }
-    body, html { height: 100%; margin: 0; padding: 0; }
+    html, body { height: 100%; margin:0; padding:0; overflow-x:hidden; }
     body {
       min-height: 100vh;
       font-family: "Segoe UI", Roboto, Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
     }
+
     .topbar {
-      width: 100%;
-      min-height: 56px;
+      width: 100vw;
+      min-height: var(--header-min);
       background: #000;
       color: #fff;
       display: flex;
       align-items: center;
-      gap: 1.1rem;
-      padding: 0 clamp(12px, 4vw, 36px);
+      justify-content: space-between;
+      gap: 1.3rem;
+      padding: 0 clamp(10px, 4vw, 48px);
+      box-sizing: border-box;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-sizing: border-box;
     }
-    .logo {
+    .topbar-inner {
       display: flex;
       align-items: center;
-      gap: .55rem;
-      text-decoration: none;
+      width: 100%;
+      min-width:0;
+      justify-content: space-between;
+      gap:2vw;
     }
-    .logo img {
-      height: 28px;
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: .63rem;
+      min-width:0;
+    }
+    .logo-area img {
+      height: 44px;
       width: auto;
-      border-radius: 6px;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 2px 10px #1976d22d;
+      max-width: min(17vw,146px);
     }
     .brand {
       font-weight: 900;
-      font-size: 1.15rem;
-      letter-spacing: .025em;
+      font-size: clamp(1.03rem, 2.5vw, 1.48rem);
+      letter-spacing: .04em;
       color: #fff;
       user-select: none;
-      text-shadow: 0 2px 14px rgba(25, 118, 210, 0.16), 0 0px 2px #222a;
-      transition: color .23s;
+      white-space:nowrap;
     }
-    .logo:hover .brand { color: #74b4ff; }
+    .lang-switch {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.3em;
+    }
+    .lang-btn {
+      background: #172337;
+      color: #fff;
+      font-weight: 800;
+      font-size: clamp(.92rem,1.5vw,1.06rem);
+      border-radius: 8px;
+      border: none;
+      padding: 0.40em 1em 0.37em;
+      cursor: pointer;
+      outline:none;
+      margin-left:15px;
+      transition: background .17s;
+      box-shadow: 0 1px 4px #2f57731a;
+      min-width:66px;
+      letter-spacing:.16em;
+    }
+    .lang-btn:hover,
+    .lang-btn:focus {
+      background: #2773d0;
+      color: #fff;
+    }
 
     header.hero {
-      min-height: 45vh;
-      height: max(330px, 50vh);
+      min-height: 47vh;
+      height: min(470px, calc(100vw / 1.9));
+      max-height: 95vw;
       background: url('./images/hero.jpg') center/cover no-repeat;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: clamp(16px, 7vw, 38px) clamp(10px, 3vw, 22px);
+      padding: clamp(12px, 5vw, 32px) clamp(8px, 4vw, 22px);
+      box-sizing: border-box;
+      overflow: hidden;
     }
     .hero::before {
       content:"";
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.35));
+      background: linear-gradient(to bottom, rgba(0,0,0,.56), rgba(0,0,0,.19));
       z-index: 0;
     }
     .hero-inner {
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: clamp(10px, 5vw, 36px) 0;
+      padding:0;
       display: flex;
       flex-direction: column;
       align-items: center;
+      box-sizing: border-box;
+      overflow: visible;
     }
     .hero-title {
       margin: 0;
-      font-weight: 900;
       color: #fff;
-      font-size: clamp(2.1rem, 6vw, 4.6rem);
+      font-weight: 900;
+      font-size: clamp(2.2rem, 7vw, 4.7rem);
       line-height: 1.10;
+      letter-spacing:.015em;
       opacity: 0;
       transform: translateY(45px) scale(.93) skewY(-2deg);
       will-change: transform, opacity;
-      animation: heroTitlePopIn 1.05s cubic-bezier(.22,1.15,.32,1) .12s both;
+      animation: heroTitlePopIn 1.09s cubic-bezier(.22,1.18,.23,1) .10s both;
+      text-shadow: 0 4px 26px #012bba44, 0 1px 1px #010a2324;
+      white-space:normal;
+      word-break:break-word;
     }
     @keyframes heroTitlePopIn {
       0% { opacity: 0; transform: translateY(45px) scale(.93) skewY(-2deg);}
-      65%{ opacity: 1; transform: translateY(-10px) scale(1.03) skewY(1.5deg);}
-      90%{ opacity:1; transform: translateY(4px) scale(.99) skewY(-1deg);}
+      68%{ opacity: 1; transform: translateY(-10px) scale(1.04) skewY(1deg);}
+      92%{ opacity:1; transform: translateY(4px) scale(.99) skewY(-.5deg);}
       100%{ opacity: 1; transform: translateY(0) scale(1) skewY(0);}
     }
-    .typewriter-wrap { display: inline-block; }
-    .typewriter {
-      display: inline-block;
-      white-space: nowrap;
-      position: relative;
-      will-change: filter;
-      text-shadow: 0 2px 16px #fff3,0 1px 2px #222a;
-      font-size: inherit;
-    }
-    .typewriter::after {
-      content: "";
-      display: inline-block;
-      width: 2px;
-      height: 1em;
-      margin-left: 6px;
-      background: #fff;
-      vertical-align: baseline;
-      animation: caretBlink .8s step-end infinite;
-    }
-    .typewriter span {
-      display: inline-block;
-      clip-path: inset(0 100% 0 0);
-      animation: reveal 2.1s steps(28, end) .46s both;
-    }
-    @keyframes reveal { to { clip-path: inset(0 0 0 0); } }
-    @keyframes caretBlink { 50% { opacity: 0; } }
-    .typewriter.done::after { opacity: 0; }
+
     .hero-sub {
-      margin: 1.1rem 0 0 0;
+      margin: 1.18rem 0 0 0;
       color: #eaeaea;
-      font-size: clamp(1rem, 2.7vw, 1.18rem);
+      font-size: clamp(1rem, 2.46vw, 1.19rem);
       text-transform: uppercase;
-      letter-spacing: .20em;
+      letter-spacing: .19em;
       font-weight: 800;
       opacity: 0;
       transform: translateY(-24px) scale(.95);
-      text-shadow:0 0 10px rgba(255,255,255,.23);
+      text-shadow:0 0 10px rgba(255,255,255,.33);
       will-change: transform, opacity, text-shadow;
-      animation: heroSubPopIn 1.12s cubic-bezier(.23,1.25,.22,1.07) 1.52s both, heroSubGlow 2.3s ease-in-out 2.68s infinite alternate;
+      animation: heroSubPopIn 1.11s cubic-bezier(.23,1.18,.24,1.06) 1.36s both, heroSubGlow 2.3s ease-in-out 2.3s infinite alternate;
+      word-break:break-word;
     }
     @keyframes heroSubPopIn {
       0% { opacity: 0; transform: translateY(-24px) scale(.95);}
-      60%{ opacity: 1; transform: translateY(9px) scale(1.04);}
+      59%{ opacity: 1; transform: translateY(7px) scale(1.03);}
       82%{ opacity: 1; transform: translateY(-2px) scale(.97);}
       100%{ opacity: 1; transform: translateY(0) scale(1);}
     }
     @keyframes heroSubGlow {
-      from { text-shadow: 0 0 11px #fff7, 0 0px 0px #8cf4;}
-      to   { text-shadow: 0 0 36px #ffffffc9, 0 6px 26px #8cf8;}
+      from { text-shadow: 0 0 14px #fff8, 0 0px 0px #5abff933;}
+      to   { text-shadow: 0 0 40px #ffffffcc, 0 6px 16px #54a4e744;}
     }
+
     .tab-area {
       background: var(--page);
       border-radius: var(--radius) var(--radius) 0 0;
-      padding: clamp(16px, 4vw, 30px) clamp(4px, 2vw, 16px) clamp(22px, 6vw, 38px);
-      box-shadow: 0 -5px 24px rgba(15,23,42,.07);
-      width: 100%;
+      padding: clamp(18px, 3vw, 32px) clamp(4px, 2.4vw, 18px) clamp(24px, 5vw, 42px);
+      box-shadow: 0 -5px 26px rgba(15,23,42,.05);
+      width: 100vw;
+      max-width:100vw;
       box-sizing: border-box;
-      margin-top: -18px;
+      margin: 0 auto -2px auto;
+      overflow-x:hidden;
     }
     .tabs-row {
       display: flex;
-      gap: .86rem;
+      gap: .83rem;
       justify-content: center;
       flex-wrap: wrap;
-      margin: 0 auto 18px;
-      max-width: 1000px;
+      margin: 0 auto 22px auto;
+      max-width: 1100px;
     }
     .tab {
-      padding: .72em 1.3em;
+      padding: .80em 1.5em;
       border-radius: 12px;
       background: var(--muted);
       font-weight: 800;
-      letter-spacing: .02em;
+      letter-spacing: .01em;
       cursor: pointer;
-      transition: transform .18s linear, box-shadow .28s var(--easing), background .28s var(--easing), color .28s var(--easing);
+      transition: transform .18s linear, box-shadow .28s cubic-bezier(.22,.6,.36,1.07), background .24s cubic-bezier(.22,.6,.41,1.07), color .28s;
       will-change: transform;
-      font-size: clamp(.99rem, 2vw, 1.08rem);
-      margin-bottom: 8px;
+      font-size: clamp(1.01rem, 2vw, 1.17rem);
+      margin-bottom: 10px;
     }
-    .tab:hover { box-shadow: 0 12px 24px rgba(25,118,210,.1);}
+    .tab:hover { box-shadow: 0 10px 24px rgba(25,118,210,.07);}
     .tab.active {
       background: linear-gradient(90deg,#111,#333);
       color: #fff;
       transform: translateY(-3px);
     }
     .content-area {
-      max-width: 1000px;
+      max-width: 1050px;
       margin: 0 auto;
-      padding: clamp(6px, 2vw, 20px);
+      padding: clamp(5px, 1.8vw, 18px);
       min-height: 340px;
       position: relative;
       box-sizing: border-box;
@@ -205,7 +228,7 @@
       flex-direction: column;
     }
     .panel {
-      border-radius: 12px;
+      border-radius: 14px;
       box-shadow: var(--shadow);
       padding: var(--panel-padding);
       background: #fff;
@@ -215,8 +238,11 @@
       pointer-events: none;
       position: absolute;
       inset: 0;
-      overflow:auto;
-      transition: opacity .38s cubic-bezier(.33,1,.49,.98), transform .36s cubic-bezier(.35,1.55,.46,.98);
+      overflow-x: auto;
+      overflow-y: auto;
+      transition: opacity .37s cubic-bezier(.33,1,.49,.98), transform .34s cubic-bezier(.33,1.15,.42,.95);
+      max-width:100vw;
+      box-sizing:border-box;
     }
     .panel.active {
       opacity: 1;
@@ -231,61 +257,109 @@
       100%{ opacity:1; transform: scale(1);}
     }
     .panel h3 {
-      margin: 0 0 .75em 0;
-      font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+      margin: 0 0 .79em 0;
+      font-size: clamp(1.17rem, 2vw, 1.47rem);
       font-weight: 900;
     }
-    .panel p {
-      margin: 0 0 1em 0;
-      font-size: clamp(.95rem, 2vw, 1.09rem);
+    .panel p, .panel ul, .panel li {
+      font-size: clamp(.97rem, 2vw, 1.13rem);
       line-height: 1.72;
-      color: rgba(0,0,0,.78);
+      color: rgba(0,0,0,.81);
+      word-break: break-word;
+      overflow-wrap:anywhere;
     }
-    @media (max-width: 900px) {
-      .hero-title { font-size: clamp(1.7rem, 7vw, 2.7rem); }
-      .hero-inner { padding: min(5vw,26px) 0;}
-      .content-area { min-height: 240px;}
+
+    /* 专属团队成员样式 */
+    .team-list { display: flex; flex-wrap: wrap; gap: 24px; justify-content:flex-start;}
+    .team-member {
+      background:#f6f9fb;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px #1481bb0a,0 0px 0px #fff;
+      padding:18px 22px 14px 22px;
+      flex: 1 1 310px;
+      min-width:205px; max-width:370px;
+      display: flex;
+      flex-direction: column;
+      margin:0 auto;
+      box-sizing:border-box;
     }
-    @media (max-width: 700px) {
-      .topbar { flex-direction: row; gap: .7rem; padding: 0 clamp(3px,2.3vw,16px);}
-      .brand { font-size: 1.01rem;}
-      header.hero { padding: clamp(8px,3vw,18px); height: max(240px,35vh);}
-      .tabs-row { flex-wrap: wrap; gap: .52em; }
-      .tab { padding: .6em 1em; font-size: 1rem;}
-      .tab-area { border-radius: 12px 12px 0 0; }
-      .content-area { padding: clamp(0px,1vw,8px);}
-      .panel { border-radius: 8px; }
+    .team-member h4 {
+      margin:0 0 7px 0;
+      font-size:1.11em;
+      color: #155799;
+      font-weight: bold;
+      display: flex; flex-wrap:wrap; align-items:center;gap:6px;
     }
-    @media (max-width: 500px) {
-      .topbar { min-height: 46px; font-size: .99rem;}
-      .brand { font-size: .98rem;}
-      header.hero { background-position: 55% 45%; }
-      .hero-inner { padding: 0;}
-      .hero-sub { font-size: .93rem; }
-      .panel h3 { font-size: 1.02rem; }
-      .tab-area { padding: clamp(7px,2vw,14px);}
+    .team-member .role {
+      font-weight:normal;background:#1976d2;color:#fff;
+      font-size:.92em; border-radius:6px; padding:2px 10px;margin-left:8px;
     }
-    @media (max-width:360px){
-      .panel { padding: clamp(4px,1vw,10px);}
-      .tab-area { padding-bottom: 12px;}
+    .team-member ul {margin:.1em 0 .3em 0;padding-inline-start:18px;font-size:.99em}
+    .team-member ul ul { padding-inline-start:16px; margin:.13em 0;}
+    .team-member li { word-break:break-all;}
+
+    @media (max-width: 1030px) {
+      .team-list {
+        gap:14px;
+        justify-content:center;
+      }
+      .team-member {
+        min-width:160px; max-width:420px;
+        padding:13px 9px 11px 13px;
+      }
+    }
+    @media (max-width:800px) {
+      .content-area { padding:clamp(0px,1.3vw,6px);}
+      .panel { border-radius:9px;}
+      .team-list{gap:11px;}
+      .team-member{max-width: 370px;}
+    }
+    @media (max-width:600px) {
+      .topbar {padding: 0 clamp(4px, 2vw, 12px);}
+      .panel, .tab-area, .content-area {
+        border-radius:6px;
+        padding-left:clamp(2px,2vw,7px);
+        padding-right:clamp(2px,2vw,7px);
+      }
+      .team-list{ gap:7px;}
+      .team-member{
+        padding:9px 6px 8px 9px;
+        min-width: 90vw; max-width:99vw;
+      }
+      .logo-area img {height:34px;}
+    }
+    @media (max-width:420px){
+      .hero-inner{padding-left:2px;padding-right:2px;}
+      .panel, .panel.active, .tab-area, .content-area {padding-left:2px;padding-right:2px;}
+      .team-list {
+        gap:3px;
+      }
+    }
+    img, video {
+      max-width:100%;
+      height:auto;
+      display: block;
+      box-sizing:border-box;
+      border-radius: 6px;
     }
   </style>
 </head>
 <body>
   <div class="topbar">
-    <a class="logo" href="/">
-      <img src="./images/logo_white.png" alt="Youth Peak Logo">
-      <span class="brand">Youth Peak</span>
-    </a>
+    <div class="topbar-inner">
+      <a class="logo-area" href="/">
+        <img src="./images/logo_white.png" alt="Youth Peak Logo">
+        <span class="brand">Youth Peak</span>
+      </a>
+      <div class="lang-switch">
+        <button class="lang-btn" onclick="switchLang()">中/EN</button>
+      </div>
+    </div>
   </div>
 
   <header class="hero" role="banner">
     <div class="hero-inner">
-      <h1 class="hero-title">
-        <span class="typewriter-wrap">
-          <span class="typewriter"><span>Youth Peak Training Camp</span></span>
-        </span>
-      </h1>
+      <h1 class="hero-title">Youth Peak Training Camp</h1>
       <p class="hero-sub">PEAK THE PASSION</p>
     </div>
   </header>
@@ -313,7 +387,111 @@
       </div>
       <div class="panel" id="panel-1">
         <h3>团队成员</h3>
-        <p>11111</p>
+        <div class="team-list">
+          <div class="team-member">
+            <h4>Harold Yang <span class="role">主教练，领队，创始人</span></h4>
+            <ul>
+              <li><strong>专项：</strong>5000M</li>
+              <li><strong>出生日期：</strong>2009年4月19日</li>
+              <li><strong>各项目PB：</strong>
+                <ul>
+                  <li>800M: 2:14</li>
+                  <li>3000M: 10:40</li>
+                  <li>5000M: 18:29</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="team-member">
+            <h4>郭天一 <span class="role">副教练</span></h4>
+            <ul>
+              <li><strong>专项：</strong>800M 1500M</li>
+              <li><strong>出生日期：</strong>2009年6月25日</li>
+              <li><strong>各项目PB：</strong>
+                <ul>
+                  <li>800M: 2:08</li>
+                  <li>1500M: 4:40</li>
+                  <li>3000M: 10:30</li>
+                  <li>5000M: 18:50</li>
+                  <li>半程马拉松: 1:41:00</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="team-member">
+            <h4>Eric Zhang <span class="role">副领队，创始人</span></h4>
+            <ul>
+              <li><strong>专项：</strong>5000M</li>
+              <li><strong>出生日期：</strong>2010年8月1日</li>
+              <li><strong>各项目PB：</strong>暂无</li>
+            </ul>
+          </div>
+          <div class="team-member">
+            <h4>甄熠然 <span class="role">数字运营负责人</span></h4>
+            <ul>
+              <li>训练营网站打造</li>
+            </ul>
+          </div>
+          <div class="team-member">
+            <h4>石原瑞</h4>
+            <ul>
+              <li><strong>专项：</strong>5000M 10000M</li>
+              <li><strong>出生日期：</strong>2012年4月11日</li>
+              <li><strong>各项目PB：</strong>
+                <ul>
+                  <li>800M: 2:39</li>
+                  <li>1000M: 3:30</li>
+                  <li>3000M: 12:09</li>
+                  <li>5000M: 20:46</li>
+                  <li>10000M: 41:46</li>
+                  <li>半程马拉松: 1:44:04</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="team-member">
+            <h4>郭奥辉</h4>
+            <ul>
+              <li><strong>专项：</strong>800M</li>
+              <li><strong>出生日期：</strong>2008年7月31日</li>
+              <li><strong>各项目PB：</strong>
+                <ul>
+                  <li>400M: 0:58</li>
+                  <li>800M: 2:16</li>
+                  <li>1500M: 4:44</li>
+                  <li>3000M: 11:20</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="team-member">
+            <h4>李云杰</h4>
+            <ul>
+              <li><strong>专项：</strong>5000M</li>
+              <li><strong>出生日期：</strong>2010年3月25日</li>
+              <li><strong>各项目PB：</strong>
+                <ul>
+                  <li>400M: 0:58</li>
+                  <li>800M: 2:20</li>
+                  <li>3000M: 11:32</li>
+                  <li>5000M: 20:30</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="team-member">
+            <h4>张皓轩</h4>
+            <ul>
+              <li><strong>专项：</strong>800M</li>
+              <li><strong>出生日期：</strong>2010年7月21日</li>
+              <li><strong>各项目PB：</strong>
+                <ul>
+                  <li>800M: 2:15</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
       <div class="panel" id="panel-2">
         <h3>训练集锦</h3>
@@ -350,9 +528,11 @@
       });
       tab.addEventListener('touchstart', () => { tab.style.transform = ''; });
     });
-    // 打字动画结束后移除光标
-    const typewriter = document.querySelector('.typewriter');
-    setTimeout(() => typewriter.classList.add('done'), 2100 + 460);
+
+    // 语言切换按钮示例（如需国际化可自行扩展）
+    function switchLang() {
+      alert('中英切换功能请根据实际需求对接国际化实现。');
+    }
   </script>
 </body>
 </html>
