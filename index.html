@@ -265,12 +265,10 @@
 </head>
 <body>
 
-  <!-- 头栏（logo 使用 apple_icon.png） -->
-  <div class="topbar">
-    <div class="logo">
-      <img src="./images/apple_icon.png" alt="Youth Peak Logo">
-      <span class="brand">Youth Peak</span>
-  </div>
+<!-- 头栏 -->
+<div class="topbar">
+  <div class="logo">LOGO</div>
+</div>
 
   <!-- Hero（优化打字动画防裁剪 + 更大字号） -->
   <header class="hero" role="banner">
@@ -358,17 +356,6 @@
       });
       tab.addEventListener('touchstart', () => { tab.style.transform = ''; });
     });
-
-    // 跑马灯速度适配
-    const track = document.querySelector('.marquee-track');
-    function adjustMarquee(){
-      const w = window.innerWidth;
-      const base = 14; // 秒
-      const dur = w < 400 ? base * 1.4 : w < 700 ? base * 1.2 : base;
-      track.style.animationDuration = `${dur}s`;
-    }
-    adjustMarquee();
-    window.addEventListener('resize', adjustMarquee);
 
     // 打字动画结束后移除光标（避免遮挡）
     const typewriter = document.querySelector('.typewriter');
