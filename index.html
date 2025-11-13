@@ -50,10 +50,11 @@
     }
     .lang-btn:hover,.lang-btn:focus{background:#2773d0;color:#fff;}
 
-    /* ──────────────────────  HERO  ────────────────────── */
+    /* ──────────────────────  HERO（完整显示1920x1080图片） ────────────────────── */
     header.hero{
       position:relative;min-height:47vh;height:min(540px,56.25vw);max-height:95vw;
-      background:url('./images/hero.jpg') center center / cover no-repeat;
+      background:url('./images/hero.jpg') center center / contain no-repeat;
+      background-color: #000; /* 背景色防留白 */
       background-attachment:fixed;display:flex;align-items:center;justify-content:center;
       text-align:center;padding:clamp(12px,5vw,32px) clamp(8px,4vw,22px);overflow:hidden;
     }
@@ -137,22 +138,13 @@
 
     .tab.active {
       color: #fff;
-      background: linear-gradient(135deg, #6e8efb, #a777e4, #f7931e);
-      background-size: 200% 200%;
-      animation: gradientShift 4s ease infinite;
-      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      background: #000; /* 纯黑颜色 */
       box-shadow: 
-        0 8px 32px rgba(110, 142, 251, 0.3),
-        0 0 0 6px rgba(110, 142, 251, 0.15),
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 0 6px rgba(0, 0, 0, 0.15),
         inset 0 1px 3px rgba(255, 255, 255, 0.3);
       transform: translateY(-6px) scale(1.05);
       z-index: 10;
-    }
-
-    @keyframes gradientShift {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
 
     .tab.active::before {
@@ -416,7 +408,7 @@
           <h3>团队成员</h3>
           <div class="team-list">
             <div class="team-member">
-              <h4>Harold Yang <span class="role">主教练，领队，创始人</span></h4>
+              <h4> Harold Yang <span class="role">主教练，领队，创始人</span></h4>
               <ul>
                 <li><strong>专项：</strong>5000M</li>
                 <li><strong>出生日期：</strong>2009年4月19日</li>
