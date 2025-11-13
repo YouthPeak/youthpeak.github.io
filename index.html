@@ -108,29 +108,116 @@
       to  {text-shadow:0 0 40px #ffffffcc,0 6px 16px #54a4e744;}
     }
 
-    /* ──────────────────────  TABS & PANELS  ────────────────────── */
-    .tab-area{
-      background:var(--page);border-radius:var(--radius) var(--radius) 0 0;
-      padding:clamp(18px,3vw,32px) clamp(4px,2.4vw,18px) clamp(24px,5vw,42px);
-      box-shadow:0 -5px 26px rgba(15,23,42,.05);width:100vw;max-width:100vw;
-      box-sizing:border-box;margin:0 auto -2px auto;overflow-x:hidden;
+    /* ──────────────────────  高级选项卡样式  ────────────────────── */
+    .tab-area {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: var(--radius) var(--radius) 0 0;
+      padding: clamp(18px, 3vw, 32px) clamp(4px, 2.4vw, 18px) clamp(24px, 5vw, 42px);
+      box-shadow: 
+        0 -5px 26px rgba(15, 23, 42, .05),
+        0 1px 3px rgba(0,0,0,.1);
+      width: 100vw;
+      max-width: 100vw;
+      box-sizing: border-box;
+      margin: 0 auto -2px auto;
+      overflow-x: hidden;
+      position: relative;
+      z-index: 1;
     }
-    .tabs-row{
-      display:flex;gap:.83rem;justify-content:center;flex-wrap:wrap;
-      margin:0 auto 22px auto;max-width:1100px;
+
+    .tabs-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 0 auto 28px auto;
+      max-width: 1100px;
+      padding: 0 1rem;
+      position: relative;
     }
-    .tab{
-      padding:.80em 1.5em;border-radius:12px;background:var(--muted);
-      font-weight:800;letter-spacing:.01em;cursor:pointer;
-      transition:transform .18s linear,box-shadow .28s cubic-bezier(.22,.6,.36,1.07),
-                 background .24s cubic-bezier(.22,.6,.41,1.07),color .28s;
-      font-size:clamp(1.01rem,2vw,1.17rem);margin-bottom:10px;
+
+    .tab {
+      position: relative;
+      padding: 0.9em 1.8em;
+      border-radius: 16px;
+      background: rgba(243, 246, 251, 0.7);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      font-size: clamp(1.02rem, 2.1vw, 1.2rem);
+      color: #444;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1.5px solid transparent;
+      box-shadow: 0 4px 12px rgba(25, 118, 210, 0.08);
+      z-index: 1;
     }
-    .tab:hover{box-shadow:0 10px 24px rgba(25,118,210,.07);}
-    .tab.active{
-      background:linear-gradient(90deg,#111,#333);color:#fff;
-      transform:translateY(-3px);
+
+    .tab:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 28px rgba(25, 118, 210, 0.18);
+      background: rgba(25, 118, 210, 0.08);
+      color: #1976d2;
     }
+
+    .tab.active {
+      color: #fff;
+      background: linear-gradient(135deg, #6e8efb, #a777e4, #f7931e);
+      background-size: 200% 200%;
+      animation: gradientShift 4s ease infinite;
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 
+        0 8px 32px rgba(110, 142, 251, 0.3),
+        0 0 0 6px rgba(110, 142, 251, 0.15),
+        inset 0 1px 3px rgba(255, 255, 255, 0.3);
+      transform: translateY(-6px) scale(1.05);
+      z-index: 10;
+    }
+
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .tab.active::before {
+      content: "";
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+      opacity: 0;
+      animation: pulseGlow 2.5s ease-out infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    @keyframes pulseGlow {
+      0%   { transform: scale(0.8); opacity: 0; }
+      50%  { transform: scale(1.1); opacity: 0.4; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+
+    .tabs-row::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      height: 3px;
+      width: 60px;
+      background: linear-gradient(90deg, #6e8efb, #f7931e);
+      border-radius: 2px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateX(var(--indicator-x, 0));
+      opacity: 1;
+      pointer-events: none;
+    }
+
+    /* ──────────────────────  CONTENT PANELS  ────────────────────── */
     .content-area{
       max-width:1050px;margin:0 auto;padding:clamp(5px,1.8vw,18px);
       min-height:340px;position:relative;box-sizing:border-box;
@@ -146,11 +233,7 @@
     }
     .panel.active{
       opacity:1;transform:scale(1);pointer-events:auto;z-index:1;
-      position:relative;animation:panelFadeIn .5s cubic-bezier(.3,1.2,.38,1.04);
-    }
-    @keyframes panelFadeIn{
-      0%{opacity:0;transform:scale(.97);}
-      100%{opacity:1;transform:scale(1);}
+      position:relative;
     }
     .panel h3{
       margin:0 0 .79em 0;font-size:clamp(1.17rem,2vw,1.47rem);font-weight:900;
@@ -232,7 +315,7 @@
     </div>
   </header>
 
-  <!-- ========================  TABS & CONTENT  ======================== -->
+  <!-- ========================  高级选项卡  ======================== -->
   <section class="tab-area" aria-label="选项卡区域">
     <div class="tabs-row" id="tabsRow">
       <div class="tab active" data-index="0">创营理念</div>
@@ -377,34 +460,70 @@
   </section>
 
   <script>
-    // 选项卡切换
+    // 高级选项卡切换 + 动画
     const tabs = document.querySelectorAll('.tab');
     const panels = document.querySelectorAll('.panel');
+    const indicator = document.querySelector('.tabs-row');
+
     tabs.forEach((tab, idx) => {
       tab.addEventListener('click', () => {
+        // 移除所有 active
         tabs.forEach(t => t.classList.remove('active'));
-        panels.forEach(p => p.classList.remove('active'));
+        panels.forEach(p => {
+          p.classList.remove('active');
+          p.style.opacity = '0';
+          p.style.transform = 'scale(0.97)';
+        });
+
+        // 添加新 active
         tab.classList.add('active');
-        panels[idx].classList.add('active');
+        const activePanel = panels[idx];
+        activePanel.classList.add('active');
+        
+        // 触发动画
+        requestAnimationFrame(() => {
+          activePanel.style.opacity = '1';
+          activePanel.style.transform = 'scale(1)';
+        });
+
+        // 移动底部指示器
+        const tabRect = tab.getBoundingClientRect();
+        const rowRect = indicator.getBoundingClientRect();
+        const offset = tabRect.left - rowRect.left + tabRect.width / 2 - 30;
+        indicator.style.setProperty('--indicator-x', `${offset}px`);
       });
+
+      // 鼠标悬停 3D 倾斜
       let rect = null;
       tab.addEventListener('mousemove', e => {
         rect = rect || tab.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width - 0.5;
         const y = (e.clientY - rect.top) / rect.height - 0.5;
-        tab.style.transform = `translate(${x * 6}px, ${y * 4}px) rotate(${x * 1.6}deg)`;
+        if (!tab.classList.contains('active')) {
+          tab.style.transform = `translate(${x * 8}px, ${y * 6}px) rotate(${x * 2}deg) scale(1.02)`;
+        }
       });
       tab.addEventListener('mouseleave', () => {
-        tab.style.transform = '';
+        if (!tab.classList.contains('active')) {
+          tab.style.transform = '';
+        }
         rect = null;
       });
-      tab.addEventListener('touchstart', () => { tab.style.transform = ''; });
     });
 
-    // 语言切换 → 敬请期待
+    // 语言切换
     function switchLang() {
       alert('敬请期待');
     }
+
+    // CSS 变量支持指示器
+    const style = document.createElement('style');
+    style.textContent = `
+      .tabs-row::after {
+        transform: translateX(var(--indicator-x, 0px)) !important;
+      }
+    `;
+    document.head.appendChild(style);
   </script>
 </body>
 </html>
