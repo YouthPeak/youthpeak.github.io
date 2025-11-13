@@ -23,18 +23,27 @@
       position:sticky;top:0;z-index:100;
     }
     .topbar-inner{display:flex;align-items:center;width:100%;min-width:0;gap:2vw;}
+    
+    /* 左侧：仅 logo 图片 + 文字（无额外背景/圆角） */
     .logo-area{
       display:flex;align-items:center;gap:.63rem;min-width:0;
       cursor:pointer;text-decoration:none;
+      transition:transform .2s ease,opacity .2s ease;
+    }
+    .logo-area:hover{
+      transform:translateY(-2px) scale(1.03);   /* 悬停动画：微抬 + 轻微放大 */
+      opacity:.92;
     }
     .logo-area img{
-      height:44px;width:auto;border-radius:8px;background:#fff;
-      box-shadow:0 2px 10px #1976d22d;max-width:min(17vw,146px);
+      height:44px;width:auto;max-width:min(17vw,146px);
+      display:block;
+      /* 完全去掉背景、圆角、阴影，让图片原样显示 */
     }
     .brand{
       font-weight:900;font-size:clamp(1.03rem,2.5vw,1.48rem);
       letter-spacing:.04em;color:#fff;user-select:none;white-space:nowrap;
     }
+
     .lang-switch{margin-left:auto;display:flex;align-items:center;gap:.3em;}
     .lang-btn{
       background:#172337;color:#fff;font-weight:800;
@@ -44,7 +53,7 @@
     }
     .lang-btn:hover,.lang-btn:focus{background:#2773d0;color:#fff;}
 
-    /* ──────────────────────  HERO  ────────────────────── */
+    /* ──────────────────────  HERO（保持之前修正） ────────────────────── */
     header.hero{
       position:relative;min-height:47vh;height:min(470px,calc(100vw/1.9));max-height:95vw;
       background:url('./images/hero.jpg') center center / cover no-repeat;
@@ -94,113 +103,68 @@
       to  {text-shadow:0 0 40px #ffffffcc,0 6px 16px #54a4e744;}
     }
 
-    /* ──────────────────────  TABS & PANELS  ────────────────────── */
-    .tab-area{
-      background:var(--page);border-radius:var(--radius) var(--radius) 0 0;
+    /* ──────────────────────  其余样式保持原样（省略） ────────────────────── */
+    /*（下面的 .tab-area、.panel、.team-list 等全部保留你原来的代码）*/
+    .tab-area{background:var(--page);border-radius:var(--radius) var(--radius) 0 0;
       padding:clamp(18px,3vw,32px) clamp(4px,2.4vw,18px) clamp(24px,5vw,42px);
       box-shadow:0 -5px 26px rgba(15,23,42,.05);width:100vw;max-width:100vw;
-      box-sizing:border-box;margin:0 auto -2px auto;overflow-x:hidden;
-    }
-    .tabs-row{
-      display:flex;gap:.83rem;justify-content:center;flex-wrap:wrap;
-      margin:0 auto 22px auto;max-width:1100px;
-    }
-    .tab{
-      padding:.80em 1.5em;border-radius:12px;background:var(--muted);
+      box-sizing:border-box;margin:0 auto -2px auto;overflow-x:hidden;}
+    .tabs-row{display:flex;gap:.83rem;justify-content:center;flex-wrap:wrap;
+      margin:0 auto 22px auto;max-width:1100px;}
+    .tab{padding:.80em 1.5em;border-radius:12px;background:var(--muted);
       font-weight:800;letter-spacing:.01em;cursor:pointer;
       transition:transform .18s linear,box-shadow .28s cubic-bezier(.22,.6,.36,1.07),
                  background .24s cubic-bezier(.22,.6,.41,1.07),color .28s;
-      font-size:clamp(1.01rem,2vw,1.17rem);margin-bottom:10px;
-    }
+      font-size:clamp(1.01rem,2vw,1.17rem);margin-bottom:10px;}
     .tab:hover{box-shadow:0 10px 24px rgba(25,118,210,.07);}
-    .tab.active{
-      background:linear-gradient(90deg,#111,#333);color:#fff;
-      transform:translateY(-3px);
-    }
-    .content-area{
-      max-width:1050px;margin:0 auto;padding:clamp(5px,1.8vw,18px);
-      min-height:340px;position:relative;box-sizing:border-box;
-      display:flex;flex-direction:column;
-    }
-    .panel{
-      border-radius:14px;box-shadow:var(--shadow);padding:var(--panel-padding);
+    .tab.active{background:linear-gradient(90deg,#111,#333);color:#fff;transform:translateY(-3px);}
+    .content-area{max-width:1050px;margin:0 auto;padding:clamp(5px,1.8vw,18px);
+      min-height:340px;position:relative;box-sizing:border-box;display:flex;flex-direction:column;}
+    .panel{border-radius:14px;box-shadow:var(--shadow);padding:var(--panel-padding);
       background:#fff;margin-bottom:0;opacity:0;transform:scale(.97);
       pointer-events:none;position:absolute;inset:0;overflow:auto;
-      transition:opacity .37s cubic-bezier(.33,1,.49,.98),
-                 transform .34s cubic-bezier(.33,1.15,.42,.95);
-      max-width:100vw;box-sizing:border-box;
-    }
-    .panel.active{
-      opacity:1;transform:scale(1);pointer-events:auto;z-index:1;
-      position:relative;animation:panelFadeIn .5s cubic-bezier(.3,1.2,.38,1.04);
-    }
-    @keyframes panelFadeIn{
-      0%{opacity:0;transform:scale(.97);}
-      100%{opacity:1;transform:scale(1);}
-    }
-    .panel h3{
-      margin:0 0 .79em 0;font-size:clamp(1.17rem,2vw,1.47rem);font-weight:900;
-    }
-    .panel p,.panel ul,.panel li{
-      font-size:clamp(.97rem,2vw,1.13rem);line-height:1.72;
-      color:rgba(0,0,0,.81);word-break:break-word;overflow-wrap:anywhere;
-    }
-
-    /* 专属团队成员样式 */
+      transition:opacity .37s cubic-bezier(.33,1,.49,.98),transform .34s cubic-bezier(.33,1.15,.42,.95);
+      max-width:100vw;box-sizing:border-box;}
+    .panel.active{opacity:1;transform:scale(1);pointer-events:auto;z-index:1;position:relative;
+      animation:panelFadeIn .5s cubic-bezier(.3,1.2,.38,1.04);}
+    @keyframes panelFadeIn{0%{opacity:0;transform:scale(.97);}100%{opacity:1;transform:scale(1);}}
+    .panel h3{margin:0 0 .79em 0;font-size:clamp(1.17rem,2vw,1.47rem);font-weight:900;}
+    .panel p,.panel ul,.panel li{font-size:clamp(.97rem,2vw,1.13rem);line-height:1.72;
+      color:rgba(0,0,0,.81);word-break:break-word;overflow-wrap:anywhere;}
     .team-list{display:flex;flex-wrap:wrap;gap:24px;justify-content:flex-start;}
-    .team-member{
-      background:#f6f9fb;border-radius:10px;
+    .team-member{background:#f6f9fb;border-radius:10px;
       box-shadow:0 2px 12px #1481bb0a,0 0 0 #fff;
       padding:18px 22px 14px 22px;flex:1 1 310px;
       min-width:205px;max-width:370px;display:flex;flex-direction:column;
-      margin:0 auto;box-sizing:border-box;
-    }
-    .team-member h4{
-      margin:0 0 7px 0;font-size:1.11em;color:#155799;
-      font-weight:bold;display:flex;flex-wrap:wrap;align-items:center;gap:6px;
-    }
-    .team-member .role{
-      font-weight:normal;background:#1976d2;color:#fff;
-      font-size:.92em;border-radius:6px;padding:2px 10px;margin-left:8px;
-    }
+      margin:0 auto;box-sizing:border-box;}
+    .team-member h4{margin:0 0 7px 0;font-size:1.11em;color:#155799;
+      font-weight:bold;display:flex;flex-wrap:wrap;align-items:center;gap:6px;}
+    .team-member .role{font-weight:normal;background:#1976d2;color:#fff;
+      font-size:.92em;border-radius:6px;padding:2px 10px;margin-left:8px;}
     .team-member ul{margin:.1em 0 .3em 0;padding-inline-start:18px;font-size:.99em}
     .team-member ul ul{padding-inline-start:16px;margin:.13em 0;}
     .team-member li{word-break:break-all;}
-
-    @media (max-width:1030px){
-      .team-list{gap:14px;justify-content:center;}
-      .team-member{min-width:160px;max-width:420px;padding:13px 9px 11px 13px;}
-    }
-    @media (max-width:800px){
-      .content-area{padding:clamp(0px,1.3vw,6px);}
-      .panel{border-radius:9px;}
-      .team-list{gap:11px;}
-      .team-member{max-width:370px;}
-    }
-    @media (max-width:600px){
-      .topbar{padding:0 clamp(4px,2vw,12px);}
-      .panel,.tab-area,.content-area{
-        border-radius:6px;padding-left:clamp(2px,2vw,7px);
-        padding-right:clamp(2px,2vw,7px);
-      }
-      .team-list{gap:7px;}
-      .team-member{padding:9px 6px 8px 9px;min-width:90vw;max-width:99vw;}
-      .logo-area img{height:34px;}
-    }
-    @media (max-width:420px){
-      .hero-inner{padding-left:2px;padding-right:2px;}
+    @media (max-width:1030px){.team-list{gap:14px;justify-content:center;}
+      .team-member{min-width:160px;max-width:420px;padding:13px 9px 11px 13px;}}
+    @media (max-width:800px){.content-area{padding:clamp(0px,1.3vw,6px);}
+      .panel{border-radius:9px;}.team-list{gap:11px;}.team-member{max-width:370px;}}
+    @media (max-width:600px){.topbar{padding:0 clamp(4px,2vw,12px);}
+      .panel,.tab-area,.content-area{border-radius:6px;padding-left:clamp(2px,2vw,7px);
+        padding-right:clamp(2px,2vw,7px);}
+      .team-list{gap:7px;}.team-member{padding:9px 6px 8px 9px;min-width:90vw;max-width:99vw;}
+      .logo-area img{height:34px;}}
+    @media (max-width:420px){.hero-inner{padding-left:2px;padding-right:2px;}
       .panel,.panel.active,.tab-area,.content-area{padding-left:2px;padding-right:2px;}
-      .team-list{gap:3px;}
-    }
+      .team-list{gap:3px;}}
     img,video{max-width:100%;height:auto;display:block;box-sizing:border-box;border-radius:6px;}
   </style>
 </head>
 <body>
 
-  <!-- ========================  TOPBAR  ======================== -->
+  <!-- ========================  TOPBAR（已优化） ======================== -->
   <div class="topbar">
     <div class="topbar-inner">
-      <!-- 左侧 Logo + 加粗文字（点击回首页） -->
+      <!-- 左侧：仅 logo 图片 + 文字，点击回首页，带悬停动画 -->
       <a href="./index.html" class="logo-area" aria-label="Youth Peak 首页">
         <img src="./images/logo_white.png" alt="Youth Peak Logo">
         <span class="brand">Youth Peak</span>
@@ -213,7 +177,7 @@
     </div>
   </div>
 
-  <!-- ========================  HERO  ======================== -->
+  <!-- ========================  HERO（保持完整显示） ======================== -->
   <header class="hero" role="banner">
     <div class="hero-inner">
       <h1 class="hero-title">Youth Peak Training Camp</h1>
@@ -221,7 +185,7 @@
     </div>
   </header>
 
-  <!-- ========================  TABS & CONTENT  ======================== -->
+  <!-- ========================  以下保持你原来的选项卡、团队等内容 ======================== -->
   <section class="tab-area" aria-label="选项卡区域">
     <div class="tabs-row" id="tabsRow">
       <div class="tab active" data-index="0">创营理念</div>
@@ -286,7 +250,7 @@
             </ul>
           </div>
           <div class="team-member">
-            <h4>甄熠然 <span class="role">数字运营负责人</span></h4>
+            <h4>Benjamin Zhen <span class="role">数字运营负责人</span></h4>
             <ul>
               <li>训练营网站打造</li>
             </ul>
@@ -388,7 +352,7 @@
     });
 
     // 语言切换占位
-    function switchLang(){alert('中英切换功能请自行对接 i18n 实现。');}
+    function switchLang(){alert('敬请期待。');}
   </script>
 </body>
 </html>
