@@ -50,36 +50,23 @@
     }
     .lang-btn:hover,.lang-btn:focus{background:#2773d0;color:#fff;}
 
-    /* ──────────────────────  HERO（高度 = 图片真实高度） ────────────────────── */
+    /* ──────────────────────  HERO（1920×960 完全铺满） ────────────────────── */
     header.hero{
-      height: auto; /* 不再固定高度，由 JS 设置 */
-      min-height: 300px; /* 防止图片未加载时塌陷 */
+      width: 100vw;
+      height: 960px;
+      max-height: 100vh;
+      background-image: url('./images/hero.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 2rem;
       position: relative;
       overflow: hidden;
-      background: #000;
-      transition: height 0.3s ease;
     }
-    .hero-image{
-      position: absolute;
-      top: 50%; left: 50%;
-      width: auto;
-      height: auto;
-      max-width: 100%;
-      max-height: none;
-      transform: translate(-50%, -50%);
-      object-fit: contain;
-      z-index: 0;
-      opacity: 0;
-      transition: opacity 0.6s ease;
-    }
-    .hero-image.loaded {
-      opacity: 1;
-    }
+
     .hero::before{
       content: "";
       position: absolute;
@@ -87,6 +74,7 @@
       background: linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.15));
       z-index: 1;
     }
+
     .hero-inner{
       max-width: 1100px;
       width: 100%;
@@ -94,6 +82,7 @@
       position: relative;
       z-index: 2;
     }
+
     .hero-title{
       font-size: clamp(2.6rem, 7vw, 4.2rem);
       font-weight: 900;
@@ -102,6 +91,7 @@
       animation: fadeIn 0.6s ease-out forwards;
       text-shadow: 0 2px 12px rgba(0,0,0,0.4);
     }
+
     .hero-sub{
       margin: 0.8rem 0 1.2rem 0;
       font-size: clamp(1rem, 2.2vw, 1.18rem);
@@ -111,6 +101,7 @@
       color: rgba(255,255,255,0.88);
       animation: fadeIn 0.8s ease-out 0.2s forwards;
     }
+
     .hero-since{
       font-size: 0.95rem;
       color: rgba(255,255,255,0.7);
@@ -118,9 +109,30 @@
       font-weight: 500;
       animation: fadeIn 1s ease-out 0.4s forwards;
     }
+
     @keyframes fadeIn{
       from{opacity:0;transform:translateY(20px);}
       to{opacity:1;transform:translateY(0);}
+    }
+
+    /* 响应式：小屏时保持比例 */
+    @media (max-width: 1920px) {
+      header.hero {
+        height: 50vw;
+        max-height: 960px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header.hero {
+        height: 60vw;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header.hero {
+        height: 70vw;
+      }
     }
 
     /* ──────────────────────  高级选项卡  ────────────────────── */
@@ -252,7 +264,7 @@
 
     .particle-canvas {
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
+      top:  0; left: 0; width: 100%; height: 100%;
       pointer-events: none;
       z-index: 1;
       opacity: 0.18;
@@ -417,9 +429,8 @@
     </div>
   </div>
 
-  <!-- HERO（高度 = hero.jpg 真实高度） -->
-  <header class="hero" role="banner" id="heroSection">
-    <img src="./images/hero.jpg" alt="Youth Peak Training Camp" class="hero-image" id="heroImage">
+  <!-- HERO（1920×960 完全铺满） -->
+  <header class="hero" role="banner">
     <div class="hero-inner">
       <h1 class="hero-title">Youth Peak Training Camp</h1>
       <p class="hero-sub">PEAK THE PASSION</p>
@@ -629,30 +640,6 @@
   </footer>
 
   <script>
-    // ==================== HERO 动态高度 ====================
-    document.addEventListener('DOMContentLoaded', function () {
-      const heroSection = document.getElementById('heroSection');
-      const heroImage = document.getElementById('heroImage');
-
-      function setHeroHeight() {
-        if (heroImage.naturalHeight > 0) {
-          const imgHeight = heroImage.naturalHeight;
-          heroSection.style.height = imgHeight + 'px';
-          heroImage.classList.add('loaded');
-        }
-      }
-
-      // 图片加载完成
-      if (heroImage.complete && heroImage.naturalHeight > 0) {
-        setHeroHeight();
-      } else {
-        heroImage.onload = setHeroHeight;
-      }
-
-      // 窗口调整时重新计算（适配缩放）
-      window.addEventListener('resize', setHeroHeight);
-    });
-
     // ==================== 选项卡 + 粒子系统 ====================
     const tabs = document.querySelectorAll('.tab');
     const panels = document.querySelectorAll('.panel');
