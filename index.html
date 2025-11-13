@@ -122,7 +122,7 @@
       to  {text-shadow:0 0 40px #ffffffcc,0 6px 16px #54a4e744;}
     }
 
-    /* ──────────────────────  高级选项卡（纯黑 + 阴影）  ────────────────────── */
+    /* ──────────────────────  高级选项卡（纯黑 + 深阴影）  ────────────────────── */
     .tab-area {
       background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(12px);
@@ -184,7 +184,7 @@
       100% { transform: scale(1.4); opacity: 0; }
     }
 
-    /* ──────────────────────  内容面板 + 模糊光效粒子  ────────────────────── */
+    /* ──────────────────────  内容面板 + 粒子  ────────────────────── */
     .content-area{
       max-width:1050px;margin:0 auto;padding:clamp(5px,1.8vw,18px);
       min-height:340px;position:relative;box-sizing:border-box;
@@ -423,7 +423,7 @@
         </div>
       </div>
 
-      <!-- 团队成员 -->
+      <!-- 团队成员（完整9人） -->
       <div class="panel" id="panel-1">
         <canvas class="particle-canvas"></canvas>
         <div class="panel-content">
@@ -443,7 +443,6 @@
                 </li>
               </ul>
             </div>
-            <!-- 其余8人保持不变 -->
             <div class="team-member">
               <h4>郭天一 <span class="role">副教练</span></h4>
               <ul>
@@ -460,7 +459,95 @@
                 </li>
               </ul>
             </div>
-            <!-- 继续省略其他成员以节省篇幅 -->
+            <div class="team-member">
+              <h4>Eric Zhang <span class="role">副领队，创始人</span></h4>
+              <ul>
+                <li><strong>专项：</strong>5000M</li>
+                <li><strong>出生日期：</strong>2010年8月1日</li>
+                <li><strong>各项目PB：</strong>暂无</li>
+              </ul>
+            </div>
+            <div class="team-member">
+              <h4>Benjamin Zhen <span class="role">数字运营负责人</span></h4>
+              <ul><li>训练营网站打造</li></ul>
+            </div>
+            <div class="team-member">
+              <h4>杨光 <span class="role">股东</span></h4>
+              <ul>
+                <li><strong>专项：</strong>5000M</li>
+                <li><strong>出生日期：</strong>1970年10月26日</li>
+                <li><strong>各项目PB：</strong>
+                  <ul>
+                    <li>5000M: 20:25</li>
+                  </ul>
+                </li>
+                <li><strong>比赛成绩：</strong>
+                  <ul>
+                    <li>2025年10月26日 WSE 太原站 M50 组别 5000M 冠军</li>
+                    <li>WSE M50 组别记录保持者</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="team-member">
+              <h4>石原瑞</h4>
+              <ul>
+                <li><strong>专项：</strong>5000M 10000M</li>
+                <li><strong>出生日期：</strong>2012年4月11日</li>
+                <li><strong>各项目PB：</strong>
+                  <ul>
+                    <li>800M: 2:39</li>
+                    <li>1000M: 3:30</li>
+                    <li>3000M: 12:09</li>
+                    <li>5000M: 20:46</li>
+                    <li>10000M: 41:46</li>
+                    <li>半程马拉松: 1:44:04</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="team-member">
+              <h4>郭奥辉</h4>
+              <ul>
+                <li><strong>专项：</strong>800M</li>
+                <li><strong>出生日期：</strong>2008年7月31日</li>
+                <li><strong>各项目PB：</strong>
+                  <ul>
+                    <li>400M: 0:58</li>
+                    <li>800M: 2:16</li>
+                    <li>1500M: 4:44</li>
+                    <li>3000M: 11:20</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="team-member">
+              <h4>李云杰</h4>
+              <ul>
+                <li><strong>专项：</strong>5000M</li>
+                <li><strong>出生日期：</strong>2010年3月25日</li>
+                <li><strong>各项目PB：</strong>
+                  <ul>
+                    <li>400M: 0:58</li>
+                    <li>800M: 2:20</li>
+                    <li>3000M: 11:32</li>
+                    <li>5000M: 20:30</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="team-member">
+              <h4>张皓轩</h4>
+              <ul>
+                <li><strong>专项：</strong>800M</li>
+                <li><strong>出生日期：</strong>2010年7月21日</li>
+                <li><strong>各项目PB：</strong>
+                  <ul>
+                    <li>800M: 2:15</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -510,7 +597,7 @@
   </footer>
 
   <script>
-    // 选项卡 + 粒子系统脚本保持不变
+    // 选项卡 + 粒子系统
     const tabs = document.querySelectorAll('.tab');
     const panels = document.querySelectorAll('.panel');
 
