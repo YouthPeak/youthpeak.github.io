@@ -169,7 +169,7 @@
       100% { transform: scale(1.4); opacity: 0; }
     }
 
-    /* ──────────────────────  内容面板 + 重力粒子  ────────────────────── */
+    /* ──────────────────────  内容面板 + 重力粒子（减速）  ────────────────────── */
     .content-area{
       max-width:1050px;margin:0 auto;padding:clamp(5px,1.8vw,18px);
       min-height:340px;position:relative;box-sizing:border-box;
@@ -229,7 +229,7 @@
       opacity: 0.6;
     }
 
-    /* ──────────────────────  加入我们 - 高级联系卡片  ────────────────────── */
+    /* ──────────────────────  加入我们 - 方形联系图  ────────────────────── */
     .join-card {
       background: linear-gradient(145deg, #ffffff, #f5f8ff);
       border-radius: 18px;
@@ -253,18 +253,19 @@
     }
 
     .leader-photo {
-      width: 160px; height: 160px;
-      border-radius: 50%;
-      object-fit: cover;
+      width: 280px; height: auto;
+      max-width: 90%;
+      border-radius: 12px; /* 圆角方形 */
+      object-fit: contain;
       margin: 0 auto 1.2rem;
       display: block;
-      border: 5px solid #fff;
+      border: 4px solid #fff;
       box-shadow: 0 8px 24px rgba(0,0,0,0.15);
       transition: transform 0.4s ease;
     }
 
     .join-card:hover .leader-photo {
-      transform: scale(1.08);
+      transform: scale(1.03);
     }
 
     .join-title {
@@ -336,7 +337,7 @@
       .panel,.tab-area,.content-area{border-radius:6px;padding-left:clamp(2px,2vw,7px);padding-right:clamp(2px,2vw,7px);}
       .team-list{gap:7px;}.team-member{padding:9px 6px 8px 9px;min-width:90vw;max-width:99vw;}
       .logo-area img{height:34px;}
-      .leader-photo{width:130px;height:130px;}
+      .leader-photo{width:90%;border-radius:10px;}
       .join-card{padding:1.6rem 1.2rem;}
     }
     @media (max-width:420px){
@@ -346,52 +347,16 @@
     }
     img,video{max-width:100%;height:auto;display:block;box-sizing:border-box;border-radius:6px;}
 
-    /* ──────────────────────  高级尾栏 Footer  ────────────────────── */
+    /* ──────────────────────  极简尾栏  ────────────────────── */
     footer {
       background: #111;
-      color: #ccc;
-      padding: 2.5rem 1rem 1.5rem;
-      margin-top: 3rem;
-      font-size: 0.95rem;
-      text-align: center;
-      border-top: 1px solid #333;
-    }
-
-    .footer-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 1.8rem;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      color: #aaa;
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s ease;
-    }
-
-    .footer-links a:hover {
       color: #fff;
-    }
-
-    .footer-contact {
-      margin: 0.8rem 0;
-      color: #888;
-    }
-
-    .footer-copyright {
-      font-size: 0.85rem;
-      color: #666;
-      margin-top: 1rem;
+      padding: 2rem 1rem;
+      margin-top: 3rem;
+      font-size: 1rem;
+      text-align: center;
+      font-weight: 600;
+      letter-spacing: 0.05em;
     }
   </style>
 </head>
@@ -445,7 +410,7 @@
         </div>
       </div>
 
-      <!-- 团队成员 -->
+      <!-- 团队成员（完整8人） -->
       <div class="panel" id="panel-1">
         <canvas class="particle-canvas"></canvas>
         <div class="panel-content">
@@ -493,6 +458,65 @@
               <h4>Benjamin Zhen <span class="role">数字运营负责人</span></h4>
               <ul><li>训练营网站打造</li></ul>
             </div>
+            <div class="team-member">
+              <h4>石原瑞</h4>
+              <ul>
+                <li><strong>专项：</strong>5000M 10000M</li>
+                <li><strong>出生日期：</strong>2012年4月11日</li>
+                <li><strong>各项目PB：</strong>
+                  <ul>
+                    <li>800M: 2:39</li>
+                    <li>1000M: 3:30</li>
+                    <li>3000M: 12:09</li>
+                    <li>5000M: 20:46</li>
+                    <li>10000M: 41:46</li>
+                    <li>半程马拉松: 1:44:04</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="team-member">
+              <h4>郭奥辉</h4>
+              <ul>
+                <li><strong>专项：</strong>800M</li>
+                <li><strong>出生日期：</strong>2008年7月31日</li>
+                <li><strong>各项目PB：</strong>
+                  <ul>
+                    <li>400M: 0:58</li>
+                    <li>800M: 2:16</li>
+                    <li>1500M: 4:44</li>
+                    <li>3000M: 11:20</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="team-member">
+              <h4>李云杰</h4>
+              <ul>
+                <li><strong>专项：</strong>5000M</li>
+                <li><strong>出生日期：</strong>2010年3月25日</li>
+                <li><strong>各项目PB：</strong>
+                  <ul>
+                    <li>400M: 0:58</li>
+                    <li>800M: 2:20</li>
+                    <li>3000M: 11:32</li>
+                    <li>5000M: 20:30</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="team-member">
+              <h4>张皓轩</h4>
+              <ul>
+                <li><strong>专项：</strong>800M</li>
+                <li><strong>出生日期：</strong>2010年7月21日</li>
+                <li><strong>各项目PB：</strong>
+                  <ul>
+                    <li>800M: 2:15</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -536,22 +560,9 @@
     </div>
   </section>
 
-  <!-- 高级尾栏 -->
+  <!-- 极简尾栏 -->
   <footer>
-    <div class="footer-inner">
-      <div class="footer-links">
-        <a href="#理念">创营理念</a>
-        <a href="#团队">团队成员</a>
-        <a href="#集锦">训练集锦</a>
-        <a href="#加入">加入我们</a>
-      </div>
-      <div class="footer-contact">
-        活动范围：中国山西省太原市迎泽区 | 电话：13603513830 | 邮箱：h40925796@gmail.com
-      </div>
-      <div class="footer-copyright">
-        © 2025 Youth Peak Training Camp. All rights reserved.
-      </div>
-    </div>
+    献给所有田径人
   </footer>
 
   <script>
@@ -569,6 +580,9 @@
             el.offsetHeight;
             el.style.animation = null;
           });
+          if (p.querySelector('.particle-canvas')._cleanup) {
+            p.querySelector('.particle-canvas')._cleanup();
+          }
         });
 
         tab.classList.add('active');
@@ -581,11 +595,9 @@
           });
         });
 
-        // 重启粒子动画
         initParticles(activePanel.querySelector('.particle-canvas'));
       });
 
-      // 悬停倾斜
       let rect = null;
       tab.addEventListener('mousemove', e => {
         rect = rect || tab.getBoundingClientRect();
@@ -601,7 +613,7 @@
       });
     });
 
-    // 重力粒子系统
+    // 重力粒子系统（速度减慢 40%）
     function initParticles(canvas) {
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -624,11 +636,11 @@
         reset() {
           this.x = Math.random() * canvas.width;
           this.y = Math.random() * -100;
-          this.size = Math.random() * 3 + 1;
-          this.speed = Math.random() * 2 + 1;
-          this.color = `rgba(25, 118, 210, ${Math.random() * 0.5 + 0.2})`;
-          this.gravity = 0.08;
-          this.vx = (Math.random() - 0.5) * 0.5;
+          this.size = Math.random() * 2.5 + 1;
+          this.speed = Math.random() * 1.2 + 0.6; // 减慢 40%
+          this.color = `rgba(25, 118, 210, ${Math.random() * 0.4 + 0.15})`;
+          this.gravity = 0.05; // 减弱重力
+          this.vx = (Math.random() - 0.5) * 0.3;
           this.vy = this.speed;
         }
         update() {
@@ -647,7 +659,7 @@
         }
       }
 
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 45; i++) { // 粒子数略减，性能更优
         particles.push(new Particle());
       }
 
@@ -661,14 +673,12 @@
       }
       animate();
 
-      // 清理
       canvas._cleanup = () => {
         cancelAnimationFrame(animationId);
         window.removeEventListener('resize', resize);
       };
     }
 
-    // 初始化第一个面板粒子
     document.addEventListener('DOMContentLoaded', () => {
       initParticles(document.querySelector('.panel.active .particle-canvas'));
     });
