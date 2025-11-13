@@ -169,7 +169,7 @@
       100% { transform: scale(1.4); opacity: 0; }
     }
 
-    /* ──────────────────────  内容面板 + 重力粒子（减速）  ────────────────────── */
+    /* ──────────────────────  内容面板 + 模糊光效粒子  ────────────────────── */
     .content-area{
       max-width:1050px;margin:0 auto;padding:clamp(5px,1.8vw,18px);
       min-height:340px;position:relative;box-sizing:border-box;
@@ -220,13 +220,14 @@
       color:rgba(0,0,0,.81);word-break:break-word;overflow-wrap:anywhere;
     }
 
-    /* 重力粒子画布 */
+    /* 模糊光效粒子画布（超低透明度） */
     .particle-canvas {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none;
       z-index: 1;
-      opacity: 0.6;
+      opacity: 0.18;
+      filter: blur(1.5px);
     }
 
     /* ──────────────────────  加入我们 - 方形联系图  ────────────────────── */
@@ -255,7 +256,7 @@
     .leader-photo {
       width: 280px; height: auto;
       max-width: 90%;
-      border-radius: 12px; /* 圆角方形 */
+      border-radius: 12px;
       object-fit: contain;
       margin: 0 auto 1.2rem;
       display: block;
@@ -347,16 +348,14 @@
     }
     img,video{max-width:100%;height:auto;display:block;box-sizing:border-box;border-radius:6px;}
 
-    /* ──────────────────────  极简尾栏  ────────────────────── */
+    /* ──────────────────────  版权尾栏  ────────────────────── */
     footer {
       background: #111;
-      color: #fff;
-      padding: 2rem 1rem;
+      color: #aaa;
+      padding: 1.8rem 1rem;
       margin-top: 3rem;
-      font-size: 1rem;
+      font-size: 0.88rem;
       text-align: center;
-      font-weight: 600;
-      letter-spacing: 0.05em;
     }
   </style>
 </head>
@@ -410,7 +409,7 @@
         </div>
       </div>
 
-      <!-- 团队成员（完整8人） -->
+      <!-- 团队成员（完整9人） -->
       <div class="panel" id="panel-1">
         <canvas class="particle-canvas"></canvas>
         <div class="panel-content">
@@ -457,6 +456,24 @@
             <div class="team-member">
               <h4>Benjamin Zhen <span class="role">数字运营负责人</span></h4>
               <ul><li>训练营网站打造</li></ul>
+            </div>
+            <div class="team-member">
+              <h4>杨光 <span class="role">股东</span></h4>
+              <ul>
+                <li><strong>专项：</strong>5000M</li>
+                <li><strong>出生日期：</strong>1970年10月26日</li>
+                <li><strong>各项目PB：</strong>
+                  <ul>
+                    <li>5000M: 20:25</li>
+                  </ul>
+                </li>
+                <li><strong>比赛成绩：</strong>
+                  <ul>
+                    <li>2025年10月26日 WSE 太原站 M50 组别 5000M 冠军</li>
+                    <li>WSE M50 组别记录保持者</li>
+                  </ul>
+                </li>
+              </ul>
             </div>
             <div class="team-member">
               <h4>石原瑞</h4>
@@ -544,7 +561,7 @@
               </div>
               <div class="info-item">
                 <svg class="info-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                <span>13603513830</span>
+                <span>+86 13603513830（微信同号）</span>
               </div>
               <div class="info-item">
                 <svg class="info-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
@@ -560,9 +577,9 @@
     </div>
   </section>
 
-  <!-- 极简尾栏 -->
+  <!-- 版权尾栏 -->
   <footer>
-    献给所有田径人
+    © 2025 Youth Peak Training Camp. All rights reserved.
   </footer>
 
   <script>
@@ -613,7 +630,7 @@
       });
     });
 
-    // 重力粒子系统（速度减慢 40%）
+    // 模糊光效粒子系统（超低透明度 + 柔和）
     function initParticles(canvas) {
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -635,31 +652,30 @@
         }
         reset() {
           this.x = Math.random() * canvas.width;
-          this.y = Math.random() * -100;
-          this.size = Math.random() * 2.5 + 1;
-          this.speed = Math.random() * 1.2 + 0.6; // 减慢 40%
-          this.color = `rgba(25, 118, 210, ${Math.random() * 0.4 + 0.15})`;
-          this.gravity = 0.05; // 减弱重力
-          this.vx = (Math.random() - 0.5) * 0.3;
-          this.vy = this.speed;
+          this.y = Math.random() * canvas.height;
+          this.size = Math.random() * 60 + 20;
+          this.opacity = Math.random() * 0.08 + 0.02;
+          this.color = `rgba(25, 118, 210, ${this.opacity})`;
+          this.vx = (Math.random() - 0.5) * 0.4;
+          this.vy = (Math.random() - 0.5) * 0.4;
         }
         update() {
-          this.vy += this.gravity;
           this.x += this.vx;
           this.y += this.vy;
-          if (this.y > canvas.height || this.x < 0 || this.x > canvas.width) {
+          if (this.x < -50 || this.x > canvas.width + 50 || this.y < -50 || this.y > canvas.height + 50) {
             this.reset();
           }
         }
         draw() {
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-          ctx.fillStyle = this.color;
-          ctx.fill();
+          const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+          gradient.addColorStop(0, `rgba(25, 118, 210, ${this.opacity * 1.5})`);
+          gradient.addColorStop(1, 'transparent');
+          ctx.fillStyle = gradient;
+          ctx.fillRect(this.x - this.size, this.y - this.size, this.size * 2, this.size * 2);
         }
       }
 
-      for (let i = 0; i < 45; i++) { // 粒子数略减，性能更优
+      for (let i = 0; i < 18; i++) {
         particles.push(new Particle());
       }
 
