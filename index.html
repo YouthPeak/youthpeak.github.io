@@ -50,7 +50,7 @@
     }
     .lang-btn:hover,.lang-btn:focus{background:#2773d0;color:#fff;}
 
-    /* ──────────────────────  HERO（1920x1080 完整显示） ────────────────────── */
+    /* ──────────────────────  HERO  ────────────────────── */
     header.hero{
       position:relative;min-height:47vh;height:min(540px,56.25vw);max-height:95vw;
       background:url('./images/hero.jpg') center center / cover no-repeat;
@@ -98,7 +98,7 @@
       to  {text-shadow:0 0 40px #ffffffcc,0 6px 16px #54a4e744;}
     }
 
-    /* ──────────────────────  高级选项卡 + 指示条修复  ────────────────────── */
+    /* ──────────────────────  高级选项卡（无指示条）  ────────────────────── */
     .tab-area {
       background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(12px);
@@ -107,7 +107,7 @@
       padding: clamp(18px, 3vw, 32px) clamp(4px, 2.4vw, 18px) clamp(24px, 5vw, 42px);
       box-shadow: 0 -5px 26px rgba(15, 23, 42, .05), 0 1px 3px rgba(0,0,0,.1);
       width: 100vw; max-width: 100vw; box-sizing: border-box;
-      margin: 0 auto -2px auto; overflow-x: hidden;
+      margin: 0 auto 0 auto; overflow-x: hidden;
       position: relative; z-index: 1;
     }
 
@@ -169,18 +169,7 @@
       100% { transform: scale(1.4); opacity: 0; }
     }
 
-    .tabs-row::after {
-      content: "";
-      position: absolute; bottom: -8px; left: 50%;
-      height: 3px; width: 60px; margin-left: -30px;
-      background: linear-gradient(90deg, #6e8efb, #f7931e);
-      border-radius: 2px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      transform: translateX(var(--indicator-x, 0));
-      opacity: 1; pointer-events: none;
-    }
-
-    /* ──────────────────────  内容面板 + 动画  ────────────────────── */
+    /* ──────────────────────  内容面板 + 重力粒子  ────────────────────── */
     .content-area{
       max-width:1050px;margin:0 auto;padding:clamp(5px,1.8vw,18px);
       min-height:340px;position:relative;box-sizing:border-box;
@@ -191,7 +180,7 @@
       border-radius:14px;box-shadow:var(--shadow);padding:var(--panel-padding);
       background:#fff;margin-bottom:0;
       opacity:0;transform:translateY(20px) scale(.97);
-      pointer-events:none;position:absolute;inset:0;overflow:auto;
+      pointer-events:none;position:absolute;inset:0;overflow:hidden;
       transition:all .45s cubic-bezier(.33,1,.49,.98);
       max-width:100vw;box-sizing:border-box;
     }
@@ -199,6 +188,11 @@
     .panel.active{
       opacity:1;transform:translateY(0) scale(1);
       pointer-events:auto;z-index:1;position:relative;
+    }
+
+    .panel-content {
+      position: relative;
+      z-index: 2;
     }
 
     .panel-content > * {
@@ -224,6 +218,15 @@
     .panel p,.panel ul,.panel li{
       font-size:clamp(.97rem,2vw,1.13rem);line-height:1.72;
       color:rgba(0,0,0,.81);word-break:break-word;overflow-wrap:anywhere;
+    }
+
+    /* 重力粒子画布 */
+    .particle-canvas {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.6;
     }
 
     /* ──────────────────────  加入我们 - 高级联系卡片  ────────────────────── */
@@ -342,6 +345,54 @@
       .team-list{gap:3px;}
     }
     img,video{max-width:100%;height:auto;display:block;box-sizing:border-box;border-radius:6px;}
+
+    /* ──────────────────────  高级尾栏 Footer  ────────────────────── */
+    footer {
+      background: #111;
+      color: #ccc;
+      padding: 2.5rem 1rem 1.5rem;
+      margin-top: 3rem;
+      font-size: 0.95rem;
+      text-align: center;
+      border-top: 1px solid #333;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.8rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #aaa;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: #fff;
+    }
+
+    .footer-contact {
+      margin: 0.8rem 0;
+      color: #888;
+    }
+
+    .footer-copyright {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -378,6 +429,7 @@
     <div class="content-area">
       <!-- 创营理念 -->
       <div class="panel active" id="panel-0">
+        <canvas class="particle-canvas"></canvas>
         <div class="panel-content">
           <h3>创营理念</h3>
           <p><strong>Youth Peak</strong> 由一群热爱中长跑的青少年跑者共同创立，专注于 <strong>800 米至 10000 米</strong> 项目的系统化训练与能力提升。</p>
@@ -395,6 +447,7 @@
 
       <!-- 团队成员 -->
       <div class="panel" id="panel-1">
+        <canvas class="particle-canvas"></canvas>
         <div class="panel-content">
           <h3>团队成员</h3>
           <div class="team-list">
@@ -440,21 +493,22 @@
               <h4>Benjamin Zhen <span class="role">数字运营负责人</span></h4>
               <ul><li>训练营网站打造</li></ul>
             </div>
-            <!-- 其他成员可继续添加 -->
           </div>
         </div>
       </div>
 
       <!-- 训练集锦 -->
       <div class="panel" id="panel-2">
+        <canvas class="particle-canvas"></canvas>
         <div class="panel-content">
           <h3>训练集锦</h3>
           <p>敬请期待精彩内容更新！</p>
         </div>
       </div>
 
-      <!-- 加入我们 - 高级联系卡片 -->
+      <!-- 加入我们 -->
       <div class="panel" id="panel-3">
+        <canvas class="particle-canvas"></canvas>
         <div class="panel-content">
           <div class="join-card">
             <img src="./images/leader_contacts.jpg" alt="队长联系方式" class="leader-photo">
@@ -482,21 +536,28 @@
     </div>
   </section>
 
-  <script>
-    // 初始化指示条
-    document.addEventListener('DOMContentLoaded', () => {
-      const firstTab = document.querySelector('.tab.active');
-      const row = document.querySelector('.tabs-row');
-      const rect = firstTab.getBoundingClientRect();
-      const rowRect = row.getBoundingClientRect();
-      const offset = rect.left - rowRect.left + rect.width / 2 - 30;
-      row.style.setProperty('--indicator-x', `${offset}px`);
-    });
+  <!-- 高级尾栏 -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="#理念">创营理念</a>
+        <a href="#团队">团队成员</a>
+        <a href="#集锦">训练集锦</a>
+        <a href="#加入">加入我们</a>
+      </div>
+      <div class="footer-contact">
+        活动范围：中国山西省太原市迎泽区 | 电话：13603513830 | 邮箱：h40925796@gmail.com
+      </div>
+      <div class="footer-copyright">
+        © 2025 Youth Peak Training Camp. All rights reserved.
+      </div>
+    </div>
+  </footer>
 
+  <script>
     // 选项卡切换
     const tabs = document.querySelectorAll('.tab');
     const panels = document.querySelectorAll('.panel');
-    const indicator = document.querySelector('.tabs-row');
 
     tabs.forEach((tab, idx) => {
       tab.addEventListener('click', () => {
@@ -520,12 +581,11 @@
           });
         });
 
-        const tabRect = tab.getBoundingClientRect();
-        const rowRect = indicator.getBoundingClientRect();
-        const offset = tabRect.left - rowRect.left + tabRect.width / 2 - 30;
-        indicator.style.setProperty('--indicator-x', `${offset}px`);
+        // 重启粒子动画
+        initParticles(activePanel.querySelector('.particle-canvas'));
       });
 
+      // 悬停倾斜
       let rect = null;
       tab.addEventListener('mousemove', e => {
         rect = rect || tab.getBoundingClientRect();
@@ -539,6 +599,78 @@
         if (!tab.classList.contains('active')) tab.style.transform = '';
         rect = null;
       });
+    });
+
+    // 重力粒子系统
+    function initParticles(canvas) {
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+      let animationId;
+
+      canvas.width = canvas.parentElement.offsetWidth;
+      canvas.height = canvas.parentElement.offsetHeight;
+
+      const resize = () => {
+        canvas.width = canvas.parentElement.offsetWidth;
+        canvas.height = canvas.parentElement.offsetHeight;
+      };
+      window.addEventListener('resize', resize);
+
+      class Particle {
+        constructor() {
+          this.reset();
+        }
+        reset() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * -100;
+          this.size = Math.random() * 3 + 1;
+          this.speed = Math.random() * 2 + 1;
+          this.color = `rgba(25, 118, 210, ${Math.random() * 0.5 + 0.2})`;
+          this.gravity = 0.08;
+          this.vx = (Math.random() - 0.5) * 0.5;
+          this.vy = this.speed;
+        }
+        update() {
+          this.vy += this.gravity;
+          this.x += this.vx;
+          this.y += this.vy;
+          if (this.y > canvas.height || this.x < 0 || this.x > canvas.width) {
+            this.reset();
+          }
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.fill();
+        }
+      }
+
+      for (let i = 0; i < 50; i++) {
+        particles.push(new Particle());
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.update();
+          p.draw();
+        });
+        animationId = requestAnimationFrame(animate);
+      }
+      animate();
+
+      // 清理
+      canvas._cleanup = () => {
+        cancelAnimationFrame(animationId);
+        window.removeEventListener('resize', resize);
+      };
+    }
+
+    // 初始化第一个面板粒子
+    document.addEventListener('DOMContentLoaded', () => {
+      initParticles(document.querySelector('.panel.active .particle-canvas'));
     });
 
     function switchLang() { alert('敬请期待'); }
