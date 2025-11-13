@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Youth Peak Training Camp | 月抛田径训练营</title>
 
-  <!-- Favicon & Apple Touch Icons（全部指向 ./images/） -->
+  <!-- Favicon & Apple Touch Icons -->
   <link rel="icon" type="image/png" href="./images/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="./images/favicon.svg" />
   <link rel="shortcut icon" href="./images/favicon.ico" />
@@ -30,25 +30,17 @@
       position:sticky;top:0;z-index:100;
     }
     .topbar-inner{display:flex;align-items:center;width:100%;min-width:0;gap:2vw;}
-    
     .logo-area{
       display:flex;align-items:center;gap:.63rem;min-width:0;
       cursor:pointer;text-decoration:none;
       transition:transform .2s ease,opacity .2s ease;
     }
-    .logo-area:hover{
-      transform:translateY(-2px) scale(1.03);
-      opacity:.92;
-    }
-    .logo-area img{
-      height:44px;width:auto;max-width:min(17vw,146px);
-      display:block;
-    }
+    .logo-area:hover{transform:translateY(-2px) scale(1.03);opacity:.92;}
+    .logo-area img{height:44px;width:auto;max-width:min(17vw,146px);display:block;}
     .brand{
       font-weight:900;font-size:clamp(1.03rem,2.5vw,1.48rem);
       letter-spacing:.04em;color:#fff;user-select:none;white-space:nowrap;
     }
-
     .lang-switch{margin-left:auto;display:flex;align-items:center;gap:.3em;}
     .lang-btn{
       background:#172337;color:#fff;font-weight:800;
@@ -58,18 +50,16 @@
     }
     .lang-btn:hover,.lang-btn:focus{background:#2773d0;color:#fff;}
 
-    /* ──────────────────────  HERO  ────────────────────── */
+    /* ──────────────────────  HERO（1920x1080 完整显示） ────────────────────── */
     header.hero{
-      position:relative;min-height:47vh;height:min(470px,calc(100vw/1.9));max-height:95vw;
+      position:relative;min-height:47vh;height:min(540px,56.25vw);max-height:95vw;
       background:url('./images/hero.jpg') center center / cover no-repeat;
-      display:flex;align-items:center;justify-content:center;
-      text-align:center;padding:clamp(12px,5vw,32px) clamp(8px,4vw,22px);
-      overflow:hidden;
+      background-attachment:fixed;display:flex;align-items:center;justify-content:center;
+      text-align:center;padding:clamp(12px,5vw,32px) clamp(8px,4vw,22px);overflow:hidden;
     }
     .hero::before{
       content:"";position:absolute;inset:0;
-      background:linear-gradient(to bottom,rgba(0,0,0,.56),rgba(0,0,0,.19));
-      z-index:0;
+      background:linear-gradient(to bottom,rgba(0,0,0,.56),rgba(0,0,0,.19));z-index:0;
     }
     .hero-inner{
       position:relative;z-index:1;width:100%;max-width:1100px;margin:0 auto;
@@ -108,60 +98,41 @@
       to  {text-shadow:0 0 40px #ffffffcc,0 6px 16px #54a4e744;}
     }
 
-    /* ──────────────────────  高级选项卡样式  ────────────────────── */
+    /* ──────────────────────  高级选项卡 + 指示条修复  ────────────────────── */
     .tab-area {
       background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-radius: var(--radius) var(--radius) 0 0;
       padding: clamp(18px, 3vw, 32px) clamp(4px, 2.4vw, 18px) clamp(24px, 5vw, 42px);
-      box-shadow: 
-        0 -5px 26px rgba(15, 23, 42, .05),
-        0 1px 3px rgba(0,0,0,.1);
-      width: 100vw;
-      max-width: 100vw;
-      box-sizing: border-box;
-      margin: 0 auto -2px auto;
-      overflow-x: hidden;
-      position: relative;
-      z-index: 1;
+      box-shadow: 0 -5px 26px rgba(15, 23, 42, .05), 0 1px 3px rgba(0,0,0,.1);
+      width: 100vw; max-width: 100vw; box-sizing: border-box;
+      margin: 0 auto -2px auto; overflow-x: hidden;
+      position: relative; z-index: 1;
     }
 
     .tabs-row {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin: 0 auto 28px auto;
-      max-width: 1100px;
-      padding: 0 1rem;
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      margin: 0 auto 28px auto; max-width: 1100px; padding: 0 1rem;
       position: relative;
     }
 
     .tab {
-      position: relative;
-      padding: 0.9em 1.8em;
-      border-radius: 16px;
-      background: rgba(243, 246, 251, 0.7);
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      cursor: pointer;
-      font-size: clamp(1.02rem, 2.1vw, 1.2rem);
-      color: #444;
+      position: relative; padding: 0.9em 1.8em; border-radius: 16px;
+      background: rgba(243, 246, 251, 0.7); font-weight: 800;
+      letter-spacing: 0.02em; cursor: pointer;
+      font-size: clamp(1.02rem, 2.1vw, 1.2rem); color: #444;
       overflow: hidden;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
       border: 1.5px solid transparent;
-      box-shadow: 0 4px 12px rgba(25, 118, 210, 0.08);
-      z-index: 1;
+      box-shadow: 0 4px 12px rgba(25, 118, 210, 0.08); z-index: 1;
     }
 
     .tab:hover {
       transform: translateY(-4px) scale(1.02);
       box-shadow: 0 12px 28px rgba(25, 118, 210, 0.18);
-      background: rgba(25, 118, 210, 0.08);
-      color: #1976d2;
+      background: rgba(25, 118, 210, 0.08); color: #1976d2;
     }
 
     .tab.active {
@@ -185,15 +156,11 @@
     }
 
     .tab.active::before {
-      content: "";
-      position: absolute;
-      top: -50%; left: -50%;
+      content: ""; position: absolute; top: -50%; left: -50%;
       width: 200%; height: 200%;
       background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-      opacity: 0;
-      animation: pulseGlow 2.5s ease-out infinite;
-      pointer-events: none;
-      z-index: -1;
+      opacity: 0; animation: pulseGlow 2.5s ease-out infinite;
+      pointer-events: none; z-index: -1;
     }
 
     @keyframes pulseGlow {
@@ -204,43 +171,136 @@
 
     .tabs-row::after {
       content: "";
-      position: absolute;
-      bottom: -8px;
-      left: 0;
-      height: 3px;
-      width: 60px;
+      position: absolute; bottom: -8px; left: 50%;
+      height: 3px; width: 60px; margin-left: -30px;
       background: linear-gradient(90deg, #6e8efb, #f7931e);
       border-radius: 2px;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       transform: translateX(var(--indicator-x, 0));
-      opacity: 1;
-      pointer-events: none;
+      opacity: 1; pointer-events: none;
     }
 
-    /* ──────────────────────  CONTENT PANELS  ────────────────────── */
+    /* ──────────────────────  内容面板 + 动画  ────────────────────── */
     .content-area{
       max-width:1050px;margin:0 auto;padding:clamp(5px,1.8vw,18px);
       min-height:340px;position:relative;box-sizing:border-box;
       display:flex;flex-direction:column;
     }
+
     .panel{
       border-radius:14px;box-shadow:var(--shadow);padding:var(--panel-padding);
-      background:#fff;margin-bottom:0;opacity:0;transform:scale(.97);
+      background:#fff;margin-bottom:0;
+      opacity:0;transform:translateY(20px) scale(.97);
       pointer-events:none;position:absolute;inset:0;overflow:auto;
-      transition:opacity .37s cubic-bezier(.33,1,.49,.98),
-                 transform .34s cubic-bezier(.33,1.15,.42,.95);
+      transition:all .45s cubic-bezier(.33,1,.49,.98);
       max-width:100vw;box-sizing:border-box;
     }
+
     .panel.active{
-      opacity:1;transform:scale(1);pointer-events:auto;z-index:1;
-      position:relative;
+      opacity:1;transform:translateY(0) scale(1);
+      pointer-events:auto;z-index:1;position:relative;
     }
+
+    .panel-content > * {
+      opacity: 0;
+      transform: translateY(15px);
+      animation: fadeUp 0.6s ease-out forwards;
+      animation-delay: calc(0.1s * var(--i));
+    }
+
+    .panel.active .panel-content > * {
+      --i: 0;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .panel h3{
       margin:0 0 .79em 0;font-size:clamp(1.17rem,2vw,1.47rem);font-weight:900;
+      --i: 0 !important;
     }
+
     .panel p,.panel ul,.panel li{
       font-size:clamp(.97rem,2vw,1.13rem);line-height:1.72;
       color:rgba(0,0,0,.81);word-break:break-word;overflow-wrap:anywhere;
+    }
+
+    /* ──────────────────────  加入我们 - 高级联系卡片  ────────────────────── */
+    .join-card {
+      background: linear-gradient(145deg, #ffffff, #f5f8ff);
+      border-radius: 18px;
+      padding: 2.2rem 1.8rem;
+      box-shadow: 
+        0 12px 32px rgba(25, 118, 210, 0.12),
+        0 0 0 1px rgba(25, 118, 210, 0.08),
+        inset 0 1px 0 rgba(255,255,255,0.6);
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .join-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 
+        0 20px 40px rgba(25, 118, 210, 0.18),
+        0 0 0 1px rgba(25, 118, 210, 0.12),
+        inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+
+    .leader-photo {
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 1.2rem;
+      display: block;
+      border: 5px solid #fff;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      transition: transform 0.4s ease;
+    }
+
+    .join-card:hover .leader-photo {
+      transform: scale(1.08);
+    }
+
+    .join-title {
+      font-size: clamp(1.4rem, 3vw, 1.7rem);
+      font-weight: 900;
+      color: #1a1a1a;
+      margin: 0 0 1rem;
+      background: linear-gradient(90deg, #1976d2, #9c27b0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .join-info {
+      display: flex; flex-direction: column; gap: 0.9rem;
+      margin: 1.4rem 0;
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      color: #333;
+    }
+
+    .info-item {
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      padding: 0.4rem 0;
+    }
+
+    .info-icon {
+      width: 20px; height: 20px; fill: #1976d2;
+    }
+
+    .join-note {
+      margin-top: 1.6rem;
+      padding: 1rem 1.2rem;
+      background: rgba(255, 245, 230, 0.7);
+      border-left: 4px solid #ff9800;
+      border-radius: 0 10px 10px 0;
+      font-size: 0.98rem;
+      color: #d84315;
+      line-height: 1.6;
+      text-align: left;
     }
 
     /* 团队成员样式 */
@@ -264,25 +324,17 @@
     .team-member ul ul{padding-inline-start:16px;margin:.13em 0;}
     .team-member li{word-break:break-all;}
 
-    @media (max-width:1030px){
-      .team-list{gap:14px;justify-content:center;}
-      .team-member{min-width:160px;max-width:420px;padding:13px 9px 11px 13px;}
-    }
-    @media (max-width:800px){
-      .content-area{padding:clamp(0px,1.3vw,6px);}
-      .panel{border-radius:9px;}
-      .team-list{gap:11px;}
-      .team-member{max-width:370px;}
-    }
+    @media (max-width:1030px){.team-list{gap:14px;justify-content:center;}
+      .team-member{min-width:160px;max-width:420px;padding:13px 9px 11px 13px;}}
+    @media (max-width:800px){.content-area{padding:clamp(0px,1.3vw,6px);}
+      .panel{border-radius:9px;}.team-list{gap:11px;}.team-member{max-width:370px;}}
     @media (max-width:600px){
       .topbar{padding:0 clamp(4px,2vw,12px);}
-      .panel,.tab-area,.content-area{
-        border-radius:6px;padding-left:clamp(2px,2vw,7px);
-        padding-right:clamp(2px,2vw,7px);
-      }
-      .team-list{gap:7px;}
-      .team-member{padding:9px 6px 8px 9px;min-width:90vw;max-width:99vw;}
+      .panel,.tab-area,.content-area{border-radius:6px;padding-left:clamp(2px,2vw,7px);padding-right:clamp(2px,2vw,7px);}
+      .team-list{gap:7px;}.team-member{padding:9px 6px 8px 9px;min-width:90vw;max-width:99vw;}
       .logo-area img{height:34px;}
+      .leader-photo{width:130px;height:130px;}
+      .join-card{padding:1.6rem 1.2rem;}
     }
     @media (max-width:420px){
       .hero-inner{padding-left:2px;padding-right:2px;}
@@ -294,7 +346,7 @@
 </head>
 <body>
 
-  <!-- ========================  TOPBAR  ======================== -->
+  <!-- TOPBAR -->
   <div class="topbar">
     <div class="topbar-inner">
       <a href="./index.html" class="logo-area" aria-label="Youth Peak 首页">
@@ -307,7 +359,7 @@
     </div>
   </div>
 
-  <!-- ========================  HERO  ======================== -->
+  <!-- HERO -->
   <header class="hero" role="banner">
     <div class="hero-inner">
       <h1 class="hero-title">Youth Peak Training Camp</h1>
@@ -315,7 +367,7 @@
     </div>
   </header>
 
-  <!-- ========================  高级选项卡  ======================== -->
+  <!-- 高级选项卡 -->
   <section class="tab-area" aria-label="选项卡区域">
     <div class="tabs-row" id="tabsRow">
       <div class="tab active" data-index="0">创营理念</div>
@@ -324,176 +376,156 @@
       <div class="tab" data-index="3">加入我们</div>
     </div>
     <div class="content-area">
+      <!-- 创营理念 -->
       <div class="panel active" id="panel-0">
-        <h3>创营理念</h3>
-        <p><strong>Youth Peak</strong> 由一群热爱中长跑的青少年跑者共同创立，专注于 <strong>800 米至 10000 米</strong> 项目的系统化训练与能力提升。</p>
-        <p>我们以科学的训练体系为基础，以清晰的目标与计划为指引，让热爱在专业中成长，让奔跑更有方向与成果。</p>
-        <p><strong>我们相信，热爱不该止于兴趣。</strong></p>
-        <p>它值得被坚持，被打磨，被赋予方向与意义。</p>
-        <p>我们希望为同样热爱跑步的年轻人，打造一个真正<strong>专业、互助、进步</strong>的训练环境。</p>
-        <p>在这里，竞争与支持并存，努力与友情同行——每一次训练，都是共同向上的旅程。</p>
-        <p>在 <strong>Youth Peak</strong>，每一位成员既是跑者，也是伙伴。</p>
-        <p>我们彼此激励、相互成长，让热爱不只是玩玩而已，而是玩出风采，跑出水平，奔向巅峰。</p>
-        <p><strong>“Peak The Passion（从热爱出发，向巅峰奔跑）。”</strong></p>
-        <p>这不仅是我们的口号，更是我们的信念——让热爱抵达巅峰。</p>
+        <div class="panel-content">
+          <h3>创营理念</h3>
+          <p><strong>Youth Peak</strong> 由一群热爱中长跑的青少年跑者共同创立，专注于 <strong>800 米至 10000 米</strong> 项目的系统化训练与能力提升。</p>
+          <p>我们以科学的训练体系为基础，以清晰的目标与计划为指引，让热爱在专业中成长，让奔跑更有方向与成果。</p>
+          <p><strong>我们相信，热爱不该止于兴趣。</strong></p>
+          <p>它值得被坚持，被打磨，被赋予方向与意义。</p>
+          <p>我们希望为同样热爱跑步的年轻人，打造一个真正<strong>专业、互助、进步</strong>的训练环境。</p>
+          <p>在这里，竞争与支持并存，努力与友情同行——每一次训练，都是共同向上的旅程。</p>
+          <p>在 <strong>Youth Peak</strong>，每一位成员既是跑者，也是伙伴。</p>
+          <p>我们彼此激励、相互成长，让热爱不只是玩玩而已，而是玩出风采，跑出水平，奔向巅峰。</p>
+          <p><strong>“Peak The Passion（从热爱出发，向巅峰奔跑）。”</strong></p>
+          <p>这不仅是我们的口号，更是我们的信念——让热爱抵达巅峰。</p>
+        </div>
       </div>
 
+      <!-- 团队成员 -->
       <div class="panel" id="panel-1">
-        <h3>团队成员</h3>
-        <div class="team-list">
-          <div class="team-member">
-            <h4>Harold Yang <span class="role">主教练，领队，创始人</span></h4>
-            <ul>
-              <li><strong>专项：</strong>5000M</li>
-              <li><strong>出生日期：</strong>2009年4月19日</li>
-              <li><strong>各项目PB：</strong>
-                <ul>
-                  <li>800M: 2:14</li>
-                  <li>3000M: 10:40</li>
-                  <li>5000M: 18:29</li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <div class="team-member">
-            <h4>郭天一 <span class="role">副教练</span></h4>
-            <ul>
-              <li><strong>专项：</strong>800M 1500M</li>
-              <li><strong>出生日期：</strong>2009年6月25日</li>
-              <li><strong>各项目PB：</strong>
-                <ul>
-                  <li>800M: 2:08</li>
-                  <li>1500M: 4:40</li>
-                  <li>3000M: 10:30</li>
-                  <li>5000M: 18:50</li>
-                  <li>半程马拉松: 1:41:00</li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <div class="team-member">
-            <h4>Eric Zhang <span class="role">副领队，创始人</span></h4>
-            <ul>
-              <li><strong>专项：</strong>5000M</li>
-              <li><strong>出生日期：</strong>2010年8月1日</li>
-              <li><strong>各项目PB：</strong>暂无</li>
-            </ul>
-          </div>
-          <div class="team-member">
-            <h4>Benjamin Zhen <span class="role">数字运营负责人</span></h4>
-            <ul>
-              <li>训练营网站打造</li>
-            </ul>
-          </div>
-          <div class="team-member">
-            <h4>石原瑞</h4>
-            <ul>
-              <li><strong>专项：</strong>5000M 10000M</li>
-              <li><strong>出生日期：</strong>2012年4月11日</li>
-              <li><strong>各项目PB：</strong>
-                <ul>
-                  <li>800M: 2:39</li>
-                  <li>1000M: 3:30</li>
-                  <li>3000M: 12:09</li>
-                  <li>5000M: 20:46</li>
-                  <li>10000M: 41:46</li>
-                  <li>半程马拉松: 1:44:04</li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <div class="team-member">
-            <h4>郭奥辉</h4>
-            <ul>
-              <li><strong>专项：</strong>800M</li>
-              <li><strong>出生日期：</strong>2008年7月31日</li>
-              <li><strong>各项目PB：</strong>
-                <ul>
-                  <li>400M: 0:58</li>
-                  <li>800M: 2:16</li>
-                  <li>1500M: 4:44</li>
-                  <li>3000M: 11:20</li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <div class="team-member">
-            <h4>李云杰</h4>
-            <ul>
-              <li><strong>专项：</strong>5000M</li>
-              <li><strong>出生日期：</strong>2010年3月25日</li>
-              <li><strong>各项目PB：</strong>
-                <ul>
-                  <li>400M: 0:58</li>
-                  <li>800M: 2:20</li>
-                  <li>3000M: 11:32</li>
-                  <li>5000M: 20:30</li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <div class="team-member">
-            <h4>张皓轩</h4>
-            <ul>
-              <li><strong>专项：</strong>800M</li>
-              <li><strong>出生日期：</strong>2010年7月21日</li>
-              <li><strong>各项目PB：</strong>
-                <ul>
-                  <li>800M: 2:15</li>
-                </ul>
-              </li>
-            </ul>
+        <div class="panel-content">
+          <h3>团队成员</h3>
+          <div class="team-list">
+            <div class="team-member">
+              <h4>Harold Yang <span class="role">主教练，领队，创始人</span></h4>
+              <ul>
+                <li><strong>专项：</strong>5000M</li>
+                <li><strong>出生日期：</strong>2009年4月19日</li>
+                <li><strong>各项目PB：</strong>
+                  <ul>
+                    <li>800M: 2:14</li>
+                    <li>3000M: 10:40</li>
+                    <li>5000M: 18:29</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="team-member">
+              <h4>郭天一 <span class="role">副教练</span></h4>
+              <ul>
+                <li><strong>专项：</strong>800M 1500M</li>
+                <li><strong>出生日期：</strong>2009年6月25日</li>
+                <li><strong>各项目PB：</strong>
+                  <ul>
+                    <li>800M: 2:08</li>
+                    <li>1500M: 4:40</li>
+                    <li>3000M: 10:30</li>
+                    <li>5000M: 18:50</li>
+                    <li>半程马拉松: 1:41:00</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="team-member">
+              <h4>Eric Zhang <span class="role">副领队，创始人</span></h4>
+              <ul>
+                <li><strong>专项：</strong>5000M</li>
+                <li><strong>出生日期：</strong>2010年8月1日</li>
+                <li><strong>各项目PB：</strong>暂无</li>
+              </ul>
+            </div>
+            <div class="team-member">
+              <h4>Benjamin Zhen <span class="role">数字运营负责人</span></h4>
+              <ul><li>训练营网站打造</li></ul>
+            </div>
+            <!-- 其他成员可继续添加 -->
           </div>
         </div>
       </div>
 
+      <!-- 训练集锦 -->
       <div class="panel" id="panel-2">
-        <h3>训练集锦</h3>
-        <p>11111</p>
+        <div class="panel-content">
+          <h3>训练集锦</h3>
+          <p>敬请期待精彩内容更新！</p>
+        </div>
       </div>
 
+      <!-- 加入我们 - 高级联系卡片 -->
       <div class="panel" id="panel-3">
-        <h3>加入我们</h3>
-        <p>11111</p>
+        <div class="panel-content">
+          <div class="join-card">
+            <img src="./images/leader_contacts.jpg" alt="队长联系方式" class="leader-photo">
+            <h3 class="join-title">欢迎加入 Youth Peak</h3>
+            <div class="join-info">
+              <div class="info-item">
+                <svg class="info-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <span>中国山西省太原市迎泽区</span>
+              </div>
+              <div class="info-item">
+                <svg class="info-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                <span>13603513830</span>
+              </div>
+              <div class="info-item">
+                <svg class="info-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <span>h40925796@gmail.com</span>
+              </div>
+            </div>
+            <div class="join-note">
+              我们欢迎您的加入，但碍于网站成本有限，请麻烦您主动联系我们的队长
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <script>
-    // 高级选项卡切换 + 动画
+    // 初始化指示条
+    document.addEventListener('DOMContentLoaded', () => {
+      const firstTab = document.querySelector('.tab.active');
+      const row = document.querySelector('.tabs-row');
+      const rect = firstTab.getBoundingClientRect();
+      const rowRect = row.getBoundingClientRect();
+      const offset = rect.left - rowRect.left + rect.width / 2 - 30;
+      row.style.setProperty('--indicator-x', `${offset}px`);
+    });
+
+    // 选项卡切换
     const tabs = document.querySelectorAll('.tab');
     const panels = document.querySelectorAll('.panel');
     const indicator = document.querySelector('.tabs-row');
 
     tabs.forEach((tab, idx) => {
       tab.addEventListener('click', () => {
-        // 移除所有 active
         tabs.forEach(t => t.classList.remove('active'));
         panels.forEach(p => {
           p.classList.remove('active');
-          p.style.opacity = '0';
-          p.style.transform = 'scale(0.97)';
+          p.querySelectorAll('.panel-content > *').forEach((el, i) => {
+            el.style.animation = 'none';
+            el.offsetHeight;
+            el.style.animation = null;
+          });
         });
 
-        // 添加新 active
         tab.classList.add('active');
         const activePanel = panels[idx];
         activePanel.classList.add('active');
-        
-        // 触发动画
+
         requestAnimationFrame(() => {
-          activePanel.style.opacity = '1';
-          activePanel.style.transform = 'scale(1)';
+          activePanel.querySelectorAll('.panel-content > *').forEach((el, i) => {
+            el.style.setProperty('--i', i);
+          });
         });
 
-        // 移动底部指示器
         const tabRect = tab.getBoundingClientRect();
         const rowRect = indicator.getBoundingClientRect();
         const offset = tabRect.left - rowRect.left + tabRect.width / 2 - 30;
         indicator.style.setProperty('--indicator-x', `${offset}px`);
       });
 
-      // 鼠标悬停 3D 倾斜
       let rect = null;
       tab.addEventListener('mousemove', e => {
         rect = rect || tab.getBoundingClientRect();
@@ -504,26 +536,12 @@
         }
       });
       tab.addEventListener('mouseleave', () => {
-        if (!tab.classList.contains('active')) {
-          tab.style.transform = '';
-        }
+        if (!tab.classList.contains('active')) tab.style.transform = '';
         rect = null;
       });
     });
 
-    // 语言切换
-    function switchLang() {
-      alert('敬请期待');
-    }
-
-    // CSS 变量支持指示器
-    const style = document.createElement('style');
-    style.textContent = `
-      .tabs-row::after {
-        transform: translateX(var(--indicator-x, 0px)) !important;
-      }
-    `;
-    document.head.appendChild(style);
+    function switchLang() { alert('敬请期待'); }
   </script>
 </body>
 </html>
