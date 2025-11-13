@@ -50,7 +50,7 @@
     }
     .lang-btn:hover,.lang-btn:focus{background:#2773d0;color:#fff;}
 
-    /* ──────────────────────  HERO（全新风格） ────────────────────── */
+    /* ──────────────────────  HERO（完美完整显示，无黑边） ────────────────────── */
     header.hero{
       height: calc(100vh - 120px);
       min-height: 420px;
@@ -65,16 +65,20 @@
     }
     .hero-image{
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
+      top: 50%; left: 50%;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      transform: translate(-50%, -50%);
       object-fit: contain;
-      object-position: center;
       z-index: 0;
     }
     .hero::before{
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,.48), rgba(0,0,0,.12));
+      background: linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.15));
       z-index: 1;
     }
     .hero-inner{
@@ -224,7 +228,6 @@
       justify-content: space-between;
     }
 
-    /* 新增：团队人数高阶显示 */
     .team-count {
       font-size: 0.88rem;
       font-weight: 700;
@@ -250,7 +253,7 @@
       filter: blur(1.5px);
     }
 
-    /* ──────────────────────  加入我们  ────────────────────── */
+    /* ──────────────────────  加入我们（标题居中）  ────────────────────── */
     .join-card {
       background: linear-gradient(145deg, #ffffff, #f5f8ff);
       border-radius: 18px;
@@ -298,6 +301,9 @@
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-align: center !important;
+      width: 100%;
+      display: block;
     }
 
     .join-info {
@@ -368,7 +374,7 @@
     }
     img,video{max-width:100%;height:auto;display:block;box-sizing:border-box;border-radius:6px;}
 
-    /* ──────────────────────  版权尾栏（新增 since） ────────────────────── */
+    /* ──────────────────────  版权尾栏（since） ────────────────────── */
     footer {
       background: #111;
       color: #aaa;
@@ -401,7 +407,7 @@
     </div>
   </div>
 
-  <!-- HERO（全新风格 + since） -->
+  <!-- HERO（完美完整显示 + since） -->
   <header class="hero" role="banner">
     <img src="./images/hero.jpg" alt="Youth Peak Training Camp" class="hero-image">
     <div class="hero-inner">
@@ -576,7 +582,7 @@
         </div>
       </div>
 
-      <!-- 加入我们 -->
+      <!-- 加入我们（标题已居中） -->
       <div class="panel" id="panel-3">
         <canvas class="particle-canvas"></canvas>
         <div class="panel-content">
@@ -606,14 +612,14 @@
     </div>
   </section>
 
-  <!-- 版权尾栏（新增 since） -->
+  <!-- 版权尾栏 -->
   <footer>
     © 2025 Youth Peak Training Camp. All rights reserved.
     <div class="footer-since">since July 2025</div>
   </footer>
 
   <script>
-    // 选项卡 + 粒子系统（完全保留）
+    // 选项卡 + 粒子系统
     const tabs = document.querySelectorAll('.tab');
     const panels = document.querySelectorAll('.panel');
 
