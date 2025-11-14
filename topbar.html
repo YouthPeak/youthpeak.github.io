@@ -1,1 +1,50 @@
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Topbar</title>
+<style>
+  :root { --header-min: 48px; }
+  body, html { margin:0; padding:0; background:#000; }
+  .topbar{
+    width:100vw;min-height:var(--header-min);background:#000;color:#fff;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:1.3rem;padding:0 clamp(10px,4vw,48px);box-sizing:border-box;
+    position:sticky;top:0;z-index:100;
+  }
+  .topbar-inner{display:flex;align-items:center;width:100%;min-width:0;gap:2vw;}
+  .logo-area{
+    display:flex;align-items:center;gap:.63rem;min-width:0;
+    cursor:pointer;text-decoration:none;
+    transition:transform .2s ease,opacity .2s ease;
+  }
+  .logo-area:hover{transform:translateY(-2px) scale(1.03);opacity:.92;}
+  .logo-area img{height:44px;width:auto;max-width:min(17vw,146px);display:block;}
+  .brand{
+    font-weight:900;font-size:clamp(1.03rem,2.5vw,1.48rem);
+    letter-spacing:.04em;color:#fff;user-select:none;white-space:nowrap;
+  }
+  .lang-switch{margin-left:auto;display:flex;align-items:center;gap:.3em;}
+  .lang-btn{
+    background:#172337;color:#fff;font-weight:800;
+    font-size:clamp(.92rem,1.5vw,1.06rem);border-radius:8px;border:none;
+    padding:.40em 1em .37em;cursor:pointer;outline:none;
+    transition:background .17s;box-shadow:0 1px 4px #2f57731a;min-width:66px;letter-spacing:.16em;
+  }
+  .lang-btn:hover,.lang-btn:focus{background:#2773d0;color:#fff;}
+</style>
+</head>
+<body>
+<div class="topbar" id="site-topbar">
+  <div class="topbar-inner">
+    <a href="./index.html" class="logo-area" aria-label="Youth Peak 首页">
+      <img src="./images/logo_white.png" alt="Youth Peak Logo">
+      <span class="brand">Youth Peak</span>
+    </a>
+    <div class="lang-switch">
+      <button class="lang-btn" onclick="alert('敬请期待')">中/EN</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
