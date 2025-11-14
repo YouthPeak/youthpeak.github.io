@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -6,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Youth Peak Training Camp | 月抛田径训练营</title>
 
-  <!-- Favicon & Apple Touch Icons -->
   <link rel="icon" type="image/png" href="./images/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="./images/favicon.svg" />
   <link rel="shortcut icon" href="./images/favicon.ico" />
@@ -25,7 +23,6 @@
     html,body{height:100%;margin:0;padding:0;overflow-x:hidden;}
     body{min-height:100vh;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
 
-    /* TOPBAR */
     .topbar{
       width:100vw;min-height:var(--header-min);background:#000;color:#fff;
       display:flex;align-items:center;justify-content:space-between;
@@ -53,7 +50,6 @@
     }
     .lang-btn:hover,.lang-btn:focus{background:#2773d0;color:#fff;}
 
-    /* HERO */
     header.hero{
       width:100vw;height:960px;max-height:100vh;
       background:url('./images/hero.jpg') center/cover no-repeat;
@@ -89,7 +85,6 @@
     @media(max-width:768px){header.hero{height:60vw}}
     @media(max-width:480px){header.hero{height:70vw}}
 
-    /* 高级选项卡 */
     .tab-area{
       margin-top:-2rem;background:rgba(255,255,255,.92);
       backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
@@ -133,7 +128,6 @@
       100%{transform:scale(1.4);opacity:0}
     }
 
-    /* 内容面板 */
     .content-area{
       max-width:1050px;margin:0 auto;padding:clamp(5px,1.8vw,18px);
       min-height:340px;position:relative;box-sizing:border-box;
@@ -160,7 +154,6 @@
     .panel.active .panel-content>*{--i:0}
     @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
 
-    /* 统一 h3 标题样式 */
     .panel h3{
       margin:0 0 .79em;font-size:clamp(1.17rem,2vw,1.47rem);font-weight:900;
       --i:0!important;display:flex;align-items:center;justify-content:space-between;
@@ -176,7 +169,6 @@
       color:rgba(0,0,0,.81);word-break:break-word;overflow-wrap:anywhere;
     }
 
-    /* 选项卡区域内律动光效 */
     .tab-glow{
       position:absolute;top:0;left:0;width:100%;height:100%;
       pointer-events:none;z-index:0;opacity:var(--glow-opacity);
@@ -202,7 +194,6 @@
       75%{transform:rotate(0.9deg) scale(1.03)}
     }
 
-    /* === 团队成员卡片 === */
     .team-grid{
       display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;
       padding:8px 0;
@@ -261,7 +252,6 @@
       .member-body{padding:14px 18px 18px}
     }
 
-    /* 加入我们 */
     .join-card{
       background:linear-gradient(145deg,#fff,#f5f8ff);border-radius:18px;
       padding:2.2rem 1.8rem;box-shadow:0 12px 32px rgba(25,118,210,.12),0 0 0 1px rgba(25,118,210,.08),inset 0 1px 0 rgba(255,255,255,.6);
@@ -303,7 +293,6 @@
 
     img,video{max-width:100%;height:auto;display:block;box-sizing:border-box;border-radius:6px}
 
-    /* 版权尾栏 */
     footer{
       background:#111;color:#aaa;padding:1.8rem 1rem;margin-top:3rem;
       font-size:.88rem;text-align:center;position:relative;
@@ -315,7 +304,6 @@
 </head>
 <body>
 
-  <!-- TOPBAR -->
   <div class="topbar">
     <div class="topbar-inner">
       <a href="./index.html" class="logo-area" aria-label="Youth Peak 首页">
@@ -328,7 +316,6 @@
     </div>
   </div>
 
-  <!-- HERO -->
   <header class="hero" role="banner">
     <div class="hero-inner">
       <h1 class="hero-title">Youth Peak Training Camp</h1>
@@ -337,20 +324,20 @@
     </div>
   </header>
 
-  <!-- 选项卡区域 -->
   <section class="tab-area" aria-label="选项卡区域">
-    <!-- 光效层 -->
     <div class="tab-glow"></div>
 
     <div class="tabs-row" id="tabsRow">
       <div class="tab active" data-index="0">创营理念</div>
       <div class="tab" data-index="1">团队成员</div>
-      <div class="tab" data-index="2">卓绝风姿</div>
-      <div class="tab" data-index="3">加入我们</div>
+      <div class="tab" data-index="2">专业知识</div>
+      <div class="tab" data-index="3">卓绝风姿</div>
+      <div class="tab" data-index="4">加入我们</div>
+      <div class="tab" data-index="5">东山驿传</div>
     </div>
 
     <div class="content-area">
-      <!-- 创营理念 -->
+
       <div class="panel active" id="panel-0">
         <div class="panel-content">
           <h3>创营理念</h3>
@@ -367,13 +354,11 @@
         </div>
       </div>
 
-      <!-- 团队成员 -->
       <div class="panel" id="panel-1">
         <div class="panel-content">
           <h3>团队成员 <span class="team-count">共 10 名成员</span></h3>
           <div class="team-grid">
 
-            <!-- Harold Yang -->
             <div class="member-card">
               <div class="member-header">
                 <h4 class="member-name">Harold Yang 杨天歌</h4>
@@ -390,7 +375,6 @@
               </div>
             </div>
 
-            <!-- 郭天一 -->
             <div class="member-card">
               <div class="member-header">
                 <h4 class="member-name">郭天一</h4>
@@ -409,7 +393,6 @@
               </div>
             </div>
 
-            <!-- Eric Zhang -->
             <div class="member-card">
               <div class="member-header">
                 <h4 class="member-name">Eric Zhang 张楚宸</h4>
@@ -422,7 +405,6 @@
               </div>
             </div>
 
-            <!-- Benjamin Zhen -->
             <div class="member-card">
               <div class="member-header">
                 <h4 class="member-name">Benjamin Zhen 甄熠然</h4>
@@ -434,7 +416,6 @@
               </div>
             </div>
 
-            <!-- 杨光 -->
             <div class="member-card">
               <div class="member-header">
                 <h4 class="member-name">杨光</h4>
@@ -454,7 +435,6 @@
               </div>
             </div>
 
-            <!-- 石原瑞 -->
             <div class="member-card">
               <div class="member-header">
                 <h4 class="member-name">石原瑞</h4>
@@ -473,7 +453,6 @@
               </div>
             </div>
 
-            <!-- 郭奥辉 -->
             <div class="member-card">
               <div class="member-header">
                 <h4 class="member-name">郭奥辉</h4>
@@ -490,7 +469,6 @@
               </div>
             </div>
 
-            <!-- 李云杰 -->
             <div class="member-card">
               <div class="member-header">
                 <h4 class="member-name">李云杰</h4>
@@ -507,7 +485,6 @@
               </div>
             </div>
 
-            <!-- 张皓轩 -->
             <div class="member-card">
               <div class="member-header">
                 <h4 class="member-name">张皓轩</h4>
@@ -521,7 +498,6 @@
               </div>
             </div>
 
-            <!-- 王梓渊（新增） -->
             <div class="member-card">
               <div class="member-header">
                 <h4 class="member-name">王梓渊</h4>
@@ -543,16 +519,20 @@
         </div>
       </div>
 
-      <!-- 卓绝风姿 -->
       <div class="panel" id="panel-2">
+        <div class="panel-content">
+          <h3>专业知识</h3>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-3">
         <div class="panel-content">
           <h3>卓绝风姿</h3>
           <p>即将登场</p>
         </div>
       </div>
 
-      <!-- 加入我们 -->
-      <div class="panel" id="panel-3">
+      <div class="panel" id="panel-4">
         <div class="panel-content">
           <h3>加入我们</h3>
           <div class="join-card">
@@ -578,17 +558,22 @@
           </div>
         </div>
       </div>
+
+      <div class="panel" id="panel-5">
+        <div class="panel-content">
+          <h3>东山驿传</h3>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- 版权尾栏 -->
   <footer>
     © 2025 Youth Peak Training Camp. All rights reserved.
     <div class="footer-since">since July 2025</div>
   </footer>
 
   <script>
-    // 选项卡切换
     const tabs=document.querySelectorAll('.tab'),panels=document.querySelectorAll('.panel');
     tabs.forEach((tab,idx)=>{
       tab.addEventListener('click',()=>{
@@ -610,7 +595,6 @@
       tab.addEventListener('mouseleave',()=>{ if(!tab.classList.contains('active')) tab.style.transform=''; rect=null; });
     });
 
-    // 选项卡区域内鼠标跟随光效
     const tabArea = document.querySelector('.tab-area');
     const glow = document.querySelector('.tab-glow');
     
