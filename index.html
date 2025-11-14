@@ -242,14 +242,65 @@
     .member-pb .label{color:#555;font-weight:600}
     .member-pb .value{color:#1976d2;font-weight:700}
 
+    /* 记录保持者卡片组 - 与现有风格完全统一 */
+    .record-holders{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+      gap:18px;
+      margin-bottom:28px;
+      padding:8px 0;
+    }
+    .record-card{
+      background:linear-gradient(135deg,#e3f2fd,#bbdefb);
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 8px 24px rgba(25,118,210,.18),0 0 0 1px rgba(25,118,210,.1);
+      text-align:center;
+      padding:20px 16px;
+      transition:transform .32s ease,box-shadow .32s ease;
+      border:2px solid transparent;
+    }
+    .record-card:hover{
+      transform:translateY(-10px) scale(1.03);
+      box-shadow:0 20px 40px rgba(25,118,210,.28),0 0 0 3px rgba(25,118,210,.2);
+    }
+    .record-title{
+      font-size:.92rem;
+      font-weight:800;
+      color:#0d47a1;
+      letter-spacing:.06em;
+      margin-bottom:8px;
+    }
+    .record-holder{
+      font-size:1.38rem;
+      font-weight:900;
+      color:#1976d2;
+      margin:6px 0;
+      text-shadow:0 1px 2px rgba(0,0,0,.1);
+    }
+    .record-time{
+      font-size:1.72rem;
+      font-weight:900;
+      color:#000;
+      letter-spacing:.02em;
+      background:linear-gradient(90deg,#1976d2,#42a5f5);
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
     @media(max-width:800px){
       .team-grid{gap:16px}
       .member-card:hover{transform:translateY(-4px) scale(1.01)}
+      .record-holders{gap:16px;margin-bottom:24px;}
+      .record-card:hover{transform:translateY(-6px) scale(1.02);}
     }
     @media(max-width:600px){
       .team-grid{grid-template-columns:1fr;gap:12px}
       .member-header{padding:16px 18px 12px}
       .member-body{padding:14px 18px 18px}
+      .record-holders{grid-template-columns:1fr 1fr;gap:14px;}
+      .record-time{font-size:1.5rem;}
     }
 
     .join-card{
@@ -358,6 +409,40 @@
         <div class="panel-content">
           <h3>团队成员 <span class="team-count">共 10 名成员</span></h3>
           <div class="team-grid">
+
+            <!-- 记录保持者卡片组 -->
+            <div class="record-holders">
+              <div class="record-card">
+                <div class="record-title">800米记录保持者</div>
+                <div class="record-holder">郭天一</div>
+                <div class="record-time">2:08</div>
+              </div>
+              <div class="record-card">
+                <div class="record-title">1500米记录保持者</div>
+                <div class="record-holder">郭天一</div>
+                <div class="record-time">4:40</div>
+              </div>
+              <div class="record-card">
+                <div class="record-title">3000米记录保持者</div>
+                <div class="record-holder">杨天歌</div>
+                <div class="record-time">10:40</div>
+              </div>
+              <div class="record-card">
+                <div class="record-title">5000米记录保持者</div>
+                <div class="record-holder">杨天歌</div>
+                <div class="record-time">18:29</div>
+              </div>
+              <div class="record-card">
+                <div class="record-title">10000米记录保持者</div>
+                <div class="record-holder">石原瑞</div>
+                <div class="record-time">41:46</div>
+              </div>
+              <div class="record-card">
+                <div class="record-title">半程马拉松记录保持者</div>
+                <div class="record-holder">石原瑞</div>
+                <div class="record-time">1:44:04</div>
+              </div>
+            </div>
 
             <div class="member-card">
               <div class="member-header">
