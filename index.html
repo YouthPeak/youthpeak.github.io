@@ -19,7 +19,7 @@
       --shadow:0 8px 32px rgba(17,24,39,.09);--radius:18px;--panel-padding:clamp(10px,3vw,32px);
       --header-min:48px;
       --role-bg:linear-gradient(90deg,#1a237e,#3949ab);
-      --glow-opacity:0.28; /* 更明显 */
+      --glow-opacity:0.28;
     }
     html,body{height:100%;margin:0;padding:0;overflow-x:hidden;}
     body{min-height:100vh;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
@@ -96,7 +96,7 @@
       padding:clamp(18px,3vw,32px) clamp(4px,2.4vw,18px) clamp(24px,5vw,42px);
       box-shadow:0 -8px 30px rgba(15,23,42,.05),0 1px 3px rgba(0,0,0,.1);
       width:100vw;max-width:100vw;box-sizing:border-box;position:relative;z-index:1;
-      overflow:hidden; /* 确保光效不溢出 */
+      overflow:hidden;
     }
     .tabs-row{
       display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
@@ -175,7 +175,7 @@
       color:rgba(0,0,0,.81);word-break:break-word;overflow-wrap:anywhere;
     }
 
-    /* 选项卡区域内律动光效（完全框在 .tab-area 内） */
+    /* 选项卡区域内律动光效 */
     .tab-glow{
       position:absolute;top:0;left:0;width:100%;height:100%;
       pointer-events:none;z-index:0;opacity:var(--glow-opacity);
@@ -338,7 +338,7 @@
 
   <!-- 选项卡区域 -->
   <section class="tab-area" aria-label="选项卡区域">
-    <!-- 光效层：完全框在 .tab-area 内 -->
+    <!-- 光效层 -->
     <div class="tab-glow"></div>
 
     <div class="tabs-row" id="tabsRow">
@@ -369,7 +369,7 @@
       <!-- 团队成员 -->
       <div class="panel" id="panel-1">
         <div class="panel-content">
-          <h3>团队成员 <span class="team-count">共 9 名成员</span></h3>
+          <h3>团队成员 <span class="team-count">共 10 名成员</span></h3>
           <div class="team-grid">
 
             <!-- Harold Yang -->
@@ -520,6 +520,24 @@
               </div>
             </div>
 
+            <!-- 王梓渊（新增） -->
+            <div class="member-card">
+              <div class="member-header">
+                <h4 class="member-name">王梓渊</h4>
+              </div>
+              <div class="member-body">
+                <p><strong>专项：</strong>400M 800M</p>
+                <p><strong>出生日期：</strong>2010年11月23日</p>
+                <ul class="member-pb">
+                  <li><span class="label">400M</span><span class="value">0:56</span></li>
+                  <li><span class="label">800M</span><span class="value">2:12</span></li>
+                  <li><span class="label">1500M</span><span class="value">4:44</span></li>
+                  <li><span class="label">3000M</span><span class="value">10:46</span></li>
+                  <li><span class="label">5000M</span><span class="value">18:55</span></li>
+                </ul>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -601,11 +619,6 @@
       const y = ((e.clientY - rect.top) / rect.height) * 100 + '%';
       glow.style.setProperty('--mouse-x', x);
       glow.style.setProperty('--mouse-y', y);
-    });
-
-    // 鼠标离开时保持最后位置（不重置）
-    tabArea.addEventListener('mouseleave', () => {
-      // 保持当前光效位置，不重置
     });
 
     function switchLang(){alert('敬请期待');}
