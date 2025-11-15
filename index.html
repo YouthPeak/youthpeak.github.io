@@ -298,24 +298,105 @@
       -webkit-text-fill-color:transparent;
     }
 
+    /* 针对卓绝风姿主题卡片的样式调整 */
+    .wide-card{
+      grid-column: 1/-1; /* 占据整个网格宽度 */
+      background: linear-gradient(135deg,#fdfdff,#f8faff);
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(25,118,210,.09),0 0 0 1px rgba(25,118,210,.06);
+      padding: 24px;
+      margin-bottom: 22px;
+      transition: transform .32s ease, box-shadow .32s ease;
+    }
+    .wide-card:hover{
+        transform: translateY(-4px);
+        box-shadow: 0 18px 38px rgba(25,118,210,.16),0 0 0 1px rgba(25,118,210,.1);
+    }
+    .wide-card h4.card-title{
+        font-size: 1.25rem;
+        font-weight: 900;
+        color: #0d47a1;
+        margin: 0 0 1.2em;
+        padding-bottom: 8px;
+        border-bottom: 2px solid rgba(25, 118, 210, 0.1);
+    }
+    .wide-card h5{
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: #1976d2;
+        margin: 1.5em 0 0.8em;
+    }
+    .wide-content-group{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-bottom: 20px;
+        align-items: flex-start;
+    }
+    .wide-content-group p{
+        flex: 1 1 100%; /* 默认独占一行 */
+        margin: 0;
+        padding: 0;
+        line-height: 1.7;
+    }
+    .wide-content-group .media-item{
+        flex: 1 1 calc(50% - 10px); /* 在宽屏下两列显示 */
+        max-width: calc(50% - 10px);
+        min-width: 200px; /* 最小宽度，防止在小屏下挤压过度 */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        overflow: hidden;
+    }
+    .wide-content-group .media-item img{
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,.1);
+    }
+    .wide-content-group .media-item .caption{
+        margin-top: 8px;
+        font-size: 0.88rem;
+        color: #555;
+        line-height: 1.5;
+    }
+    .wide-content-group .text-block{
+        flex: 1 1 100%;
+        margin-top: 10px;
+        padding: 0 10px;
+    }
+    .wide-content-group .note-text{
+        flex: 1 1 100%;
+        font-size: 0.85rem;
+        color: #777;
+        margin: 0;
+        text-align: right;
+    }
+
     @media(max-width:800px){
       .team-grid{gap:16px}
       .member-card:hover{transform:translateY(-4px) scale(1.01)}
       .record-holders{gap:16px;margin-bottom:24px;}
-      /* 调整中等屏幕下卡片布局 */
       .record-card{flex: 1 1 45%; max-width: 100%;}
       .record-card:hover{transform:translateY(-6px) scale(1.02);}
+      /* 小屏幕下主题卡片图片单列显示 */
+      .wide-content-group .media-item{
+          flex: 1 1 100%;
+          max-width: 100%;
+      }
+      .wide-card{padding: 16px;}
+      .wide-card h4.card-title{font-size: 1.15rem;}
+      .wide-card h5{font-size: 1.05rem;}
     }
     @media(max-width:600px){
       .team-grid{grid-template-columns:1fr;gap:12px}
       .member-header{padding:16px 18px 12px}
       .member-body{padding:14px 18px 18px}
-      /* 小屏幕下每行两个 */
       .record-card{flex: 1 1 calc(50% - 9px); max-width: 100%;}
       .record-time{font-size:1.5rem;}
     }
     @media(max-width:400px){
-        /* 更小的屏幕下每行一个 */
         .record-card{flex: 1 1 100%;}
     }
 
@@ -658,7 +739,45 @@
       <div class="panel" id="panel-3">
         <div class="panel-content">
           <h3>卓绝风姿</h3>
-          <p>即将登场</p>
+          
+          <div class="wide-card">
+            <h4 class="card-title">2025年10月25日，WSE 田径公开赛·太原站，我们成员的表现</h4>
+            
+            <h5>男子5000米 U17 组别</h5>
+            <div class="wide-content-group">
+                <div class="media-item">
+                    <img src="./images/wse_ytg1.jpg" alt="杨天歌赛中表现">
+                    <span class="caption">杨天歌（左起第二位）赛中表现</span>
+                </div>
+                <div class="media-item">
+                    <img src="./images/wse_ytg2.jpg" alt="杨天歌冲刺阶段">
+                    <span class="caption">杨天歌（左起第一位）冲刺阶段表现</span>
+                </div>
+                <p class="text-block">在比赛的尾声，杨天歌奋力冲刺，跑出了男子5000米 U17 组 18:29.79，第九名的成绩。</p>
+
+                <div class="media-item" style="max-width: 400px; margin: 20px auto 10px;">
+                    <img src="./images/wse_ytg3.jpg" alt="杨天歌与康智博合影">
+                    <span class="caption">杨天歌（左）与康智博（右）</span>
+                </div>
+                <p class="text-block">杨天歌成绩为 18:29.79；而康智博成绩为 18:29.90。</p>
+            </div>
+
+            <h5>男子5000米 M50 组别</h5>
+            <div class="wide-content-group">
+                <div class="media-item">
+                    <img src="./images/wse_yg1.jpg" alt="杨光先生赛中">
+                </div>
+                <div class="media-item">
+                    <img src="./images/wse_yg2.jpg" alt="杨光先生完赛">
+                </div>
+                <p class="note-text">（以上图片来自 WSE 官方比赛图库）</p>
+                <p class="text-block">杨光先生，男子5000米 M50 组 20:25.84，组别第一。</p>
+            </div>
+          </div>
+          
+          <div class="team-grid">
+            
+          </div>
         </div>
       </div>
 
