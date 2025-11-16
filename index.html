@@ -11,6 +11,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png" />
   <meta name="apple-mobile-web-app-title" content="Youth Peak" />
   <link rel="manifest" href="./images/site.webmanifest" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9R3WqfdJRLxPjO3U5K0LzXw0zM8I5L4U5W6D5N7T7P7A7C7A7B7A7C7A7C7A7C7A7A7A7" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
     :root{
@@ -445,9 +446,30 @@
     footer{
       background:#111;color:#aaa;padding:1.8rem 1rem;margin-top:3rem;
       font-size:.88rem;text-align:center;position:relative;
+      /* NEW: 确保内容居中对齐 */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .footer-since{
       font-size:.82rem;color:#666;margin-top:.5rem;letter-spacing:.08em;
+    }
+    /* NEW: 社交图标容器样式 */
+    .social-links {
+      display: flex;
+      gap: 20px; /* 确保图标之间有足够的间距 */
+      margin-bottom: 12px; /* 确保图标和版权信息之间有间距 */
+      margin-top: -8px; /* 向上微调，视觉上更靠近 */
+    }
+    /* NEW: 社交图标样式 */
+    .social-icon {
+      font-size: 26px; /* 图标大小 */
+      color: #aaa; /* 默认颜色 */
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+    .social-icon:hover {
+      color: #fff; /* 悬停颜色 */
+      transform: translateY(-2px);
     }
   </style>
 </head>
@@ -765,10 +787,10 @@
             <h5>男子5000米 M50 组别</h5>
             <div class="wide-content-group">
                 <div class="media-item">
-                    <img src="./images/wse_yg1.jpg" alt="杨光先生赛中">
+                    <img src="./images/wse_yg1.jpg" alt="杨光先生完赛1">
                 </div>
                 <div class="media-item">
-                    <img src="./images/wse_yg2.jpg" alt="杨光先生完赛">
+                    <img src="./images/wse_yg2.jpg" alt="杨光先生完赛2">
                 </div>
                 <p class="note-text">（以上图片来自 WSE 官方比赛图库）</p>
                 <p class="text-block">杨光先生，男子5000米 M50 组 20:25.84，组别第一，同时也创下了 M50 组记录。</p>
@@ -818,6 +840,14 @@
   </section>
 
   <footer>
+    <div class="social-links">
+      <a href="https://www.instagram.com/youthpeak_traingcamp" target="_blank" aria-label="Instagram 账号">
+        <i class="fa-brands fa-instagram social-icon"></i>
+      </a>
+      <a href="https://x.com/ypcamp2025" target="_blank" aria-label="X (Twitter) 账号">
+        <i class="fa-brands fa-x-twitter social-icon"></i>
+      </a>
+    </div>
     © 2025 Youth Peak Training Camp. All rights reserved.
     <div class="footer-since">since July 2025</div>
   </footer>
