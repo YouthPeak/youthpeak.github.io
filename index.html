@@ -11,7 +11,6 @@
   <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png" />
   <meta name="apple-mobile-web-app-title" content="Youth Peak" />
   <link rel="manifest" href="./images/site.webmanifest" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9R3WqfdJRLxPjO3U5K0LzXw0zM8I5L4U5W6D5N7T7P7A7C7A7C7A7C7A7C7A7A7A7" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
     :root{
@@ -446,7 +445,7 @@
     footer{
       background:#111;color:#aaa;padding:1.8rem 1rem;margin-top:3rem;
       font-size:.88rem;text-align:center;position:relative;
-      /* **【关键修改 2-CSS】** 确保内容居中对齐 */
+      /* 确保内容居中对齐 */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -454,22 +453,30 @@
     .footer-since{
       font-size:.82rem;color:#666;margin-top:.5rem;letter-spacing:.08em;
     }
-    /* **【关键修改 2-CSS】** 社交图标容器样式 */
+    /* NEW: 社交图标容器样式 */
     .social-links {
       display: flex;
-      gap: 20px; /* 确保图标之间有足够的间距 */
+      gap: 24px; /* 确保图标之间有足够的间距 */
       margin-bottom: 12px; /* 确保图标和版权信息之间有间距 */
-      margin-top: -8px; /* 向上微调，视觉上更靠近 */
+      margin-top: -8px; /* 向上微调 */
     }
-    /* **【关键修改 2-CSS】** 社交图标样式 */
-    .social-icon {
-      font-size: 26px; /* 图标大小 */
-      color: #aaa; /* 默认颜色 */
-      transition: color 0.2s ease, transform 0.2s ease;
+    /* NEW: 图片图标样式 - 实现白色背景和白色描边 */
+    .social-links img {
+      width: 32px; /* 图片图标大小 */
+      height: 32px;
+      background-color: #fff; /* 白色背景 */
+      border: 2px solid #fff; /* 白色描边/边框 */
+      border-radius: 50%; /* 圆形背景 */
+      padding: 4px; /* 图标与边框之间的间距 */
+      box-sizing: content-box; /* 确保大小计算正确 */
+      opacity: 0.9; /* 默认透明度 */
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      cursor: pointer;
     }
-    .social-icon:hover {
-      color: #fff; /* 悬停颜色 */
-      transform: translateY(-2px);
+    .social-links img:hover {
+      opacity: 1; /* 悬停时完全不透明 */
+      transform: translateY(-2px) scale(1.05); /* 悬停时向上和放大一点点 */
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* 增加一个柔和的白色光晕效果 */
     }
   </style>
 </head>
@@ -842,10 +849,10 @@
   <footer>
     <div class="social-links">
       <a href="https://www.instagram.com/youthpeak_traingcamp" target="_blank" aria-label="Instagram 账号">
-        <i class="fa-brands fa-instagram social-icon"></i>
+        <img src="https://img.icons8.com/?size=96&id=Xy10Jcu1L2Su&format=png" alt="Instagram Icon">
       </a>
       <a href="https://x.com/ypcamp2025" target="_blank" aria-label="X (Twitter) 账号">
-        <i class="fa-brands fa-x-twitter social-icon"></i>
+        <img src="https://img.icons8.com/?size=100&id=phOKFKYpe00C&format=png" alt="X (Twitter) Icon">
       </a>
     </div>
     © 2025 Youth Peak Training Camp. All rights reserved.
