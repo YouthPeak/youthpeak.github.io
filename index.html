@@ -20,14 +20,33 @@
       --role-bg:linear-gradient(90deg,#1a237e,#3949ab);
       --glow-opacity:0.28;
     }
-    html,body{height:100%;margin:0;padding:0;overflow-x:hidden;}
-    body{min-height:100vh;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
+
+    /* === 修复核心：移除 height:100%，允许文档自然滚动 === */
+    /* 这解决了 iOS Safari 搜索框不隐藏和页面卡顿的问题，同时也修复了 sticky 吸顶失效的问题 */
+    html {
+      height: auto;
+      overflow-x: hidden;
+    }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-overflow-scrolling: touch; /* 优化 iOS 滚动体验 */
+    }
 
     .topbar{
       width:100vw;min-height:var(--header-min);background:#000;color:#fff;
       display:flex;align-items:center;justify-content:space-between;
       gap:1.3rem;padding:0 clamp(10px,4vw,48px);box-sizing:border-box;
-      position:sticky;top:0;z-index:100;
+      /* === 修复头栏：确保吸顶 === */
+      position: -webkit-sticky; /* Safari 兼容 */
+      position: sticky;
+      top: 0;
+      z-index: 9999; /* 确保在最上层 */
     }
     .topbar-inner{display:flex;align-items:center;width:100%;min-width:0;gap:2vw;}
     .logo-area{
@@ -242,21 +261,20 @@
     .member-pb .label{color:#555;font-weight:600}
     .member-pb .value{color:#1976d2;font-weight:700}
 
-    /* 记录保持者卡片组 - 重新设计布局 */
+    /* 记录保持者卡片组 */
     .record-holders{
-      /* 占据第一行所有空间，不参与到 team-grid 的自动填充中 */
       grid-column:1/-1;
-      display:flex; /* 使用 flex 布局替代 grid 确保水平排列 */
-      flex-wrap:wrap; /* 允许换行 */
+      display:flex; 
+      flex-wrap:wrap; 
       gap:18px;
       margin-bottom:28px;
       padding:8px 0;
-      justify-content: center; /* 居中显示 */
-      align-items: stretch; /* 确保卡片等高 */
+      justify-content: center; 
+      align-items: stretch; 
     }
     .record-card{
-      flex: 1 1 280px; /* 允许卡片伸缩，基础宽度 280px */
-      max-width: 380px; /* 避免在宽屏下卡片过宽 */
+      flex: 1 1 280px; 
+      max-width: 380px; 
       background:linear-gradient(135deg,#e3f2fd,#bbdefb);
       border-radius:16px;
       overflow:hidden;
@@ -265,9 +283,9 @@
       padding:20px 16px;
       transition:transform .32s ease,box-shadow .32s ease;
       border:2px solid transparent;
-      display: flex; /* 内部 flex 布局 */
+      display: flex; 
       flex-direction: column;
-      justify-content: center; /* 垂直居中内容 */
+      justify-content: center; 
     }
     .record-card:hover{
       transform:translateY(-10px) scale(1.03);
@@ -298,9 +316,9 @@
       -webkit-text-fill-color:transparent;
     }
 
-    /* 针对卓绝风姿主题卡片的样式调整 */
+    /* 卓绝风姿样式 */
     .wide-card{
-      grid-column: 1/-1; /* 占据整个网格宽度 */
+      grid-column: 1/-1; 
       background: linear-gradient(135deg,#fdfdff,#f8faff);
       border-radius: 16px;
       box-shadow: 0 6px 20px rgba(25,118,210,.09),0 0 0 1px rgba(25,118,210,.06);
@@ -334,15 +352,15 @@
         align-items: flex-start;
     }
     .wide-content-group p{
-        flex: 1 1 100%; /* 默认独占一行 */
+        flex: 1 1 100%; 
         margin: 0;
         padding: 0;
         line-height: 1.7;
     }
     .wide-content-group .media-item{
-        flex: 1 1 calc(50% - 10px); /* 在宽屏下两列显示 */
+        flex: 1 1 calc(50% - 10px); 
         max-width: calc(50% - 10px);
-        min-width: 200px; /* 最小宽度，防止在小屏下挤压过度 */
+        min-width: 200px; 
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -380,7 +398,6 @@
       .record-holders{gap:16px;margin-bottom:24px;}
       .record-card{flex: 1 1 45%; max-width: 100%;}
       .record-card:hover{transform:translateY(-6px) scale(1.02);}
-      /* 小屏幕下主题卡片图片单列显示 */
       .wide-content-group .media-item{
           flex: 1 1 100%;
           max-width: 100%;
