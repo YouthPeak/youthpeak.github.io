@@ -21,8 +21,6 @@
       --glow-opacity:0.28;
     }
 
-    /* === 修复核心：移除 height:100%，允许文档自然滚动 === */
-    /* 这解决了 iOS Safari 搜索框不隐藏和页面卡顿的问题，同时也修复了 sticky 吸顶失效的问题 */
     html {
       height: auto;
       overflow-x: hidden;
@@ -30,24 +28,31 @@
     body {
       min-height: 100vh;
       margin: 0;
-      padding: 0;
+      /* === 修复核心 1：给 body 添加顶部内边距 === */
+      /* 因为 topbar 变成了 fixed，脱离文档流，需要把内容挤下来，否则会被遮挡 */
+      padding-top: var(--header-min); 
       overflow-x: hidden;
       font-family: "Segoe UI", Roboto, Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
-      -webkit-overflow-scrolling: touch; /* 优化 iOS 滚动体验 */
+      -webkit-overflow-scrolling: touch; 
     }
 
     .topbar{
-      width:100vw;min-height:var(--header-min);background:#000;color:#fff;
+      /* === 修复核心 2：改为 Fixed 固定定位 === */
+      position: fixed; 
+      top: 0;
+      left: 0;
+      /* 这里的宽度改为 100% 更加安全，防止 100vw 包含滚动条宽度导致水平溢出 */
+      width: 100%; 
+      height: var(--header-min); /* 明确高度 */
+      
+      background:#000;color:#fff;
       display:flex;align-items:center;justify-content:space-between;
       gap:1.3rem;padding:0 clamp(10px,4vw,48px);box-sizing:border-box;
-      /* === 修复头栏：确保吸顶 === */
-      position: -webkit-sticky; /* Safari 兼容 */
-      position: sticky;
-      top: 0;
-      z-index: 9999; /* 确保在最上层 */
+      z-index: 9999; 
     }
+    
     .topbar-inner{display:flex;align-items:center;width:100%;min-width:0;gap:2vw;}
     .logo-area{
       display:flex;align-items:center;gap:.63rem;min-width:0;
@@ -801,7 +806,7 @@
           <h3>卓绝风姿</h3>
           
           <div class="wide-card">
-            <h4 class="card-title">2025年10月25日，WSE 田径公开赛·太原站，我们成员的表现</h4>
+            <h4 class="card-title">2025年10月25日，WSE 田径公开赛·太原站</h4>
             
             <h5>男子5000米 U17 组别</h5>
             <div class="wide-content-group">
@@ -825,10 +830,10 @@
             <h5>男子5000米 M50 组别</h5>
             <div class="wide-content-group">
                 <div class="media-item">
-                    <img src="./images/wse_yg1.jpg" alt="杨光先生赛中">
+                    <img src="./images/wse_yg1.jpg" alt="杨光先生完赛1">
                 </div>
                 <div class="media-item">
-                    <img src="./images/wse_yg2.jpg" alt="杨光先生完赛">
+                    <img src="./images/wse_yg2.jpg" alt="杨光先生完赛2">
                 </div>
                 <p class="note-text">（以上图片来自 WSE 官方比赛图库）</p>
                 <p class="text-block">杨光先生，男子5000米 M50 组 20:25.84，组别第一，同时也创下了 M50 组记录。</p>
@@ -858,7 +863,7 @@
               </div>
               <div class="info-item">
                 <svg class="info-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                <span>h40925796@gmail.com</span>
+                <span>leader@youthpeak.top</span>
               </div>
             </div>
             <div class="join-note">
