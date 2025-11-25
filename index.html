@@ -28,8 +28,6 @@
     body {
       min-height: 100vh;
       margin: 0;
-      /* === 修复核心 1：给 body 添加顶部内边距 === */
-      /* 因为 topbar 变成了 fixed，脱离文档流，需要把内容挤下来，否则会被遮挡 */
       padding-top: var(--header-min); 
       overflow-x: hidden;
       font-family: "Segoe UI", Roboto, Arial, sans-serif;
@@ -39,14 +37,11 @@
     }
 
     .topbar{
-      /* === 修复核心 2：改为 Fixed 固定定位 === */
       position: fixed; 
       top: 0;
       left: 0;
-      /* 这里的宽度改为 100% 更加安全，防止 100vw 包含滚动条宽度导致水平溢出 */
       width: 100%; 
-      height: var(--header-min); /* 明确高度 */
-      
+      height: var(--header-min); 
       background:#000;color:#fff;
       display:flex;align-items:center;justify-content:space-between;
       gap:1.3rem;padding:0 clamp(10px,4vw,48px);box-sizing:border-box;
@@ -467,7 +462,6 @@
     footer{
       background:#111;color:#aaa;padding:1.8rem 1rem;margin-top:3rem;
       font-size:.88rem;text-align:center;position:relative;
-      /* NEW: 确保内容居中对齐 */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -475,30 +469,28 @@
     .footer-since{
       font-size:.82rem;color:#666;margin-top:.5rem;letter-spacing:.08em;
     }
-    /* NEW: 社交图标容器样式 */
     .social-links {
       display: flex;
-      gap: 24px; /* 确保图标之间有足够的间距 */
-      margin-bottom: 12px; /* 确保图标和版权信息之间有间距 */
-      margin-top: -8px; /* 向上微调 */
+      gap: 24px; 
+      margin-bottom: 12px;
+      margin-top: -8px;
     }
-    /* NEW: 图片图标样式 - 实现白色背景和白色描边 */
     .social-links img {
-      width: 32px; /* 图片图标大小 */
+      width: 32px;
       height: 32px;
-      background-color: #fff; /* 白色背景 */
-      border: 2px solid #fff; /* 白色描边/边框 */
-      border-radius: 50%; /* 圆形背景 */
-      padding: 4px; /* 图标与边框之间的间距 */
-      box-sizing: content-box; /* 确保大小计算正确 */
-      opacity: 0.9; /* 默认透明度 */
+      background-color: #fff;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      padding: 4px;
+      box-sizing: content-box;
+      opacity: 0.9;
       transition: opacity 0.2s ease, transform 0.2s ease;
       cursor: pointer;
     }
     .social-links img:hover {
-      opacity: 1; /* 悬停时完全不透明 */
-      transform: translateY(-2px) scale(1.05); /* 悬停时向上和放大一点点 */
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* 增加一个柔和的白色光晕效果 */
+      opacity: 1;
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
     }
   </style>
 </head>
@@ -556,7 +548,7 @@
 
       <div class="panel" id="panel-1">
         <div class="panel-content">
-          <h3>团队成员 <span class="team-count">共 13 名成员</span></h3>
+          <h3>团队成员 <span class="team-count">共 16 名成员</span></h3>
           <div class="team-grid">
 
             <div class="record-holders">
@@ -587,8 +579,8 @@
               </div>
               <div class="record-card">
                 <div class="record-title">半程马拉松记录保持者</div>
-                <div class="record-holder">郭天一</div>
-                <div class="record-time">1:41:00</div>
+                <div class="record-holder">孙浩然</div>
+                <div class="record-time">1:26:52</div>
               </div>
             </div>
 
@@ -634,7 +626,9 @@
               <div class="member-body">
                 <p><strong>专项：</strong>5000M</p>
                 <p><strong>出生日期：</strong>2010年8月1日</p>
-                <p><strong>各项目PB：</strong>暂无</p>
+                <ul class="member-pb">
+                  <li><span class="label">5000M</span><span class="value">24:09</span></li>
+                </ul>
               </div>
             </div>
 
@@ -664,6 +658,22 @@
                 <ul style="margin:6px 0 0;padding-left:18px;font-size:.94rem;">
                   <li>2025年10月26日 WSE 太原站 M50 组别 5000M 冠军</li>
                   <li>WSE M50 组别记录保持者</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="member-card">
+              <div class="member-header">
+                <h4 class="member-name">孙浩然</h4>
+              </div>
+              <div class="member-body">
+                <p><strong>专项：</strong>马拉松</p>
+                <p><strong>出生日期：</strong>2010年11月23日</p>
+                <ul class="member-pb">
+                  <li><span class="label">800M</span><span class="value">02:15</span></li>
+                  <li><span class="label">1500M</span><span class="value">05:00</span></li>
+                  <li><span class="label">5000M</span><span class="value">18:51</span></li>
+                  <li><span class="label">半程马拉松</span><span class="value">01:26:52</span></li>
                 </ul>
               </div>
             </div>
@@ -762,6 +772,34 @@
                 <p><strong>出生日期：</strong>2010年7月21日</p>
                 <ul class="member-pb">
                   <li><span class="label">800M</span><span class="value">2:15</span></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="member-card">
+              <div class="member-header">
+                <h4 class="member-name">李锦林</h4>
+              </div>
+              <div class="member-body">
+                <p><strong>专项：</strong>马拉松</p>
+                <p><strong>出生日期：</strong>2009年5月1日</p>
+                <ul class="member-pb">
+                  <li><span class="label">10000M</span><span class="value">00:44:25</span></li>
+                  <li><span class="label">半程马拉松</span><span class="value">01:37:00</span></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="member-card">
+              <div class="member-header">
+                <h4 class="member-name">郭羽翔</h4>
+              </div>
+              <div class="member-body">
+                <p><strong>专项：</strong>400M 800M</p>
+                <p><strong>出生日期：</strong>2009年1月21日</p>
+                <ul class="member-pb">
+                  <li><span class="label">400M</span><span class="value">00:58</span></li>
+                  <li><span class="label">800M</span><span class="value">02:36</span></li>
                 </ul>
               </div>
             </div>
@@ -889,6 +927,9 @@
       </a>
       <a href="https://x.com/ypcamp2025" target="_blank" aria-label="X (Twitter) 账号">
         <img src="./images/X.png" alt="X (Twitter) Icon">
+      </a>
+      <a href="https://www.douyin.com/user/MS4wLjABAAAA7uzXXrTtG9-yKtJJUNwMicWJfp1plNtW3J6MMy6jwl5eGEx4SCF4jVJIyk0-nsWK" target="_blank" aria-label="抖音账号">
+        <img src="./images/dy.png" alt="Douyin Icon">
       </a>
     </div>
     © 2025 Youth Peak Training Camp. All rights reserved.
