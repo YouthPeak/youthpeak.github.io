@@ -458,6 +458,48 @@
     }
 
     img,video{max-width:100%;height:auto;display:block;box-sizing:border-box;border-radius:6px}
+    
+    /* NEW: 东山驿传头部图片组样式 */
+    .header-logos {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .header-logos img {
+      height: 48px; /* 调整高度以适应标题栏 */
+      width: auto;
+      pointer-events: none; /* 禁用鼠标事件 */
+      user-select: none;
+      -webkit-user-drag: none;
+      border-radius: 4px;
+    }
+    
+    /* NEW: 文本小卡片样式 (复用 member-card 的视觉效果) */
+    .text-card {
+      background: linear-gradient(135deg,#fdfdff,#f8faff);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(25,118,210,.09),0 0 0 1px rgba(25,118,210,.06);
+      transition: transform .32s ease,box-shadow .32s ease;
+      padding: 24px 28px;
+      margin-top: 8px;
+    }
+    .text-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 38px rgba(25,118,210,.16),0 0 0 1px rgba(25,118,210,.1);
+    }
+
+    /* 交互链接样式 */
+    .link-action {
+      color: #1976d2;
+      cursor: pointer;
+      font-weight: 700;
+      text-decoration: underline;
+      transition: color .2s;
+    }
+    .link-action:hover {
+      color: #0d47a1;
+    }
 
     footer{
       background:#111;color:#aaa;padding:1.8rem 1rem;margin-top:3rem;
@@ -914,7 +956,17 @@
 
       <div class="panel" id="panel-5">
         <div class="panel-content">
-          <h3>东山驿传</h3>
+          <h3>
+            <span>东山驿传</span>
+            <div class="header-logos">
+              <img src="./images/youthpeak.png" alt="Youth Peak Logo">
+              <img src="./images/dsyc.png" alt="Dongshan Ekiden Logo">
+            </div>
+          </h3>
+          
+          <div class="text-card">
+             <p>由 Youth Peak Training Camp 举办的第一届东山驿传将于 2026 年 1 月 1 日于山西省太原市举办，若您有兴趣参加，请移步 <span class="link-action" onclick="document.querySelector('.tab[data-index=\'4\']').click()">“加入我们”</span> 与队长取得联系。</p>
+          </div>
         </div>
       </div>
 
