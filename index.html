@@ -36,6 +36,12 @@
       -webkit-overflow-scrolling: touch; 
     }
 
+    /* 通用不可选中样式类 */
+    .noselect {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
     .topbar{
       position: fixed; 
       top: 0;
@@ -61,19 +67,23 @@
       letter-spacing:.04em;color:#fff;user-select:none;white-space:nowrap;
     }
     .lang-switch{margin-left:auto;display:flex;align-items:center;gap:.3em;}
+    
     .lang-btn{
       background:#172337;color:#fff;font-weight:800;
       font-size:clamp(.92rem,1.5vw,1.06rem);border-radius:8px;border:none;
       padding:.40em 1em .37em;cursor:pointer;outline:none;margin-left:15px;
       transition:background .17s;box-shadow:0 1px 4px #2f57731a;min-width:66px;letter-spacing:.16em;
     }
-    .lang-btn:hover,.lang-btn:focus{background:#2773d0;color:#fff;}
+    .lang-btn:hover, .lang-btn.active {background:#2773d0;color:#fff;}
 
+    /* Hero区域文字不可选中 */
     header.hero{
       width:100vw;height:960px;max-height:100vh;
       background:url('./images/hero.jpg') center/cover no-repeat;
       display:flex;align-items:center;justify-content:center;text-align:center;
       position:relative;overflow:hidden;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .hero::before{
       content:"";position:absolute;inset:0;
@@ -117,6 +127,7 @@
       display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
       margin:0 auto 28px;max-width:1100px;padding:0 1rem;position:relative;
     }
+    /* 选项卡按钮文字不可选中 */
     .tab{
       position:relative;padding:.9em 1.8em;border-radius:16px;
       background:rgba(243,246,251,.7);font-weight:800;letter-spacing:.02em;
@@ -125,6 +136,8 @@
       backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
       border:1.5px solid transparent;
       box-shadow:0 4px 12px rgba(25,118,210,.08);z-index:1;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .tab:hover{
       transform:translateY(-4px) scale(1.02);
@@ -160,6 +173,19 @@
       transition:all .45s cubic-bezier(.33,1,.49,.98);
       max-width:100vw;box-sizing:border-box;
     }
+    
+    /* 团队成员页不可选中 */
+    #panel-1 {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    
+    /* 卓绝风姿内容不可选中 */
+    #panel-3 {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
     .panel.active{
       opacity:1;transform:translateY(0) scale(1);
       pointer-events:auto;z-index:1;position:relative;
@@ -173,10 +199,13 @@
     .panel.active .panel-content>*{--i:0}
     @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
 
+    /* 所有面板标题不可选中 */
     .panel h3{
       margin:0 0 .79em;font-size:clamp(1.17rem,2vw,1.47rem);font-weight:900;
       --i:0!important;display:flex;align-items:center;justify-content:space-between;
       color:#0d47a1;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .team-count{
       font-size:.88rem;font-weight:700;color:#1976d2;
@@ -391,6 +420,29 @@
         margin: 0;
         text-align: right;
     }
+    
+    /* 引用样式 */
+    .quote-box {
+        background: #f0f4f8;
+        border-left: 5px solid #1976d2;
+        margin: 20px 0;
+        padding: 20px;
+        font-style: italic;
+        color: #555;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 4px;
+        display: block;
+    }
+    .quote-author {
+        display: block;
+        text-align: right;
+        margin-top: 10px;
+        font-weight: bold;
+        font-style: normal;
+        font-size: 0.9em;
+        color: #333;
+    }
 
     @media(max-width:800px){
       .team-grid{gap:16px}
@@ -431,9 +483,14 @@
     .leader-photo{
       width:280px;max-width:90%;border-radius:12px;object-fit:contain;
       margin:0 auto 1.2rem;display:block;border:4px solid #fff;
-      box-shadow:0 8px 24px rgba(0,0,0,.15);transition:transform .4s ease;
+      box-shadow:0 8px 24px rgba(0,0,0,.15);
+      /* 移除动画，变成静态可保存 */
+      transition: none;
     }
-    .join-card:hover .leader-photo{transform:scale(1.03)}
+    /* 移除Hover时的缩放 */
+    .join-card:hover .leader-photo{transform:none}
+
+    /* 欢迎加入标题不可选中 */
     .join-title{
       font-size:clamp(1.4rem,3vw,1.7rem);font-weight:900;margin:0 0 1rem;
       background:linear-gradient(90deg,#1976d2,#9c27b0);
@@ -441,6 +498,8 @@
       display:block!important;width:100%!important;text-align:center!important;
       margin-left:auto!important;margin-right:auto!important;
       position:relative!important;left:0!important;transform:none!important;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .join-info{
       display:flex;flex-direction:column;gap:.9rem;margin:1.4rem 0;
@@ -459,22 +518,20 @@
 
     img,video{max-width:100%;height:auto;display:block;box-sizing:border-box;border-radius:6px}
     
-    /* NEW: 东山驿传头部图片组样式 */
     .header-logos {
       display: flex;
       align-items: center;
       gap: 15px;
     }
     .header-logos img {
-      height: 48px; /* 调整高度以适应标题栏 */
+      height: 48px; 
       width: auto;
-      pointer-events: none; /* 禁用鼠标事件 */
+      pointer-events: none; 
       user-select: none;
       -webkit-user-drag: none;
       border-radius: 4px;
     }
     
-    /* NEW: 文本小卡片样式 (复用 member-card 的视觉效果) */
     .text-card {
       background: linear-gradient(135deg,#fdfdff,#f8faff);
       border-radius: 16px;
@@ -489,7 +546,6 @@
       box-shadow: 0 18px 38px rgba(25,118,210,.16),0 0 0 1px rgba(25,118,210,.1);
     }
 
-    /* 交互链接样式 */
     .link-action {
       color: #1976d2;
       cursor: pointer;
@@ -501,12 +557,15 @@
       color: #0d47a1;
     }
 
+    /* Footer所有字不可选中 */
     footer{
       background:#111;color:#aaa;padding:1.8rem 1rem;margin-top:3rem;
       font-size:.88rem;text-align:center;position:relative;
       display: flex;
       flex-direction: column;
       align-items: center;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .footer-since{
       font-size:.82rem;color:#666;margin-top:.5rem;letter-spacing:.08em;
@@ -921,6 +980,31 @@
             </div>
           </div>
           
+          <div class="wide-card">
+            <h4 class="card-title">2025的最后一次训练——“奔向 2026”之20.26公里特别跑</h4>
+            
+            <p class="text-block">在2025年的尾声，Youth Peak 的训练营成员们展示了一次独特的、浪漫的迎接2026年的方式。</p>
+            
+            <div class="wide-content-group">
+                <div class="media-item" style="max-width: 500px; margin: 0 auto;">
+                    <img src="./images/202512311.png" alt="训练进行时">
+                    <span class="caption">训练进行时</span>
+                </div>
+                
+                <p class="text-block">从太原市迎泽公园北门出发，经迎泽大桥转往汾河公园，随后沿汾河公园骑行道一路北上；期间穿过了漪汾桥、胜利桥；最后折返，沿路返回迎泽公园北门，完成了长度为20.26公里的训练。</p>
+
+                <div class="media-item" style="max-width: 500px; margin: 0 auto;">
+                    <img src="./images/202512312.png" alt="返回迎泽公园后众人的合影">
+                    <span class="caption">返回迎泽公园后众人的合影</span>
+                </div>
+                
+                <div class="quote-box">
+                    “这正是热爱的具象化”
+                    <span class="quote-author">——网站负责人，甄熠然</span>
+                </div>
+            </div>
+          </div>
+          
           <div class="team-grid">
             
           </div>
@@ -935,15 +1019,21 @@
             <h3 class="join-title">欢迎加入 Youth Peak</h3>
             <div class="join-info">
               <div class="info-item">
-                <svg class="info-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <svg class="info-icon" viewBox="0 0 24 24">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
                 <span>中国山西省太原市迎泽区</span>
               </div>
               <div class="info-item">
-                <svg class="info-icon" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                <svg class="info-icon" viewBox="0 0 24 24">
+                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
                 <span>+86 13603513830（微信同号）</span>
               </div>
               <div class="info-item">
-                <svg class="info-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <svg class="info-icon" viewBox="0 0 24 24">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
                 <span>leader@youthpeak.top</span>
               </div>
             </div>
@@ -965,7 +1055,8 @@
           </h3>
           
           <div class="text-card">
-             <p>由 Youth Peak Training Camp 举办的第一届东山驿传将于 2026 年 1 月 1 日于山西省太原市举办，若您有兴趣参加，请移步 <span class="link-action" onclick="document.querySelector('.tab[data-index=\'4\']').click()">“加入我们”</span> 与队长取得联系。</p>
+             <p>非常抱歉，原定于2026年1 月1日在山西省太原市由 Youth Peak Training Camp 举办的第一届东山驿传将不再举办，我们由衷地向您表达歉意，感谢您的支持。<br>
+             我们暂定于2026年5月重新举办，如您有兴趣，请移步 <span class="link-action" onclick="document.querySelector('.tab[data-index=\'4\']').click()">“加入我们”</span> 与队长取得联系。</p>
           </div>
         </div>
       </div>
@@ -1025,7 +1116,11 @@
       glow.style.setProperty('--mouse-y', y);
     });
 
-    function switchLang(){alert('敬请期待');}
+    function switchLang(){
+      const btn = document.querySelector('.lang-btn');
+      btn.classList.toggle('active');
+      alert('敬请期待');
+    }
   </script>
 </body>
 </html>
