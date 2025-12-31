@@ -180,6 +180,12 @@
       -webkit-user-select: none;
     }
     
+    /* 记录展示页不可选中 (原专业知识页) */
+    #panel-2 {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
     /* 卓绝风姿内容不可选中 */
     #panel-3 {
       user-select: none;
@@ -623,7 +629,7 @@
     <div class="tabs-row" id="tabsRow">
       <div class="tab active" data-index="0">创营理念</div>
       <div class="tab" data-index="1">团队成员</div>
-      <div class="tab" data-index="2">专业知识</div>
+      <div class="tab" data-index="2">记录展示</div>
       <div class="tab" data-index="3">卓绝风姿</div>
       <div class="tab" data-index="4">加入我们</div>
       <div class="tab" data-index="5">东山驿传</div>
@@ -651,40 +657,6 @@
         <div class="panel-content">
           <h3>团队成员 <span class="team-count">共 16 名成员</span></h3>
           <div class="team-grid">
-
-            <div class="record-holders">
-              <div class="record-card">
-                <div class="record-title">800米记录保持者</div>
-                <div class="record-holder">郭天一</div>
-                <div class="record-time">2:08</div>
-              </div>
-              <div class="record-card">
-                <div class="record-title">1500米记录保持者</div>
-                <div class="record-holder">郭天一</div>
-                <div class="record-time">4:40</div>
-              </div>
-              <div class="record-card">
-                <div class="record-title">3000米记录保持者</div>
-                <div class="record-holder">郭天一</div>
-                <div class="record-time">10:30</div>
-              </div>
-              <div class="record-card">
-                <div class="record-title">5000米记录保持者</div>
-                <div class="record-holder">杨天歌</div>
-                <div class="record-time">18:29</div>
-              </div>
-              <div class="record-card">
-                <div class="record-title">10000米记录保持者</div>
-                <div class="record-holder">石原瑞</div>
-                <div class="record-time">41:46</div>
-              </div>
-              <div class="record-card">
-                <div class="record-title">半程马拉松记录保持者</div>
-                <div class="record-holder">孙浩然</div>
-                <div class="record-time">1:26:52</div>
-              </div>
-            </div>
-
             <div class="member-card">
               <div class="member-header">
                 <h4 class="member-name">Harold Yang 杨天歌</h4>
@@ -937,7 +909,39 @@
 
       <div class="panel" id="panel-2">
         <div class="panel-content">
-          <h3>专业知识</h3>
+          <h3>记录展示</h3>
+          <div class="record-holders">
+              <div class="record-card">
+                <div class="record-title">800米记录保持者</div>
+                <div class="record-holder">郭天一</div>
+                <div class="record-time">2:08</div>
+              </div>
+              <div class="record-card">
+                <div class="record-title">1500米记录保持者</div>
+                <div class="record-holder">郭天一</div>
+                <div class="record-time">4:40</div>
+              </div>
+              <div class="record-card">
+                <div class="record-title">3000米记录保持者</div>
+                <div class="record-holder">郭天一</div>
+                <div class="record-time">10:30</div>
+              </div>
+              <div class="record-card">
+                <div class="record-title">5000米记录保持者</div>
+                <div class="record-holder">杨天歌</div>
+                <div class="record-time">18:29</div>
+              </div>
+              <div class="record-card">
+                <div class="record-title">10000米记录保持者</div>
+                <div class="record-holder">石原瑞</div>
+                <div class="record-time">41:46</div>
+              </div>
+              <div class="record-card">
+                <div class="record-title">半程马拉松记录保持者</div>
+                <div class="record-holder">孙浩然</div>
+                <div class="record-time">1:26:52</div>
+              </div>
+            </div>
         </div>
       </div>
 
@@ -981,7 +985,7 @@
           </div>
           
           <div class="wide-card">
-            <h4 class="card-title">2025的最后一次训练——“奔向 2026”之20.26公里特别跑</h4>
+            <h4 class="card-title">2025的最后一次训练——“奔向2026”之20.26公里特别跑</h4>
             
             <p class="text-block">在2025年的尾声，Youth Peak 的训练营成员们展示了一次独特的、浪漫的迎接2026年的方式。</p>
             
@@ -1055,8 +1059,8 @@
           </h3>
           
           <div class="text-card">
-             <p>非常抱歉，原定于2026年1 月1日在山西省太原市由 Youth Peak Training Camp 举办的第一届东山驿传将不再举办，我们由衷地向您表达歉意，感谢您的支持。<br>
-             我们暂定于2026年5月重新举办，如您有兴趣，请移步 <span class="link-action" onclick="document.querySelector('.tab[data-index=\'4\']').click()">“加入我们”</span> 与队长取得联系。</p>
+             <p>非常抱歉！原定于2026年1月1日在山西省太原市举办的第一届东山驿传将不再举办，请允许我们由衷地向您表达歉意，感谢您的理解和支持。<br>
+             另外，我们暂定于2026年5月重新举办，如您有兴趣，请移步 <span class="link-action" onclick="document.querySelector('.tab[data-index=\'4\']').click()">“加入我们”</span> 与队长取得联系。</p>
           </div>
         </div>
       </div>
