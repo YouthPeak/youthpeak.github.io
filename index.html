@@ -296,59 +296,98 @@
     .member-pb .label{color:#555;font-weight:600}
     .member-pb .value{color:#1976d2;font-weight:700}
 
-    /* 记录保持者卡片组 */
-    .record-holders{
-      grid-column:1/-1;
-      display:flex; 
-      flex-wrap:wrap; 
-      gap:18px;
-      margin-bottom:28px;
-      padding:8px 0;
-      justify-content: center; 
-      align-items: stretch; 
+    /* 排名系统样式 - 替代原卡片 */
+    .rank-intro {
+      margin-bottom: 20px;
+      color: #555;
     }
-    .record-card{
-      flex: 1 1 280px; 
-      max-width: 380px; 
-      background:linear-gradient(135deg,#e3f2fd,#bbdefb);
-      border-radius:16px;
-      overflow:hidden;
-      box-shadow:0 8px 24px rgba(25,118,210,.18),0 0 0 1px rgba(25,118,210,.1);
-      text-align:center;
-      padding:20px 16px;
-      transition:transform .32s ease,box-shadow .32s ease;
-      border:2px solid transparent;
-      display: flex; 
+    .ranking-group {
+      display: flex;
       flex-direction: column;
-      justify-content: center; 
+      gap: 16px;
     }
-    .record-card:hover{
-      transform:translateY(-10px) scale(1.03);
-      box-shadow:0 20px 40px rgba(25,118,210,.28),0 0 0 3px rgba(25,118,210,.2);
+    .rank-item {
+      border: 1px solid rgba(25,118,210,.15);
+      border-radius: 12px;
+      background: #fff;
+      overflow: hidden;
+      transition: box-shadow .3s ease;
     }
-    .record-title{
-      font-size:.92rem;
-      font-weight:800;
-      color:#0d47a1;
-      letter-spacing:.06em;
-      margin-bottom:8px;
+    .rank-item:hover {
+      box-shadow: 0 4px 14px rgba(25,118,210,.1);
     }
-    .record-holder{
-      font-size:1.38rem;
-      font-weight:900;
-      color:#1976d2;
-      margin:6px 0;
-      text-shadow:0 1px 2px rgba(0,0,0,.1);
+    .rank-item[open] {
+      box-shadow: 0 8px 24px rgba(25,118,210,.12);
+      border-color: rgba(25,118,210,.3);
     }
-    .record-time{
-      font-size:1.72rem;
-      font-weight:900;
-      color:#000;
-      letter-spacing:.02em;
-      background:linear-gradient(90deg,#1976d2,#42a5f5);
-      -webkit-background-clip:text;
-      background-clip:text;
-      -webkit-text-fill-color:transparent;
+    summary {
+      padding: 18px 24px;
+      cursor: pointer;
+      font-weight: 800;
+      color: #0d47a1;
+      font-size: 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to right, #fbfdff, #f0f7ff);
+      list-style: none; /* Hide default triangle */
+    }
+    summary::-webkit-details-marker {
+      display: none;
+    }
+    summary::after {
+      content: '+';
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: #1976d2;
+      transition: transform .2s ease;
+    }
+    details[open] summary::after {
+      transform: rotate(45deg);
+    }
+    .rank-record-holder {
+      font-size: 0.9em;
+      font-weight: 600;
+      color: #1976d2;
+      background: rgba(25,118,210,.08);
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-left: auto;
+      margin-right: 12px;
+    }
+    .rank-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+    .rank-table th {
+      text-align: left;
+      padding: 12px 24px;
+      background: #fafbfc;
+      color: #666;
+      font-weight: 600;
+      border-bottom: 1px solid #eee;
+    }
+    .rank-table td {
+      padding: 12px 24px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #333;
+    }
+    .rank-table tr:last-child td {
+      border-bottom: none;
+    }
+    .rank-num {
+      font-weight: 700;
+      color: #999;
+      width: 40px;
+    }
+    .rank-1 .rank-num { color: #ffb300; } /* Gold */
+    .rank-2 .rank-num { color: #90a4ae; } /* Silver */
+    .rank-3 .rank-num { color: #cd7f32; } /* Bronze */
+    .rank-time {
+      font-weight: 700;
+      color: #1976d2;
+      text-align: right;
     }
 
     /* 卓绝风姿样式 */
@@ -453,9 +492,6 @@
     @media(max-width:800px){
       .team-grid{gap:16px}
       .member-card:hover{transform:translateY(-4px) scale(1.01)}
-      .record-holders{gap:16px;margin-bottom:24px;}
-      .record-card{flex: 1 1 45%; max-width: 100%;}
-      .record-card:hover{transform:translateY(-6px) scale(1.02);}
       .wide-content-group .media-item{
           flex: 1 1 100%;
           max-width: 100%;
@@ -463,16 +499,12 @@
       .wide-card{padding: 16px;}
       .wide-card h4.card-title{font-size: 1.15rem;}
       .wide-card h5{font-size: 1.05rem;}
+      .rank-record-holder { display: none; } /* Hide compact holder on small screens to save space */
     }
     @media(max-width:600px){
       .team-grid{grid-template-columns:1fr;gap:12px}
       .member-header{padding:16px 18px 12px}
       .member-body{padding:14px 18px 18px}
-      .record-card{flex: 1 1 calc(50% - 9px); max-width: 100%;}
-      .record-time{font-size:1.5rem;}
-    }
-    @media(max-width:400px){
-        .record-card{flex: 1 1 100%;}
     }
 
 
@@ -700,7 +732,7 @@
                 <p><strong>专项：</strong>5000M</p>
                 <p><strong>出生日期：</strong>2010年8月1日</p>
                 <ul class="member-pb">
-                  <li><span class="label">5000M</span><span class="value">24:09</span></li>
+                  <li><span class="label">5000M</span><span class="value">19:40</span></li>
                 </ul>
               </div>
             </div>
@@ -708,7 +740,7 @@
             <div class="member-card">
               <div class="member-header">
                 <h4 class="member-name">Benjamin Zhen 甄熠然</h4>
-                <span class="member-role">数字运营负责人</span>
+                <span class="member-role">网站负责人</span>
               </div>
               <div class="member-body">
                 <p><strong>出生日期：</strong>2008年12月26日</p>
@@ -731,6 +763,23 @@
                 <ul style="margin:6px 0 0;padding-left:18px;font-size:.94rem;">
                   <li>2025年10月26日 WSE 太原站 M50 组别 5000M 冠军</li>
                   <li>WSE M50 组别记录保持者</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="member-card">
+              <div class="member-header">
+                <h4 class="member-name">成沛轩</h4>
+              </div>
+              <div class="member-body">
+                <p><strong>专项：</strong>800M</p>
+                <p><strong>出生日期：</strong>2010年7月16日</p>
+                <ul class="member-pb">
+                  <li><span class="label">800M</span><span class="value">2:13</span></li>
+                  <li><span class="label">1500M</span><span class="value">4:45</span></li>
+                  <li><span class="label">5000M</span><span class="value">18:07</span></li>
+                  <li><span class="label">10000M</span><span class="value">38:13</span></li>
+                  <li><span class="label">半程马拉松</span><span class="value">1:43:26</span></li>
                 </ul>
               </div>
             </div>
@@ -908,23 +957,14 @@
 
             <div class="member-card">
               <div class="member-header">
-                <h4 class="member-name">成沛轩</h4>
-              </div>
-              <div class="member-body">
-                <p><strong>专项：</strong>800M</p>
-                <p><strong>出生日期：</strong>2010年7月16日</p>
-                <p><strong>各项目PB：</strong>暂无</p>
-              </div>
-            </div>
-
-            <div class="member-card">
-              <div class="member-header">
                 <h4 class="member-name">王振光</h4>
               </div>
               <div class="member-body">
                 <p><strong>专项：</strong>5000M</p>
                 <p><strong>出生日期：</strong>2008年10月31日</p>
-                <p><strong>各项目PB：</strong>暂无</p>
+                <ul class="member-pb">
+                  <li><span class="label">3000M</span><span class="value">13:55</span></li>
+                </ul>
               </div>
             </div>
 
@@ -956,39 +996,132 @@
 
       <div class="panel" id="panel-2">
         <div class="panel-content">
-          <h3>队内记录</h3>
-          <div class="record-holders">
-              <div class="record-card">
-                <div class="record-title">800米记录保持者</div>
-                <div class="record-holder">郭天一</div>
-                <div class="record-time">2:08</div>
-              </div>
-              <div class="record-card">
-                <div class="record-title">1500米记录保持者</div>
-                <div class="record-holder">郭天一</div>
-                <div class="record-time">4:40</div>
-              </div>
-              <div class="record-card">
-                <div class="record-title">3000米记录保持者</div>
-                <div class="record-holder">郭天一</div>
-                <div class="record-time">10:30</div>
-              </div>
-              <div class="record-card">
-                <div class="record-title">5000米记录保持者</div>
-                <div class="record-holder">杨天歌</div>
-                <div class="record-time">18:29</div>
-              </div>
-              <div class="record-card">
-                <div class="record-title">10000米记录保持者</div>
-                <div class="record-holder">石原瑞</div>
-                <div class="record-time">41:46</div>
-              </div>
-              <div class="record-card">
-                <div class="record-title">半程马拉松记录保持者</div>
-                <div class="record-holder">孙浩然</div>
-                <div class="record-time">1:26:52</div>
-              </div>
-            </div>
+          <h3>队内记录 & 项目排名</h3>
+          <p class="rank-intro">点击下方项目即可展开查看详细排名，数据源自队内测试或正式比赛有效成绩。</p>
+          
+          <div class="ranking-group">
+            
+            <details class="rank-item">
+              <summary>
+                <span>800M</span>
+                <span class="rank-record-holder">NR: 郭天一 2:08</span>
+              </summary>
+              <table class="rank-table">
+                <thead><tr><th>排名</th><th>成员</th><th>成绩</th></tr></thead>
+                <tbody>
+                  <tr class="rank-1"><td class="rank-num">1</td><td>郭天一</td><td class="rank-time">2:08</td></tr>
+                  <tr class="rank-2"><td class="rank-num">2</td><td>王梓渊</td><td class="rank-time">2:12</td></tr>
+                  <tr class="rank-3"><td class="rank-num">3</td><td>成沛轩</td><td class="rank-time">2:13</td></tr>
+                  <tr><td class="rank-num">4</td><td>杨天歌</td><td class="rank-time">2:14</td></tr>
+                  <tr><td class="rank-num">5</td><td>张皓轩</td><td class="rank-time">2:15</td></tr>
+                  <tr><td class="rank-num">6</td><td>孙浩然</td><td class="rank-time">2:15</td></tr>
+                  <tr><td class="rank-num">7</td><td>郭奥辉</td><td class="rank-time">2:16</td></tr>
+                  <tr><td class="rank-num">8</td><td>李云杰</td><td class="rank-time">2:20</td></tr>
+                  <tr><td class="rank-num">9</td><td>康智博</td><td class="rank-time">2:23</td></tr>
+                  <tr><td class="rank-num">10</td><td>郭羽翔</td><td class="rank-time">2:36</td></tr>
+                  <tr><td class="rank-num">11</td><td>石原瑞</td><td class="rank-time">2:39</td></tr>
+                </tbody>
+              </table>
+            </details>
+
+            <details class="rank-item">
+              <summary>
+                <span>1500M</span>
+                <span class="rank-record-holder">NR: 郭天一 4:40</span>
+              </summary>
+              <table class="rank-table">
+                <thead><tr><th>排名</th><th>成员</th><th>成绩</th></tr></thead>
+                <tbody>
+                  <tr class="rank-1"><td class="rank-num">1</td><td>郭天一</td><td class="rank-time">4:40</td></tr>
+                  <tr class="rank-2"><td class="rank-num">2</td><td>郭奥辉</td><td class="rank-time">4:44</td></tr>
+                  <tr class="rank-3"><td class="rank-num">3</td><td>王梓渊</td><td class="rank-time">4:44</td></tr>
+                  <tr><td class="rank-num">4</td><td>成沛轩</td><td class="rank-time">4:45</td></tr>
+                  <tr><td class="rank-num">5</td><td>康智博</td><td class="rank-time">4:57</td></tr>
+                  <tr><td class="rank-num">6</td><td>孙浩然</td><td class="rank-time">5:00</td></tr>
+                </tbody>
+              </table>
+            </details>
+
+            <details class="rank-item">
+              <summary>
+                <span>3000M</span>
+                <span class="rank-record-holder">NR: 郭天一 10:30</span>
+              </summary>
+              <table class="rank-table">
+                <thead><tr><th>排名</th><th>成员</th><th>成绩</th></tr></thead>
+                <tbody>
+                  <tr class="rank-1"><td class="rank-num">1</td><td>郭天一</td><td class="rank-time">10:30</td></tr>
+                  <tr class="rank-2"><td class="rank-num">2</td><td>杨天歌</td><td class="rank-time">10:40</td></tr>
+                  <tr class="rank-3"><td class="rank-num">3</td><td>王梓渊</td><td class="rank-time">10:46</td></tr>
+                  <tr><td class="rank-num">4</td><td>郭奥辉</td><td class="rank-time">11:20</td></tr>
+                  <tr><td class="rank-num">5</td><td>张景竣</td><td class="rank-time">11:29</td></tr>
+                  <tr><td class="rank-num">6</td><td>李云杰</td><td class="rank-time">11:32</td></tr>
+                  <tr><td class="rank-num">7</td><td>石原瑞</td><td class="rank-time">12:09</td></tr>
+                  <tr><td class="rank-num">8</td><td>刘轩宸</td><td class="rank-time">12:31</td></tr>
+                  <tr><td class="rank-num">9</td><td>王振光</td><td class="rank-time">13:55</td></tr>
+                </tbody>
+              </table>
+            </details>
+
+            <details class="rank-item">
+              <summary>
+                <span>5000M</span>
+                <span class="rank-record-holder">NR: 成沛轩 18:07</span>
+              </summary>
+              <table class="rank-table">
+                <thead><tr><th>排名</th><th>成员</th><th>成绩</th></tr></thead>
+                <tbody>
+                  <tr class="rank-1"><td class="rank-num">1</td><td>成沛轩</td><td class="rank-time">18:07</td></tr>
+                  <tr class="rank-2"><td class="rank-num">2</td><td>杨天歌</td><td class="rank-time">18:29</td></tr>
+                  <tr class="rank-3"><td class="rank-num">3</td><td>康智博</td><td class="rank-time">18:29</td></tr>
+                  <tr><td class="rank-num">4</td><td>郭天一</td><td class="rank-time">18:50</td></tr>
+                  <tr><td class="rank-num">5</td><td>孙浩然</td><td class="rank-time">18:51</td></tr>
+                  <tr><td class="rank-num">6</td><td>王梓渊</td><td class="rank-time">18:55</td></tr>
+                  <tr><td class="rank-num">7</td><td>张楚宸</td><td class="rank-time">19:40</td></tr>
+                  <tr><td class="rank-num">8</td><td>杨光</td><td class="rank-time">20:25</td></tr>
+                  <tr><td class="rank-num">9</td><td>李云杰</td><td class="rank-time">20:30</td></tr>
+                  <tr><td class="rank-num">10</td><td>石原瑞</td><td class="rank-time">20:46</td></tr>
+                  <tr><td class="rank-num">11</td><td>刘轩宸</td><td class="rank-time">21:00</td></tr>
+                  <tr><td class="rank-num">12</td><td>张景竣</td><td class="rank-time">21:24</td></tr>
+                </tbody>
+              </table>
+            </details>
+
+            <details class="rank-item">
+              <summary>
+                <span>10000M</span>
+                <span class="rank-record-holder">NR: 成沛轩 38:13</span>
+              </summary>
+              <table class="rank-table">
+                <thead><tr><th>排名</th><th>成员</th><th>成绩</th></tr></thead>
+                <tbody>
+                  <tr class="rank-1"><td class="rank-num">1</td><td>成沛轩</td><td class="rank-time">38:13</td></tr>
+                  <tr class="rank-2"><td class="rank-num">2</td><td>石原瑞</td><td class="rank-time">41:46</td></tr>
+                  <tr class="rank-3"><td class="rank-num">3</td><td>康智博</td><td class="rank-time">42:28</td></tr>
+                  <tr><td class="rank-num">4</td><td>张景竣</td><td class="rank-time">43:45</td></tr>
+                  <tr><td class="rank-num">5</td><td>李锦林</td><td class="rank-time">44:25</td></tr>
+                </tbody>
+              </table>
+            </details>
+
+            <details class="rank-item">
+              <summary>
+                <span>半程马拉松</span>
+                <span class="rank-record-holder">NR: 孙浩然 1:26:52</span>
+              </summary>
+              <table class="rank-table">
+                <thead><tr><th>排名</th><th>成员</th><th>成绩</th></tr></thead>
+                <tbody>
+                  <tr class="rank-1"><td class="rank-num">1</td><td>孙浩然</td><td class="rank-time">1:26:52</td></tr>
+                  <tr class="rank-2"><td class="rank-num">2</td><td>李锦林</td><td class="rank-time">1:37:00</td></tr>
+                  <tr class="rank-3"><td class="rank-num">3</td><td>郭天一</td><td class="rank-time">1:41:00</td></tr>
+                  <tr><td class="rank-num">4</td><td>成沛轩</td><td class="rank-time">1:43:26</td></tr>
+                  <tr><td class="rank-num">5</td><td>石原瑞</td><td class="rank-time">1:44:04</td></tr>
+                </tbody>
+              </table>
+            </details>
+
+          </div>
         </div>
       </div>
 
@@ -997,7 +1130,7 @@
           <h3>卓绝风姿</h3>
           
           <div class="wide-card">
-            <h4 class="card-title">2025年10月25日，WSE 田径公开赛·太原站</h4>
+            <h4 class="card-title">2025 年 10 月 25 日，WSE 田径公开赛·太原站</h4>
             
             <h5>男子5000米 U17 组别</h5>
             <div class="wide-content-group">
@@ -1050,7 +1183,7 @@
                 </div>
                 
                 <div class="quote-box">
-                    “这正是热爱的具象化”
+                    “这正是热爱的具象化”。
                     <span class="quote-author">——网站负责人，甄熠然</span>
                 </div>
             </div>
@@ -1089,7 +1222,7 @@
               </div>
             </div>
             <div class="join-note">
-              我们欢迎您的加入，但碍于网站成本有限，请麻烦您主动联系我们的队长
+              我们欢迎您的加入！但碍于网站成本有限，请麻烦您主动联系我们的队长。
             </div>
           </div>
         </div>
@@ -1106,8 +1239,7 @@
           </h3>
           
           <div class="text-card">
-             <p>非常抱歉！原定于2026年1月1日在山西省太原市举办的第一届东山驿传将不再举办，请允许我们由衷地向您表达歉意，感谢您的理解与支持。<br>
-             另外，我们暂定于2026年5月重新举办，如您有兴趣，请移步 <span class="link-action" onclick="document.querySelector('.tab[data-index=\'4\']').click()">“加入我们”</span> 与队长取得联系。</p>
+             <p>非常抱歉！原定于 2026 年 1 月 1 日在山西省太原市举办的第一届东山驿传因不可抗力因素将推迟至 2026 年 5 月举办，详细日期请等待新一轮的通知，感谢您的理解。如您有兴趣，请移步 <span class="link-action" onclick="document.querySelector('.tab[data-index=\'4\']').click()">“加入我们”</span> 与队长取得联系。</p>
           </div>
         </div>
       </div>
@@ -1130,7 +1262,7 @@
         <img src="./images/bilibili.png" alt="Bilibili Icon" style="pointer-events: none; -webkit-user-drag: none; user-select: none;">
       </a>
     </div>
-    © 2025 Youth Peak Training Camp. All rights reserved.
+    © 2025-2026 Youth Peak Training Camp. All rights reserved.
     <div class="footer-since">since July 2025</div>
   </footer>
 
