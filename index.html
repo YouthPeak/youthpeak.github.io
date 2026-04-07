@@ -296,7 +296,7 @@
     .member-pb .label{color:#555;font-weight:600}
     .member-pb .value{color:#1976d2;font-weight:700}
 
-    /* 排名系统样式 - 替代原卡片 */
+    /* 排名系统样式 */
     .rank-intro {
       margin-bottom: 20px;
       color: #555;
@@ -489,6 +489,17 @@
         color: #333;
     }
 
+    /* 闪烁文字样式 */
+    .blinking-text {
+      color: #888;
+      font-weight: 700;
+      animation: blink 2s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
     @media(max-width:800px){
       .team-grid{gap:16px}
       .member-card:hover{transform:translateY(-4px) scale(1.01)}
@@ -506,7 +517,6 @@
       .member-header{padding:16px 18px 12px}
       .member-body{padding:14px 18px 18px}
     }
-
 
     .join-card{
       background:linear-gradient(145deg,#fff,#f5f8ff);border-radius:18px;
@@ -651,7 +661,7 @@
     <div class="hero-inner">
       <h1 class="hero-title">Youth Peak Training Camp</h1>
       <p class="hero-sub">PEAK THE PASSION</p>
-      <p class="hero-since">since July 2025</p>
+      <p class="hero-since">since July 15, 2025</p>
     </div>
   </header>
 
@@ -664,7 +674,7 @@
       <div class="tab" data-index="2">队内记录</div>
       <div class="tab" data-index="3">卓绝风姿</div>
       <div class="tab" data-index="4">加入我们</div>
-      <div class="tab" data-index="5">东山驿传</div>
+      <div class="tab" data-index="5">山神挑战</div>
     </div>
 
     <div class="content-area">
@@ -691,7 +701,7 @@
           <div class="team-grid">
             <div class="member-card">
               <div class="member-header">
-                <h4 class="member-name">Harold Yang 杨天歌</h4>
+                <h4 class="member-name">杨天歌</h4>
                 <span class="member-role">主教练，领队，创始人</span>
               </div>
               <div class="member-body">
@@ -709,7 +719,7 @@
             
             <div class="member-card">
               <div class="member-header">
-                <h4 class="member-name">Eric Zhang 张楚宸</h4>
+                <h4 class="member-name">张楚宸</h4>
                 <span class="member-role">副领队，创始人</span>
               </div>
               <div class="member-body">
@@ -741,7 +751,7 @@
 
             <div class="member-card">
               <div class="member-header">
-                <h4 class="member-name">Benjamin Zhen 甄熠然</h4>
+                <h4 class="member-name">甄熠然</h4>
                 <span class="member-role">网站负责人</span>
               </div>
               <div class="member-body">
@@ -773,6 +783,7 @@
             <div class="member-card">
               <div class="member-header">
                 <h4 class="member-name">成沛轩</h4>
+                <span class="member-role" style="background:#D4AF37;box-shadow:0 2px 6px rgba(212,175,55,.4);">主将</span>
               </div>
               <div class="member-body">
                 <p><strong>专项：</strong>800M</p>
@@ -945,7 +956,7 @@
                 <p><strong>专项：</strong>十项全能</p>
                 <p><strong>出生日期：</strong>2010年5月27日</p>
                 <ul class="member-pb">
-                  <li><span class="label">400M</span><span class="value">58:07</span></li>
+                  <li><span class="label">400M</span><span class="value">58.07</span></li>
                   <li><span class="label">800M</span><span class="value">2:26</span></li>
                   <li><span class="label">1500M</span><span class="value">5:20</span></li>
                   <li><span class="label">5000M</span><span class="value">21:47</span></li>
@@ -1046,7 +1057,7 @@
             <details class="rank-item">
               <summary>
                 <span>800M</span>
-                <span class="rank-record-holder">NR: 郭天一 2:08</span>
+                <span class="rank-record-holder">CR: 郭天一 2:08</span>
               </summary>
               <table class="rank-table">
                 <thead><tr><th>排名</th><th>成员</th><th>成绩</th></tr></thead>
@@ -1071,7 +1082,7 @@
             <details class="rank-item">
               <summary>
                 <span>1500M</span>
-                <span class="rank-record-holder">NR: 郭天一 4:40</span>
+                <span class="rank-record-holder">CR: 郭天一 4:40</span>
               </summary>
               <table class="rank-table">
                 <thead><tr><th>排名</th><th>成员</th><th>成绩</th></tr></thead>
@@ -1093,7 +1104,7 @@
             <details class="rank-item">
               <summary>
                 <span>3000M</span>
-                <span class="rank-record-holder">NR: Harold Yang 10:19</span>
+                <span class="rank-record-holder">CR: 杨天歌 10:19</span>
               </summary>
               <table class="rank-table">
                 <thead><tr><th>排名</th><th>成员</th><th>成绩</th></tr></thead>
@@ -1115,7 +1126,7 @@
             <details class="rank-item">
               <summary>
                 <span>5000M</span>
-                <span class="rank-record-holder">NR: 成沛轩 18:07</span>
+                <span class="rank-record-holder">CR: 成沛轩 18:07</span>
               </summary>
               <table class="rank-table">
                 <thead><tr><th>排名</th><th>成员</th><th>成绩</th></tr></thead>
@@ -1142,7 +1153,7 @@
             <details class="rank-item">
               <summary>
                 <span>10000M</span>
-                <span class="rank-record-holder">NR: 成沛轩 38:13</span>
+                <span class="rank-record-holder">CR: 成沛轩 38:13</span>
               </summary>
               <table class="rank-table">
                 <thead><tr><th>排名</th><th>成员</th><th>成绩</th></tr></thead>
@@ -1159,7 +1170,7 @@
             <details class="rank-item">
               <summary>
                 <span>半程马拉松</span>
-                <span class="rank-record-holder">NR: 孙浩然 1:26:52</span>
+                <span class="rank-record-holder">CR: 孙浩然 1:26:52</span>
               </summary>
               <table class="rank-table">
                 <thead><tr><th>排名</th><th>成员</th><th>成绩</th></tr></thead>
@@ -1286,7 +1297,7 @@
       <div class="panel" id="panel-5">
         <div class="panel-content">
           <h3>
-            <span>东山驿传</span>
+            <span>山神挑战</span>
             <div class="header-logos">
               <img src="./images/youthpeak.png" alt="Youth Peak Logo">
               <img src="./images/dsyc.png" alt="Dongshan Ekiden Logo">
@@ -1294,7 +1305,8 @@
           </h3>
           
           <div class="text-card">
-             <p>非常抱歉！原定于 2026 年 1 月 1 日在山西省太原市举办的第一届东山驿传因不可抗力因素将推迟至 2026 年 5 月举办，详细日期请等待新一轮的通知，感谢您的理解。如您有兴趣，请移步 <span class="link-action" onclick="document.querySelector('.tab[data-index=\'4\']').click()">“加入我们”</span> 与队长取得联系。</p>
+             <p>Youth Peak 训练营内的活动，在东山上挑战自己！最速上山与最速下山之人分别是谁？让我们拭目以待……</p>
+             <p class="blinking-text">举办时间待定……</p>
           </div>
         </div>
       </div>
@@ -1318,7 +1330,7 @@
       </a>
     </div>
     © 2025-2026 Youth Peak Training Camp. All rights reserved.
-    <div class="footer-since">since July 2025</div>
+    <div class="footer-since">since July 15, 2025</div>
   </footer>
 
   <script>
