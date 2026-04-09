@@ -330,7 +330,7 @@
       justify-content: space-between;
       align-items: center;
       background: linear-gradient(to right, #fbfdff, #f0f7ff);
-      list-style: none; /* Hide default triangle */
+      list-style: none; 
     }
     summary::-webkit-details-marker {
       display: none;
@@ -381,57 +381,124 @@
       color: #999;
       width: 40px;
     }
-    .rank-1 .rank-num { color: #ffb300; } /* Gold */
-    .rank-2 .rank-num { color: #90a4ae; } /* Silver */
-    .rank-3 .rank-num { color: #cd7f32; } /* Bronze */
+    .rank-1 .rank-num { color: #ffb300; } 
+    .rank-2 .rank-num { color: #90a4ae; } 
+    .rank-3 .rank-num { color: #cd7f32; } 
     .rank-time {
       font-weight: 700;
       color: #1976d2;
       text-align: right;
     }
 
-    /* 卓绝风姿样式 */
-    .wide-card{
+    /* 卓绝风姿样式：置顶横幅 */
+    .featured-banner {
+      background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+      color: #fff;
+      padding: 16px 24px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 800;
+      font-size: 1.05rem;
+      box-shadow: 0 6px 16px rgba(25, 118, 210, 0.25);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .featured-banner:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(25, 118, 210, 0.35);
+    }
+    .featured-banner .arrow {
+      font-size: 1.4rem;
+      transition: transform 0.3s ease;
+    }
+    .featured-banner:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    /* 卓绝风姿样式：平滑折叠文章卡片 */
+    .wide-card {
       grid-column: 1/-1; 
       background: linear-gradient(135deg,#fdfdff,#f8faff);
       border-radius: 16px;
       box-shadow: 0 6px 20px rgba(25,118,210,.09),0 0 0 1px rgba(25,118,210,.06);
-      padding: 24px;
       margin-bottom: 22px;
-      transition: transform .32s ease, box-shadow .32s ease;
+      transition: box-shadow .32s ease;
+      display: flex;
+      flex-direction: column;
     }
-    .wide-card:hover{
-        transform: translateY(-4px);
-        box-shadow: 0 18px 38px rgba(25,118,210,.16),0 0 0 1px rgba(25,118,210,.1);
+    .wide-card:hover {
+        box-shadow: 0 14px 32px rgba(25,118,210,.14),0 0 0 1px rgba(25,118,210,.1);
     }
-    .wide-card h4.card-title{
+    
+    .wide-card-header {
+      padding: 24px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .wide-card-header h4.card-title {
         font-size: 1.25rem;
         font-weight: 900;
         color: #0d47a1;
-        margin: 0 0 1.2em;
-        padding-bottom: 8px;
-        border-bottom: 2px solid rgba(25, 118, 210, 0.1);
+        margin: 0;
     }
-    .wide-card h5{
+    .wide-card-header .toggle-icon {
+      font-size: 1.8rem;
+      color: #1976d2;
+      font-weight: 300;
+      line-height: 1;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .wide-card.open .toggle-icon {
+      transform: rotate(45deg);
+    }
+
+    /* 丝滑折叠核心机制 */
+    .wide-card-body-wrapper {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .wide-card.open .wide-card-body-wrapper {
+      grid-template-rows: 1fr;
+    }
+    .wide-card-body {
+      overflow: hidden;
+    }
+    .wide-card-inner {
+      padding: 0 24px 24px 24px;
+      border-top: 2px solid rgba(25, 118, 210, 0.05);
+      margin-top: -8px; /* 视觉衔接调整 */
+    }
+
+    .wide-card h5 {
         font-size: 1.1rem;
         font-weight: 800;
         color: #1976d2;
         margin: 1.5em 0 0.8em;
     }
-    .wide-content-group{
+    .wide-content-group {
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
         margin-bottom: 20px;
         align-items: flex-start;
     }
-    .wide-content-group p{
+    .wide-content-group p {
         flex: 1 1 100%; 
         margin: 0;
         padding: 0;
         line-height: 1.7;
     }
-    .wide-content-group .media-item{
+    .wide-content-group .media-item {
         flex: 1 1 calc(50% - 10px); 
         max-width: calc(50% - 10px);
         min-width: 200px; 
@@ -441,24 +508,30 @@
         text-align: center;
         overflow: hidden;
     }
-    .wide-content-group .media-item img{
+    
+    /* 图片彻底反制保存与选中 */
+    .wide-content-group img {
         width: 100%;
         height: auto;
         border-radius: 10px;
         box-shadow: 0 4px 12px rgba(0,0,0,.1);
+        pointer-events: none;
+        -webkit-user-drag: none;
+        user-select: none;
+        -webkit-touch-callout: none;
     }
-    .wide-content-group .media-item .caption{
+    .wide-content-group .media-item .caption {
         margin-top: 8px;
         font-size: 0.88rem;
         color: #555;
         line-height: 1.5;
     }
-    .wide-content-group .text-block{
+    .wide-content-group .text-block {
         flex: 1 1 100%;
         margin-top: 10px;
         padding: 0 10px;
     }
-    .wide-content-group .note-text{
+    .wide-content-group .note-text {
         flex: 1 1 100%;
         font-size: 0.85rem;
         color: #777;
@@ -466,7 +539,6 @@
         text-align: right;
     }
     
-    /* 引用样式 */
     .quote-box {
         background: #f0f4f8;
         border-left: 5px solid #1976d2;
@@ -489,7 +561,6 @@
         color: #333;
     }
 
-    /* 闪烁文字样式 */
     .blinking-text {
       color: #888;
       font-weight: 700;
@@ -500,6 +571,7 @@
       50% { opacity: 0.3; }
     }
 
+    /* 移动端排版修正 */
     @media(max-width:800px){
       .team-grid{gap:16px}
       .member-card:hover{transform:translateY(-4px) scale(1.01)}
@@ -507,15 +579,39 @@
           flex: 1 1 100%;
           max-width: 100%;
       }
-      .wide-card{padding: 16px;}
-      .wide-card h4.card-title{font-size: 1.15rem;}
+      .wide-card-header, .wide-card-inner {padding: 16px;}
+      .wide-card-header h4.card-title{font-size: 1.15rem;}
       .wide-card h5{font-size: 1.05rem;}
-      .rank-record-holder { display: none; } /* Hide compact holder on small screens to save space */
+      .featured-banner { padding: 14px 18px; font-size: 1rem; }
     }
+    
     @media(max-width:600px){
       .team-grid{grid-template-columns:1fr;gap:12px}
       .member-header{padding:16px 18px 12px}
       .member-body{padding:14px 18px 18px}
+    }
+    
+    /* 解决 CR 在小屏手机上溢出的问题，采用换行策略而非隐藏 */
+    @media(max-width:480px){
+      summary {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 14px 18px;
+        gap: 6px;
+      }
+      .rank-record-holder {
+        margin-left: 0; /* 重置靠右，使其跟在标题下方 */
+        margin-right: 0;
+      }
+      /* 修复 summary::after 箭头的位置，使其依然靠右 */
+      summary::after {
+        position: absolute;
+        right: 20px;
+        top: 24px;
+      }
+      .rank-item summary {
+        position: relative;
+      }
     }
 
     .join-card{
@@ -532,13 +628,14 @@
       width:280px;max-width:90%;border-radius:12px;object-fit:contain;
       margin:0 auto 1.2rem;display:block;border:4px solid #fff;
       box-shadow:0 8px 24px rgba(0,0,0,.15);
-      /* 移除动画，变成静态可保存 */
       transition: none;
+      pointer-events: none;
+      -webkit-user-drag: none;
+      user-select: none;
+      -webkit-touch-callout: none;
     }
-    /* 移除Hover时的缩放 */
     .join-card:hover .leader-photo{transform:none}
 
-    /* 欢迎加入标题不可选中 */
     .join-title{
       font-size:clamp(1.4rem,3vw,1.7rem);font-weight:900;margin:0 0 1rem;
       background:linear-gradient(90deg,#1976d2,#9c27b0);
@@ -605,7 +702,6 @@
       color: #0d47a1;
     }
 
-    /* Footer所有字不可选中 */
     footer{
       background:#111;color:#aaa;padding:1.8rem 1rem;margin-top:3rem;
       font-size:.88rem;text-align:center;position:relative;
@@ -1194,67 +1290,127 @@
       <div class="panel" id="panel-3">
         <div class="panel-content">
           <h3>卓绝风姿</h3>
-          
-          <div class="wide-card">
-            <h4 class="card-title">2025 年 10 月 25 日，WSE 田径公开赛·太原站</h4>
-            
-            <h5>男子5000米 U17 组别</h5>
-            <div class="wide-content-group">
-                <div class="media-item">
-                    <img src="./images/wse_ytg1.jpg" alt="杨天歌赛中表现">
-                    <span class="caption">杨天歌（左起第二位）赛中表现</span>
-                </div>
-                <div class="media-item">
-                    <img src="./images/wse_ytg2.jpg" alt="杨天歌冲刺阶段">
-                    <span class="caption">杨天歌（左起第一位）冲刺阶段表现</span>
-                </div>
-                <p class="text-block">在比赛的尾声，杨天歌奋力冲刺，跑出了男子5000米 U17 组 18:29.79，第九名的成绩。</p>
 
-                <div class="media-item" style="max-width: 400px; margin: 20px auto 10px;">
-                    <img src="./images/wse_ytg3.jpg" alt="杨天歌与康智博合影">
-                    <span class="caption">杨天歌（左）与康智博（右）</span>
-                </div>
-                <p class="text-block">杨天歌成绩为 18:29.79；而康智博成绩为 18:29.90。</p>
+          <div class="featured-banner" onclick="openAndScrollToArticle('article-202602')">
+            <span>主教练杨天歌成为中国田协认证的指导员！点击查看详情</span>
+            <span class="arrow">&rarr;</span>
+          </div>
+
+          <div class="wide-card" id="article-wse">
+            <div class="wide-card-header">
+              <h4 class="card-title">2025 年 10 月 25 日，WSE 田径公开赛·太原站</h4>
+              <span class="toggle-icon">+</span>
             </div>
+            <div class="wide-card-body-wrapper">
+              <div class="wide-card-body">
+                <div class="wide-card-inner">
+                  <h5>男子5000米 U17 组别</h5>
+                  <div class="wide-content-group">
+                      <div class="media-item">
+                          <img src="./images/wse_ytg1.jpg" alt="杨天歌赛中表现">
+                          <span class="caption">杨天歌（左起第二位）赛中表现</span>
+                      </div>
+                      <div class="media-item">
+                          <img src="./images/wse_ytg2.jpg" alt="杨天歌冲刺阶段">
+                          <span class="caption">杨天歌（左起第一位）冲刺阶段表现</span>
+                      </div>
+                      <p class="text-block">在比赛的尾声，杨天歌奋力冲刺，跑出了男子5000米 U17 组 18:29.79，第九名的成绩。</p>
 
-            <h5>男子5000米 M50 组别</h5>
-            <div class="wide-content-group">
-                <div class="media-item">
-                    <img src="./images/wse_yg1.jpg" alt="杨光先生完赛1">
+                      <div class="media-item" style="max-width: 400px; margin: 20px auto 10px;">
+                          <img src="./images/wse_ytg3.jpg" alt="杨天歌与康智博合影">
+                          <span class="caption">杨天歌（左）与康智博（右）</span>
+                      </div>
+                      <p class="text-block">杨天歌成绩为 18:29.79；而康智博成绩为 18:29.90。</p>
+                  </div>
+
+                  <h5>男子5000米 M50 组别</h5>
+                  <div class="wide-content-group">
+                      <div class="media-item">
+                          <img src="./images/wse_yg1.jpg" alt="杨光先生完赛1">
+                      </div>
+                      <div class="media-item">
+                          <img src="./images/wse_yg2.jpg" alt="杨光先生完赛2">
+                      </div>
+                      <p class="note-text">（以上图片来自 WSE 官方比赛图库）</p>
+                      <p class="text-block">杨光先生，男子5000米 M50 组 20:25.84，组别第一，同时也创下了 M50 组记录。</p>
+                  </div>
                 </div>
-                <div class="media-item">
-                    <img src="./images/wse_yg2.jpg" alt="杨光先生完赛2">
-                </div>
-                <p class="note-text">（以上图片来自 WSE 官方比赛图库）</p>
-                <p class="text-block">杨光先生，男子5000米 M50 组 20:25.84，组别第一，同时也创下了 M50 组记录。</p>
+              </div>
             </div>
           </div>
           
-          <div class="wide-card">
-            <h4 class="card-title">2025 的最后一次训练——“奔向 2026”之 20.26 公里特别跑</h4>
-            
-            <p class="text-block">在 2025 年的尾声，Youth Peak 成员们展示了一次独特的、浪漫的迎接 2026 年的方式。</p>
-            
-            <div class="wide-content-group">
-                <div class="media-item" style="max-width: 500px; margin: 0 auto;">
-                    <img src="./images/202512311.png" alt="训练进行时">
-                    <span class="caption">训练进行时</span>
-                </div>
-                
-                <p class="text-block">从太原市迎泽公园北门出发，经迎泽大桥转往汾河公园，随后沿汾河公园骑行道一路北上；期间穿过了漪汾桥、胜利桥；最后折返，沿路返回迎泽公园北门，完成了长度为 20.26 公里的训练。</p>
+          <div class="wide-card" id="article-202512">
+            <div class="wide-card-header">
+              <h4 class="card-title">2025 的最后一次训练——“奔向 2026”之 20.26 公里特别跑</h4>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="wide-card-body-wrapper">
+              <div class="wide-card-body">
+                <div class="wide-card-inner">
+                  <p class="text-block" style="padding-top: 10px;">在 2025 年的尾声，Youth Peak 成员们展示了一次独特的、浪漫的迎接 2026 年的方式。</p>
+                  
+                  <div class="wide-content-group">
+                      <div class="media-item" style="max-width: 500px; margin: 0 auto;">
+                          <img src="./images/202512311.png" alt="训练进行时">
+                          <span class="caption">训练进行时</span>
+                      </div>
+                      
+                      <p class="text-block">从太原市迎泽公园北门出发，经迎泽大桥转往汾河公园，随后沿汾河公园骑行道一路北上；期间穿过了漪汾桥、胜利桥；最后折返，沿路返回迎泽公园北门，完成了长度为 20.26 公里的训练。</p>
 
-                <div class="media-item" style="max-width: 500px; margin: 0 auto;">
-                    <img src="./images/202512312.png" alt="返回迎泽公园后众人的合影">
-                    <span class="caption">返回迎泽公园后众人的合影</span>
+                      <div class="media-item" style="max-width: 500px; margin: 0 auto;">
+                          <img src="./images/202512312.png" alt="返回迎泽公园后众人的合影">
+                          <span class="caption">返回迎泽公园后众人的合影</span>
+                      </div>
+                      
+                      <div class="quote-box">
+                          “这正是热爱的具象化。”
+                          <span class="quote-author">——网站负责人，甄熠然</span>
+                      </div>
+                  </div>
                 </div>
-                
-                <div class="quote-box">
-                    “这正是热爱的具象化。”
-                    <span class="quote-author">——网站负责人，甄熠然</span>
-                </div>
+              </div>
             </div>
           </div>
-          
+                    
+          <div class="wide-card" id="article-202602">
+            <div class="wide-card-header">
+              <h4 class="card-title">2026 年 2 月 6 日 - 2026 年 2 月 8 日，杨天歌参加田径指导员培训</h4>
+              <span class="toggle-icon">+</span>
+            </div>
+            <div class="wide-card-body-wrapper">
+              <div class="wide-card-body">
+                <div class="wide-card-inner">
+                  <h5>目的</h5>
+                  <div class="wide-content-group">
+                    <p>北方的冬日甚是寒冷，但也盖不过这片土地上盎然的生机。镜头转到一座田径场，Youth Peak 的主教练杨天歌正利用空暇时间训练。这里的空暇，是他来到北京参加田径指导员培训的课余间隙。这也引出了一个问题：他为什么在这里？答案只有一个：为了团队的明天。</p>
+                    <div class="media-item" style="max-width: 500px; margin: 10px auto;">
+                      <img src="./images/202602-1.png" alt="杨天歌训练">
+                    </div>
+                  </div>
+
+                  <h5>见闻</h5>
+                  <div class="wide-content-group">
+                    <p>本课程由中田体育培训（海南）有限公司开展，旨在为有意从事田径教练工作的人员提供专业技能培训。其中，线下课程于 2026 年 2 月 6 日开始，共计 24 学时，培训地点设在北京交通大学体育场。</p>
+                    <div class="media-item" style="max-width: 500px; margin: 10px auto;">
+                      <img src="./images/202602-2.png" alt="培训现场">
+                      <span class="caption">课程进行时</span>
+                    </div>
+                    <p>2026 年 2 月 8 日，完成了线上线下所有课程的杨天歌成为了中国田径协会认可的田径指导员。</p>
+                    <div class="media-item" style="max-width: 500px; margin: 10px auto;">
+                      <img src="./images/202602-3.png" alt="合影">
+                      <span class="caption">结业后的杨天歌与培训师的合影</span>
+                    </div>
+                    <div class="media-item" style="max-width: 500px; margin: 10px auto;">
+                      <img src="./images/202602-4.png" alt="结业证书">
+                      <span class="caption">杨天歌的结业证书</span>
+                      <span class="caption" style="color: #d32f2f; font-weight: 800; margin-top: 4px;">仅作展示，非法使用必究</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="team-grid">
             
           </div>
@@ -1370,6 +1526,27 @@
       const btn = document.querySelector('.lang-btn');
       btn.classList.toggle('active');
       alert('敬请期待');
+    }
+
+    // 处理卓绝风姿页面的折叠卡片逻辑
+    document.querySelectorAll('.wide-card-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const card = header.closest('.wide-card');
+        card.classList.toggle('open');
+      });
+    });
+
+    // 置顶横幅跳转及展开逻辑
+    function openAndScrollToArticle(id) {
+      const article = document.getElementById(id);
+      if (article) {
+        if (!article.classList.contains('open')) {
+          article.classList.add('open');
+        }
+        setTimeout(() => {
+          article.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
+      }
     }
   </script>
 </body>
