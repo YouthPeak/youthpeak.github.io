@@ -174,22 +174,11 @@
       max-width:100vw;box-sizing:border-box;
     }
     
-    /* 团队成员页不可选中 */
-    #panel-1 {
+    /* 所有面板均不可选中内容（强制） */
+    #panel-1, #panel-2, #panel-3, .article-card {
       user-select: none;
       -webkit-user-select: none;
-    }
-    
-    /* 记录展示页不可选中 (原专业知识页) */
-    #panel-2 {
-      user-select: none;
-      -webkit-user-select: none;
-    }
-
-    /* 卓绝风姿内容不可选中 */
-    #panel-3 {
-      user-select: none;
-      -webkit-user-select: none;
+      -moz-user-select: none;
     }
 
     .panel.active{
@@ -330,7 +319,7 @@
       justify-content: space-between;
       align-items: center;
       background: linear-gradient(to right, #fbfdff, #f0f7ff);
-      list-style: none; 
+      list-style: none; /* Hide default triangle */
     }
     summary::-webkit-details-marker {
       display: none;
@@ -354,6 +343,7 @@
       border-radius: 6px;
       margin-left: auto;
       margin-right: 12px;
+      flex-shrink: 0;
     }
     .rank-table {
       width: 100%;
@@ -381,9 +371,9 @@
       color: #999;
       width: 40px;
     }
-    .rank-1 .rank-num { color: #ffb300; } 
-    .rank-2 .rank-num { color: #90a4ae; } 
-    .rank-3 .rank-num { color: #cd7f32; } 
+    .rank-1 .rank-num { color: #ffb300; } /* Gold */
+    .rank-2 .rank-num { color: #90a4ae; } /* Silver */
+    .rank-3 .rank-num { color: #cd7f32; } /* Bronze */
     .rank-time {
       font-weight: 700;
       color: #1976d2;
@@ -807,8 +797,12 @@
                   <li><span class="label">800M</span><span class="value">2:14</span></li>
                   <li><span class="label">1500M</span><span class="value">4:43</span></li>
                   <li><span class="label">3000M</span><span class="value">10:19</span></li>
-                  <li><span class="label">5000M</span><span class="value">18:29</span></li>
+                  <li><span class="label">5000M</span><span class="value">18:10</span></li>
                   <li><span class="label">半程马拉松</span><span class="value">1:35:47</span></li>
+                </ul>
+                <p><strong>比赛成绩：</strong></p>
+                <ul style="margin:6px 0 0;padding-left:18px;font-size:.94rem;">
+                  <li>2026年4月11日 WSE 石家庄站 U17 组别 5000M 第四名</li>
                 </ul>
               </div>
             </div>
@@ -844,25 +838,25 @@
                 </ul>
               </div>
             </div>
-
+           
             <div class="member-card">
               <div class="member-header">
                 <h4 class="member-name">成沛轩</h4>
                 <span class="member-role" style="background:#D4AF37;box-shadow:0 2px 6px rgba(212,175,55,.4);">ACE</span>
               </div>
               <div class="member-body">
-                <p><strong>专项：</strong>800M</p>
+                <p><strong>专项：</strong>5000M</p>
                 <p><strong>出生日期：</strong>2010年7月16日</p>
                 <ul class="member-pb">
                   <li><span class="label">800M</span><span class="value">2:10</span></li>
                   <li><span class="label">1500M</span><span class="value">4:43</span></li>
-                  <li><span class="label">5000M</span><span class="value">18:07</span></li>
+                  <li><span class="label">5000M</span><span class="value">15:51</span></li>
                   <li><span class="label">10000M</span><span class="value">38:13</span></li>
                   <li><span class="label">半程马拉松</span><span class="value">1:39:07</span></li>
                 </ul>
                 <p><strong>比赛成绩：</strong></p>
                 <ul style="margin:6px 0 0;padding-left:18px;font-size:.94rem;">
-                  <li>2026 年 WSE 太原站 U17 1500M 第四名</li>
+                  <li>2026 年3月14日WSE 太原站 U17 组别 1500M 第四名</li>
                 </ul>
               </div>
             </div>
@@ -906,7 +900,6 @@
                 <p><strong>专项：</strong>1500M</p>
                 <p><strong>出生日期：</strong>2008年9月30日</p>
                 <ul class="member-pb">
-                  <li><span class="label">400M</span><span class="value">0:58</span></li>
                   <li><span class="label">800M</span><span class="value">2:23</span></li>
                   <li><span class="label">1000M</span><span class="value">2:59</span></li>
                   <li><span class="label">1500M</span><span class="value">4:57</span></li>
@@ -938,10 +931,9 @@
                 <h4 class="member-name">王梓渊</h4>
               </div>
               <div class="member-body">
-                <p><strong>专项：</strong>400M 800M</p>
+                <p><strong>专项：</strong>800M</p>
                 <p><strong>出生日期：</strong>2010年11月23日</p>
                 <ul class="member-pb">
-                  <li><span class="label">400M</span><span class="value">0:56</span></li>
                   <li><span class="label">800M</span><span class="value">2:12</span></li>
                   <li><span class="label">1500M</span><span class="value">4:44</span></li>
                   <li><span class="label">3000M</span><span class="value">10:46</span></li>
@@ -972,7 +964,6 @@
                 <p><strong>专项：</strong>5000M</p>
                 <p><strong>出生日期：</strong>2010年3月25日</p>
                 <ul class="member-pb">
-                  <li><span class="label">400M</span><span class="value">0:58</span></li>
                   <li><span class="label">800M</span><span class="value">2:20</span></li>
                   <li><span class="label">3000M</span><span class="value">11:32</span></li>
                   <li><span class="label">5000M</span><span class="value">20:30</span></li>
@@ -989,7 +980,6 @@
                 <p><strong>出生日期：</strong>2012年4月11日</p>
                 <ul class="member-pb">
                   <li><span class="label">800M</span><span class="value">2:33</span></li>
-                  <li><span class="label">1000M</span><span class="value">3:30</span></li>
                   <li><span class="label">3000M</span><span class="value">12:09</span></li>
                   <li><span class="label">5000M</span><span class="value">20:46</span></li>
                   <li><span class="label">10000M</span><span class="value">41:46</span></li>
@@ -1052,7 +1042,6 @@
                 <p><strong>专项：</strong>十项全能</p>
                 <p><strong>出生日期：</strong>2010年5月27日</p>
                 <ul class="member-pb">
-                  <li><span class="label">400M</span><span class="value">58.07</span></li>
                   <li><span class="label">800M</span><span class="value">2:26</span></li>
                   <li><span class="label">1500M</span><span class="value">5:20</span></li>
                   <li><span class="label">5000M</span><span class="value">21:47</span></li>
@@ -1068,7 +1057,6 @@
                 <p><strong>专项：</strong>800M</p>
                 <p><strong>出生日期：</strong>2008年7月31日</p>
                 <ul class="member-pb">
-                  <li><span class="label">400M</span><span class="value">0:58</span></li>
                   <li><span class="label">800M</span><span class="value">2:09</span></li>
                   <li><span class="label">1500M</span><span class="value">4:44</span></li>
                   <li><span class="label">3000M</span><span class="value">11:20</span></li>
@@ -1111,7 +1099,6 @@
                 <p><strong>专项：</strong>800M</p>
                 <p><strong>出生日期：</strong>2009年1月21日</p>
                 <ul class="member-pb">
-                  <li><span class="label">400M</span><span class="value">00:58</span></li>
                   <li><span class="label">800M</span><span class="value">02:36</span></li>
                 </ul>
               </div>
@@ -1222,13 +1209,13 @@
             <details class="rank-item">
               <summary>
                 <span>5000M</span>
-                <span class="rank-record-holder">CR: 成沛轩 18:07</span>
+                <span class="rank-record-holder">CR: 成沛轩 15:51</span>
               </summary>
               <table class="rank-table">
                 <thead><tr><th>排名</th><th>成员</th><th>成绩</th></tr></thead>
                 <tbody>
-                  <tr class="rank-1"><td class="rank-num">1</td><td>成沛轩</td><td class="rank-time">18:07</td></tr>
-                  <tr class="rank-2"><td class="rank-num">2</td><td>杨天歌</td><td class="rank-time">18:29</td></tr>
+                  <tr class="rank-1"><td class="rank-num">1</td><td>成沛轩</td><td class="rank-time">15:51</td></tr>
+                  <tr class="rank-2"><td class="rank-num">2</td><td>杨天歌</td><td class="rank-time">18:10</td></tr>
                   <tr class="rank-3"><td class="rank-num">3</td><td>康智博</td><td class="rank-time">18:29</td></tr>
                   <tr><td class="rank-num">4</td><td>郭天一</td><td class="rank-time">18:50</td></tr>
                   <tr><td class="rank-num">5</td><td>孙浩然</td><td class="rank-time">18:51</td></tr>
